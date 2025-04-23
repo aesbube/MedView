@@ -1,0 +1,7 @@
+:host {
+  display: flex;
+  justify-content: end;
+  height: calc(100vh - 60px);
+  background: #074B7B;
+}
+
