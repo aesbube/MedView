@@ -1,0 +1,25 @@
+:host{
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+}
+
+#nav-left{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#logo{
+  height: 48px;
+}
+
+#nav-right{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a{
+  text-decoration: none;
+}
