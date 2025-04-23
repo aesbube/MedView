@@ -21,15 +21,21 @@ class AuthServiceImpl(
     private val authenticationManager: AuthenticationManager,
     private val jwtTokenProvider: JwtTokenProvider
 ) : AuthService {
+    val logger = org.slf4j.LoggerFactory.getLogger(AuthServiceImpl::class.java)
     override fun authenticateUser(loginRequest: LoginRequest): JwtResponse {
+        logger.info("Authenticating user: ${loginRequest.username} with password: ${loginRequest.password}")
         val authentication = authenticationManager.authenticate(
             UsernamePasswordAuthenticationToken(loginRequest.username, loginRequest.password)
         )
+        logger.info("Authentication successful for user: ${loginRequest.username}")
 
         SecurityContextHolder.getContext().authentication = authentication
+        logger.info(SecurityContextHolder.getContext().authentication.name)
+        logger.info("Generating JWT token for user: ${loginRequest.username}")
         val jwt = jwtTokenProvider.generateToken(authentication)
+        logger.info("JWT token generated for user: ${loginRequest.username} and the token is $jwt")
         val user = userRepository.findByUsername(loginRequest.username)!!
-
+        logger.info("User details retrieved for user: ${loginRequest.username}")
         return JwtResponse(
             token = jwt,
             id = user.id,

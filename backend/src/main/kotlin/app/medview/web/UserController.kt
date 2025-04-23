@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/users")
 class UserController(private val userService: UserService) {
-
     @GetMapping("/me")
     fun getCurrentUser(): ResponseEntity<User> {
         return ResponseEntity.ok(userService.getCurrentUser())

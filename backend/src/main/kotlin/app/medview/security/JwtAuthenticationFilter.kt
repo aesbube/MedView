@@ -16,7 +16,6 @@ class JwtAuthenticationFilter(
     private val jwtTokenProvider: JwtTokenProvider,
     private val userDetailsService: UserDetailsService
 ) : OncePerRequestFilter() {
-
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
@@ -24,6 +23,7 @@ class JwtAuthenticationFilter(
     ) {
         try {
             val jwt = getJwtFromRequest(request)
+            logger.info("JWT token in JwtAuthenticationFilter: $jwt")
             if (jwt != null && jwtTokenProvider.validateToken(jwt)) {
                 val username = jwtTokenProvider.getUsernameFromToken(jwt)
                 val userDetails = userDetailsService.loadUserByUsername(username)
