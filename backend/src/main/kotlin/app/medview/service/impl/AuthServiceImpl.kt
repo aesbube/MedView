@@ -1,5 +1,6 @@
 package app.medview.service.impl
 
+import app.medview.domain.Role
 import app.medview.domain.User
 import app.medview.domain.dto.JwtResponse
 import app.medview.domain.dto.LoginRequest
@@ -39,7 +40,8 @@ class AuthServiceImpl(
         return JwtResponse(
             token = jwt,
             id = user.id,
-            username = user.username
+            username = user.username,
+            role = user.role,
         )
     }
 
@@ -55,7 +57,8 @@ class AuthServiceImpl(
         val user = User(
             username = signupRequest.username,
             email = signupRequest.email,
-            password = passwordEncoder.encode(signupRequest.password)
+            password = passwordEncoder.encode(signupRequest.password),
+            role = signupRequest.role ?: Role.PATIENT
         )
 
         userRepository.save(user)

@@ -1,5 +1,6 @@
 package app.medview.domain.dto
 
+import app.medview.domain.Role
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
@@ -16,5 +17,7 @@ data class SignupRequest(
     @field:NotBlank
     @field:Size(max = 50)
     @field:Email
-    val email: String
+    val email: String,
+
+    val role: Role?
 )

@@ -34,6 +34,10 @@ class SecurityConfig(
             .authorizeHttpRequests { authz ->
                 authz
                     .requestMatchers("/auth/**", "/h2/**").permitAll()
+                    .requestMatchers("/users/**").hasRole("ADMIN")
+                    .requestMatchers("/users/specialist/**").hasAnyRole("SPECIALIST")
+                    .requestMatchers("/users/doctor/**").hasAnyRole("DOCTOR")
+                    .requestMatchers("/users/patient/**").hasAnyRole("PATIENT")
                     .anyRequest().authenticated()
             }
             .exceptionHandling {

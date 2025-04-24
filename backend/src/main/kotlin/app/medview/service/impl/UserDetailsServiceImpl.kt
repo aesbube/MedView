@@ -16,7 +16,7 @@ class UserDetailsServiceImpl(private val userRepository: UserRepository) : UserD
         return org.springframework.security.core.userdetails.User
             .withUsername(user.username)
             .password(user.password)
-            .authorities("ROLE_USER")
+            .authorities("ROLE_${user.role.name}")
             .accountExpired(false)
             .accountLocked(false)
             .credentialsExpired(false)
