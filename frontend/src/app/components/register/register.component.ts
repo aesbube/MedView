@@ -1,5 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ValidationService } from '../../services/validation.service';
 import { AuthService } from '../../services/auth.service';
@@ -8,46 +13,49 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule
-  ],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [ValidationService] //Provide service
+  providers: [ValidationService],
 })
 export class RegisterComponent implements OnInit {
-
-
   myForm: FormGroup;
-  strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/;
+  strongPasswordPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/;
 
-  constructor(public validationService: ValidationService, private authService: AuthService, private router: Router) {
+  constructor(
+    public validationService: ValidationService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.myForm = new FormGroup({
       username: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(this.strongPasswordPattern)])
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(this.strongPasswordPattern),
+      ]),
     });
   }
 
   ngOnInit() {}
 
   onSubmit() {
-    console.log("Submit");
+    console.log('Submit');
     if (this.myForm.valid) {
-      console.log('Registering...')
+      console.log('Registering...');
       const registrationData = this.myForm.value;
 
       this.authService.register(registrationData).subscribe({
         next: (response) => {
           console.log('Registration successful!', response);
-          this.router.navigate(['/login'])
+          this.router.navigate(['/login']);
         },
         error: (error) => {
           console.error('Registration failed:', error);
-        }
+        },
       });
-
     } else {
       console.log('Form is invalid');
     }

@@ -2,28 +2,88 @@
   <h2>Register</h2>
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <input type="text" id="username" name="username" formControlName="username" placeholder=""
-        [class.error]="validationService.isControlInvalid(myForm, 'username')">
+      <input
+        type="text"
+        id="username"
+        name="username"
+        formControlName="username"
+        placeholder=""
+        [class.error]="validationService.isControlInvalid(myForm, 'username')"
+      />
       <label for="username">Username</label>
     </div>
     <div class="form-group">
-      <input type="email" id="email" name="email" formControlName="email" placeholder=""
-        [class.error]="validationService.formHasErrors(myForm, 'email', ['required', 'email'])">
+      <input
+        type="email"
+        id="email"
+        name="email"
+        formControlName="email"
+        placeholder=""
+        [class.error]="
+          validationService.formHasErrors(myForm, 'email', [
+            'required',
+            'email'
+          ])
+        "
+      />
       <label for="email">E-mail</label>
     </div>
     <div class="form-group">
-      <input type="password" id="password" name="password" formControlName="password" placeholder=""
-        [class.error]="validationService.formHasErrors(myForm, 'password', ['required', 'minlength', 'pattern'])">
+      <input
+        type="password"
+        id="password"
+        name="password"
+        formControlName="password"
+        placeholder=""
+        [class.error]="
+          validationService.formHasErrors(myForm, 'password', [
+            'required',
+            'minlength',
+            'pattern'
+          ])
+        "
+      />
       <label for="password">Password</label>
     </div>
-    <div *ngIf="validationService.hasError(myForm, 'username', 'required')" class="error-message">Username is required.</div>
-    <div *ngIf="validationService.hasError(myForm, 'email', 'required')" class="error-message">Email is required.</div>
-    <div *ngIf="validationService.hasError(myForm, 'email', 'email')" class="error-message">Invalid email format.</div>
-    <div *ngIf="validationService.hasError(myForm, 'password', 'required')" class="error-message">Password is required.</div>
-    <div *ngIf="validationService.hasError(myForm, 'password', 'minlength')" class="error-message">Password must be at least 8 characters long.</div>
-    <div *ngIf="validationService.hasError(myForm, 'password', 'pattern')" class="error-message">Password must be strong.</div>
+    <div
+      *ngIf="validationService.hasError(myForm, 'username', 'required')"
+      class="error-message"
+    >
+      Username is required.
+    </div>
+    <div
+      *ngIf="validationService.hasError(myForm, 'email', 'required')"
+      class="error-message"
+    >
+      Email is required.
+    </div>
+    <div
+      *ngIf="validationService.hasError(myForm, 'email', 'email')"
+      class="error-message"
+    >
+      Invalid email format.
+    </div>
+    <div
+      *ngIf="validationService.hasError(myForm, 'password', 'required')"
+      class="error-message"
+    >
+      Password is required.
+    </div>
+    <div
+      *ngIf="validationService.hasError(myForm, 'password', 'minlength')"
+      class="error-message"
+    >
+      Password must be at least 8 characters long.
+    </div>
+    <div
+      *ngIf="validationService.hasError(myForm, 'password', 'pattern')"
+      class="error-message"
+    >
+      Password must be strong.
+    </div>
 
-    <button type="submit" [disabled]="!myForm.valid" class="submit-button">Register</button>
+    <button type="submit" [disabled]="!myForm.valid" class="submit-button">
+      Register
+    </button>
   </form>
 </div>
-

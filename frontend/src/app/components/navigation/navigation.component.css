@@ -1,11 +1,11 @@
-:host{
+:host {
   display: flex;
   width: 100vw;
   justify-content: space-between;
-  border-bottom: 2px solid #074B7B;
+  border-bottom: 2px solid #074b7b;
 }
 
-#nav-left{
+#nav-left {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,20 +13,20 @@
   padding: 8px 16px;
 }
 
-#nav-left a{
+#nav-left a {
   font-size: 22px;
   font-weight: bold;
 }
 
-#logo{
+#logo {
   height: 42px;
 }
 
-#logo img{
+#logo img {
   height: 42px;
 }
 
-#nav-right{
+#nav-right {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,26 +34,24 @@
   gap: 18px;
 }
 
-a{
+a {
   text-decoration: none;
-  color: #074B7B;
+  color: #074b7b;
 }
 
-#nav-right a{
+#nav-right a {
   font-size: 14px;
   border-radius: 8px;
   padding: 5px 10px;
-  transition: background-color ease 0.2s,
-              color ease 0.2s;
+  transition: background-color ease 0.2s, color ease 0.2s;
 }
 
-.btn{
+.btn {
   color: white;
-  background-color: #074B7B;
+  background-color: #074b7b;
 }
 
-#nav-right a:hover{
-  background-color: #2282B6;
+#nav-right a:hover {
+  background-color: #2282b6;
   color: white;
 }
-

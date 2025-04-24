@@ -12,13 +12,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 bootstrapApplication(AppComponent, {
   providers: [
-      provideRouter(routes),
-      provideHttpClient(withInterceptors([AuthInterceptor])),
-      AuthService,
-      AuthGuard,
-      importProvidersFrom(FormsModule),
-      importProvidersFrom(ReactiveFormsModule)
-
-  ]
-})
-  .catch((err) => console.error(err));
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([AuthInterceptor])),
+    AuthService,
+    AuthGuard,
+    importProvidersFrom(FormsModule),
+    importProvidersFrom(ReactiveFormsModule),
+  ],
+}).catch((err) => console.error(err));

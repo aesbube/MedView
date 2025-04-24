@@ -1,4 +1,4 @@
-:host{
+:host {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,7 +9,7 @@
   z-index: 1;
 }
 
-#search-wrapper{
+#search-wrapper {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -17,21 +17,20 @@
   padding: 5px;
 }
 
-input{
+input {
   font-size: 12px;
   padding: 5px 10px;
   border-radius: 12px;
   border: none;
   background-color: white;
-  transition: background-color ease 0.1s,
-              color ease 0.1s;
+  transition: background-color ease 0.1s, color ease 0.1s;
 }
 
-#see-all{
+#see-all {
   background-color: hsl(205, 89%, 75%);
 }
 
-#see-all:hover{
+#see-all:hover {
   background-color: rgb(7, 75, 123);
   color: white;
   outline: 1px solid white;

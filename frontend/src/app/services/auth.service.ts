@@ -10,21 +10,23 @@ interface LoginResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = environment.apiUrl;
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  public isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
+  public isAuthenticated$: Observable<boolean> =
+    this.isAuthenticatedSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
     this.checkAuthStatus();
   }
 
   login(credentials: { username: string; email: string }): Observable<boolean> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials)
+    return this.http
+      .post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials)
       .pipe(
-        tap(response => {
+        tap((response) => {
           this.setToken(response.token);
           this.isAuthenticatedSubject.next(true);
         }),
@@ -32,7 +34,11 @@ export class AuthService {
       );
   }
 
-  register(registrationData: { username: string; email: string; password: string }): Observable<any> {
+  register(registrationData: {
+    username: string;
+    email: string;
+    password: string;
+  }): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/register`, registrationData);
   }
 

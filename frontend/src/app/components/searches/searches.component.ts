@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-searches',
   imports: [],
   templateUrl: './searches.component.html',
-  styleUrl: './searches.component.css'
+  styleUrl: './searches.component.css',
 })
-export class SearchesComponent {
-
-}
+export class SearchesComponent {}
