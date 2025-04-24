@@ -34,11 +34,13 @@ class SecurityConfig(
             .authorizeHttpRequests { authz ->
                 authz
                     .requestMatchers("/auth/**", "/h2/**").permitAll()
+                    .requestMatchers("/users/me").hasAnyRole("ADMIN", "SPECIALIST", "PHARMACIST", "DOCTOR", "PATIENT")
+                    .requestMatchers("/users/pharmacist").hasAnyRole("PHARMACIST", "ADMIN")
+                    .requestMatchers("/users/doctor").hasAnyRole("DOCTOR", "ADMIN")
+                    .requestMatchers("/users/patient").hasAnyRole("PATIENT", "ADMIN")
+                    .requestMatchers("/users/specialist").hasAnyRole("SPECIALIST", "ADMIN")
                     .requestMatchers("/users/**").hasRole("ADMIN")
-                    .requestMatchers("/users/specialist/**").hasAnyRole("SPECIALIST")
-                    .requestMatchers("/users/doctor/**").hasAnyRole("DOCTOR")
-                    .requestMatchers("/users/patient/**").hasAnyRole("PATIENT")
-                    .anyRequest().authenticated()
+                    .anyRequest().hasRole("ADMIN")
             }
             .exceptionHandling {
                 it.authenticationEntryPoint(jwtAuthenticationEntryPoint)
