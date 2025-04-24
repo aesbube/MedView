@@ -35,6 +35,7 @@ label {
   background-color: white;
   padding: 0 3px;
   transition: margin ease 0.2s, font-size ease 0.2s;
+  z-index: 1;
 }
 
 input {
