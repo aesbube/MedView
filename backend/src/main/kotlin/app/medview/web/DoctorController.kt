@@ -6,6 +6,7 @@ import app.medview.service.users.DoctorService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -19,7 +20,7 @@ class DoctorController(private val doctorService: DoctorService) {
     }
 
     @PostMapping("/update")
-    fun addDetailsToDoctor(doctorDto: DoctorDto): ResponseEntity<String> {
+    fun addDetailsToDoctor(@RequestBody doctorDto: DoctorDto): ResponseEntity<String> {
         val response = doctorService.addDetailsToDoctor(doctorDto)
         return ResponseEntity.ok(response.message)
     }

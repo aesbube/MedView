@@ -5,12 +5,15 @@ import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.users.DoctorDto
 import app.medview.domain.users.Doctor
 import app.medview.repository.DoctorRepository
+import app.medview.repository.UserRepository
 import app.medview.service.users.DoctorService
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
 @Service
-class DoctorServiceImpl(private val doctorRepository: DoctorRepository) : DoctorService {
+class DoctorServiceImpl(private val doctorRepository: DoctorRepository, private val userRepository: UserRepository) :
+    DoctorService {
+        val logger = org.slf4j.LoggerFactory.getLogger(DoctorServiceImpl::class.java)
     override fun getAllDoctors(): List<Doctor> {
         return doctorRepository.findAll()
     }
@@ -22,10 +25,14 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository) : Doctor
     }
 
     override fun addDetailsToDoctor(doctorDto: DoctorDto): MessageResponse {
+        logger.info("Adding doctor details")
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
 
-        val user = doctorRepository.findByUsername(username)
+        logger.info("Adding doctor details for user: $username")
+        logger.info("Doctor DTO: $doctorDto")
+
+        val user = userRepository.findByUsername(username)
             ?: throw RuntimeException("Doctor not found with username: $username")
 
         if (user.role != Role.DOCTOR) {

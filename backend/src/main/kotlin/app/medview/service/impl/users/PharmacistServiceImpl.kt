@@ -5,12 +5,16 @@ import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.users.PharmacistDto
 import app.medview.domain.users.Pharmacist
 import app.medview.repository.PharmacistRepository
+import app.medview.repository.UserRepository
 import app.medview.service.users.PharmacistService
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
 @Service
-class PharmacistServiceImpl(private val pharmacistRepository: PharmacistRepository) : PharmacistService {
+class PharmacistServiceImpl(
+    private val pharmacistRepository: PharmacistRepository,
+    private val userRepository: UserRepository
+) : PharmacistService {
     override fun getAllPharmacists(): List<Pharmacist> {
         return pharmacistRepository.findAll()
     }
@@ -25,7 +29,7 @@ class PharmacistServiceImpl(private val pharmacistRepository: PharmacistReposito
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
 
-        val user = pharmacistRepository.findByUsername(username)
+        val user = userRepository.findByUsername(username)
             ?: throw RuntimeException("Pharmacist not found with username: $username")
 
         if (user.role != Role.PHARMACIST) {

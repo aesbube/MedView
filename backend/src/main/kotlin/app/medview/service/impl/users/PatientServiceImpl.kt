@@ -6,13 +6,18 @@ import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.users.Doctor
 import app.medview.domain.users.Patient
 import app.medview.repository.PatientRepository
+import app.medview.repository.UserRepository
 import app.medview.service.users.DoctorService
 import app.medview.service.users.PatientService
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
 @Service
-class PatientServiceImpl(private val patientRepository: PatientRepository, private val doctorService: DoctorService) : PatientService {
+class PatientServiceImpl(
+    private val patientRepository: PatientRepository,
+    private val doctorService: DoctorService,
+    private val userRepository: UserRepository
+) : PatientService {
     override fun getAllPatients(): List<Patient> {
         return patientRepository.findAll()
     }
@@ -27,7 +32,7 @@ class PatientServiceImpl(private val patientRepository: PatientRepository, priva
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
 
-        val user = patientRepository.findByUsername(username)
+        val user = userRepository.findByUsername(username)
             ?: throw RuntimeException("Patient not found with username: $username")
 
         if (user.role != Role.PATIENT) {

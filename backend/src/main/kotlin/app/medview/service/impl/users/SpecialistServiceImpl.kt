@@ -5,12 +5,16 @@ import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.users.SpecialistDto
 import app.medview.domain.users.Specialist
 import app.medview.repository.SpecialistRepository
+import app.medview.repository.UserRepository
 import app.medview.service.users.SpecialistService
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
 @Service
-class SpecialistServiceImpl(private val specialistRepository: SpecialistRepository) : SpecialistService {
+class SpecialistServiceImpl(
+    private val specialistRepository: SpecialistRepository,
+    private val userRepository: UserRepository
+) : SpecialistService {
     override fun getAllSpecialists(): List<Specialist> {
         return specialistRepository.findAll()
     }
@@ -25,7 +29,7 @@ class SpecialistServiceImpl(private val specialistRepository: SpecialistReposito
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
 
-        val user = specialistRepository.findByUsername(username)
+        val user = userRepository.findByUsername(username)
             ?: throw RuntimeException("Specialist not found with username: $username")
 
         if (user.role != Role.SPECIALIST) {
