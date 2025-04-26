@@ -32,22 +32,16 @@ class PatientServiceImpl(
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
 
-        val user = userRepository.findByUsername(username)
+        val patient = patientRepository.findByUsername(username)
             ?: throw RuntimeException("Patient not found with username: $username")
 
-        if (user.role != Role.PATIENT) {
+        if (patient.role != Role.PATIENT) {
             throw RuntimeException("User is not a patient")
         }
 
         val doctor: Doctor = doctorService.getDoctorById(patientDto.doctorId)
 
-        val patient = Patient(
-            id = user.id,
-            username = user.username,
-            password = user.password,
-            email = user.email,
-            doctor = doctor,
-        )
+        patient.doctor = doctor
 
         patientRepository.save(patient)
         return MessageResponse("Patient details added successfully")

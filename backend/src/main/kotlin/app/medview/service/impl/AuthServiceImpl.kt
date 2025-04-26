@@ -6,6 +6,14 @@ import app.medview.domain.dto.JwtResponse
 import app.medview.domain.dto.LoginRequest
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.SignupRequest
+import app.medview.domain.users.Doctor
+import app.medview.domain.users.Patient
+import app.medview.domain.users.Pharmacist
+import app.medview.domain.users.Specialist
+import app.medview.repository.DoctorRepository
+import app.medview.repository.PatientRepository
+import app.medview.repository.PharmacistRepository
+import app.medview.repository.SpecialistRepository
 import app.medview.repository.UserRepository
 import app.medview.security.JwtTokenProvider
 import app.medview.service.AuthService
@@ -18,6 +26,10 @@ import org.springframework.stereotype.Service
 @Service
 class AuthServiceImpl(
     private val userRepository: UserRepository,
+    private val doctorRepository: DoctorRepository,
+    private val patientRepository: PatientRepository,
+    private val pharmacistRepository: PharmacistRepository,
+    private val specialistRepository: SpecialistRepository,
     private val passwordEncoder: PasswordEncoder,
     private val authenticationManager: AuthenticationManager,
     private val jwtTokenProvider: JwtTokenProvider
@@ -54,14 +66,51 @@ class AuthServiceImpl(
             return MessageResponse("Error: Email is already in use!")
         }
 
-        val user = User(
-            username = signupRequest.username,
-            email = signupRequest.email,
-            password = passwordEncoder.encode(signupRequest.password),
-            role = signupRequest.role ?: Role.PATIENT
-        )
+        val encodedPassword = passwordEncoder.encode(signupRequest.password)
 
-        userRepository.save(user)
+        when (signupRequest.role) {
+            Role.DOCTOR -> {
+                val doctor = Doctor(
+                    username = signupRequest.username,
+                    email = signupRequest.email,
+                    password = encodedPassword
+                )
+                doctorRepository.save(doctor)
+            }
+            Role.PATIENT -> {
+                val patient = Patient(
+                    username = signupRequest.username,
+                    email = signupRequest.email,
+                    password = encodedPassword
+                )
+                patientRepository.save(patient)
+            }
+            Role.PHARMACIST -> {
+                val pharmacist = Pharmacist(
+                    username = signupRequest.username,
+                    email = signupRequest.email,
+                    password = encodedPassword
+                )
+                pharmacistRepository.save(pharmacist)
+            }
+            Role.SPECIALIST -> {
+                val specialist = Specialist(
+                    username = signupRequest.username,
+                    email = signupRequest.email,
+                    password = encodedPassword
+                )
+                specialistRepository.save(specialist)
+            }
+            else -> {
+                val user = User(
+                    username = signupRequest.username,
+                    email = signupRequest.email,
+                    password = encodedPassword,
+                    role = signupRequest.role ?: Role.PATIENT
+                )
+                userRepository.save(user)
+            }
+        }
         return MessageResponse("User registered successfully!")
     }
 }

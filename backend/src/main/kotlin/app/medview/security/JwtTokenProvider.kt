@@ -40,6 +40,16 @@ class JwtTokenProvider(private val jwtConfig: JwtConfig) {
         return claims.subject
     }
 
+    fun getRoleFromToken(token: String): String? {
+        val claims = Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .body
+
+        return claims["role"] as? String
+    }
+
     fun validateToken(token: String): Boolean {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)

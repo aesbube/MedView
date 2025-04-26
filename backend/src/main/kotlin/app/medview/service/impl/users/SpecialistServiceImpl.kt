@@ -29,22 +29,16 @@ class SpecialistServiceImpl(
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
 
-        val user = userRepository.findByUsername(username)
+        val specialist = specialistRepository.findByUsername(username)
             ?: throw RuntimeException("Specialist not found with username: $username")
 
-        if (user.role != Role.SPECIALIST) {
+        if (specialist.role != Role.SPECIALIST) {
             throw RuntimeException("User is not a specialist")
         }
 
-        val specialist = Specialist(
-            id = user.id,
-            username = user.username,
-            password = user.password,
-            email = user.email,
-            specialty = specialistDto.specialty,
-            licenseNumber = specialistDto.licenseNumber,
-            yearsOfExperience = specialistDto.yearsOfExperience,
-        )
+        specialist.specialty = specialistDto.specialty
+        specialist.licenseNumber = specialistDto.licenseNumber
+        specialist.yearsOfExperience = specialistDto.yearsOfExperience
 
         specialistRepository.save(specialist)
         return MessageResponse("Specialist details added successfully")

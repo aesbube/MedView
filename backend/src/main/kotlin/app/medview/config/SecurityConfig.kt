@@ -35,10 +35,10 @@ class SecurityConfig(
                 authz
                     .requestMatchers("/auth/**", "/h2/**").permitAll()
                     .requestMatchers("/users/me").hasAnyRole("ADMIN", "SPECIALIST", "PHARMACIST", "DOCTOR", "PATIENT")
-                    .requestMatchers("/users/pharmacist").hasAnyRole("PHARMACIST", "ADMIN")
+                    .requestMatchers("/users/pharmacist", "/pharmacists/**").hasAnyRole("PHARMACIST", "ADMIN")
                     .requestMatchers("/users/doctor", "/doctors/**").hasAnyRole("DOCTOR", "ADMIN")
-                    .requestMatchers("/users/patient").hasAnyRole("PATIENT", "ADMIN")
-                    .requestMatchers("/users/specialist").hasAnyRole("SPECIALIST", "ADMIN")
+                    .requestMatchers("/users/patient", "/patients/**").hasAnyRole("PATIENT", "ADMIN")
+                    .requestMatchers("/users/specialist", "/specialists/**").hasAnyRole("SPECIALIST", "ADMIN")
                     .requestMatchers("/users/**").hasRole("ADMIN")
                     .anyRequest().hasRole("ADMIN")
             }

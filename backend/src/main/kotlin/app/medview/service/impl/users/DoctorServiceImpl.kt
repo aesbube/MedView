@@ -7,13 +7,14 @@ import app.medview.domain.users.Doctor
 import app.medview.repository.DoctorRepository
 import app.medview.repository.UserRepository
 import app.medview.service.users.DoctorService
+import jakarta.transaction.Transactional
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
 @Service
 class DoctorServiceImpl(private val doctorRepository: DoctorRepository, private val userRepository: UserRepository) :
     DoctorService {
-        val logger = org.slf4j.LoggerFactory.getLogger(DoctorServiceImpl::class.java)
+    val logger = org.slf4j.LoggerFactory.getLogger(DoctorServiceImpl::class.java)
     override fun getAllDoctors(): List<Doctor> {
         return doctorRepository.findAll()
     }
@@ -32,23 +33,17 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository, private 
         logger.info("Adding doctor details for user: $username")
         logger.info("Doctor DTO: $doctorDto")
 
-        val user = userRepository.findByUsername(username)
+        val doctor = doctorRepository.findByUsername(username)
             ?: throw RuntimeException("Doctor not found with username: $username")
 
-        if (user.role != Role.DOCTOR) {
+        if (doctor.role != Role.DOCTOR) {
             throw RuntimeException("User is not a doctor")
         }
 
-        val doctor = Doctor(
-            id = user.id,
-            username = user.username,
-            password = user.password,
-            email = user.email,
-            specialty = doctorDto.specialty,
-            licenseNumber = doctorDto.licenseNumber,
-            yearsOfExperience = doctorDto.yearsOfExperience,
-            hospitalName = doctorDto.hospitalName
-        )
+        doctor.specialty = doctorDto.specialty
+        doctor.licenseNumber = doctorDto.licenseNumber
+        doctor.yearsOfExperience = doctorDto.yearsOfExperience
+        doctor.hospitalName = doctorDto.hospitalName
 
         doctorRepository.save(doctor)
         return MessageResponse("Doctor details added successfully")

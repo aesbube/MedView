@@ -29,22 +29,16 @@ class PharmacistServiceImpl(
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
 
-        val user = userRepository.findByUsername(username)
+        val pharmacist = pharmacistRepository.findByUsername(username)
             ?: throw RuntimeException("Pharmacist not found with username: $username")
 
-        if (user.role != Role.PHARMACIST) {
+        if (pharmacist.role != Role.PHARMACIST) {
             throw RuntimeException("User is not a pharmacist")
         }
 
-        val pharmacist = Pharmacist(
-            id = user.id,
-            username = user.username,
-            password = user.password,
-            email = user.email,
-            pharmacyName = pharmacistDto.pharmacyName,
-            pharmacyAddress = pharmacistDto.pharmacyAddress,
-            licenseNumber = pharmacistDto.licenseNumber,
-        )
+        pharmacist.pharmacyName = pharmacistDto.pharmacyName
+        pharmacist.pharmacyAddress = pharmacistDto.pharmacyAddress
+        pharmacist.licenseNumber = pharmacistDto.licenseNumber
 
         pharmacistRepository.save(pharmacist)
         return MessageResponse("Pharmacist details added successfully")
