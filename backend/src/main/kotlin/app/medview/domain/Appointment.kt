@@ -5,6 +5,7 @@ import jakarta.persistence.*
 import java.util.Date
 
 @Entity
+@Table(name = "appointments")
 class Appointment(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +18,5 @@ class Appointment(
     val assignee: User? = null,
     val date: Date? = null,
     val time: String = "",
-    val status: String = "",
     val location: String = "",
 )
