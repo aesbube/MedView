@@ -67,4 +67,9 @@ export class AuthService {
       this.isAuthenticatedSubject.next(false);
     }
   }
+
+  isLoggedIn(): any{
+    return !(this.getToken() == null)
+  }
+
 }

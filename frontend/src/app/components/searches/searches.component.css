@@ -1,5 +1,6 @@
 :host {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 500px;
@@ -9,7 +10,20 @@
   z-index: 1;
 }
 
-#search-wrapper {
+mat-form-field, #timeslots-btn{
+  width: 300px;
+}
+
+mat-form-field{
+  border-radius: 20px;
+}
+
+button{
+  height: 50px;
+  margin-bottom: 19.5px;
+}
+
+/* #search-wrapper {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -35,4 +49,4 @@ input {
   color: white;
   outline: 1px solid white;
   cursor: pointer;
-}
+} */

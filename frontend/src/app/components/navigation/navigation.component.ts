@@ -1,10 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { NgIf } from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-navigation',
-  imports: [RouterLink],
+  imports: [
+    RouterLink,
+    NgIf,
+    MatButtonModule
+  ],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.css',
 })
-export class NavigationComponent {}
+export class NavigationComponent {
+
+  authService = inject(AuthService)
+
+}
