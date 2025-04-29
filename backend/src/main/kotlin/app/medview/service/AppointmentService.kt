@@ -10,5 +10,5 @@ interface AppointmentService {
     fun getAppointmentsByScheduleId(scheduleId: Long): List<Appointment>
     fun createAppointment(appointmentDto: AppointmentDto): MessageResponse
     fun updateAppointment(id: Long, appointmentDto: AppointmentDto): MessageResponse
-    fun deleteAppointment(id: Long)
+    fun deleteAppointment(id: Long): MessageResponse
 }

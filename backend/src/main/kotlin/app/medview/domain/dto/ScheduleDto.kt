@@ -1,7 +1,9 @@
 package app.medview.domain.dto
 
+import jakarta.validation.constraints.NotBlank
+
 data class ScheduleDto(
-    val scheduleId: Long,
+    @field:NotBlank
     val specialistId: Long,
-    val occupiedAppointments: List<AppointmentDto>,
+    val occupiedAppointments: List<AppointmentDto>?,
 )

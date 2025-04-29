@@ -11,12 +11,12 @@ class Appointment(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     @ManyToOne
-    val schedule: Schedule? = null,
+    var schedule: Schedule? = null,
     @ManyToOne
-    val patient: Patient? = null,
+    var patient: Patient? = null,
     @ManyToOne
     val assignee: User? = null,
-    val date: Date? = null,
-    val time: String = "",
-    val location: String = "",
+    var date: Date? = null,
+    var time: String = "",
+    var location: String = "",
 )

@@ -9,5 +9,5 @@ interface ScheduleService {
     fun getScheduleById(id: Long): Schedule
     fun createSchedule(scheduleDto: ScheduleDto): MessageResponse
     fun updateSchedule(id: Long, scheduleDto: ScheduleDto): MessageResponse
-    fun deleteSchedule(id: Long)
+    fun deleteSchedule(id: Long): MessageResponse
 }
