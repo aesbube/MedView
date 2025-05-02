@@ -11,7 +11,12 @@ import app.medview.service.users.PatientService
 import org.springframework.stereotype.Service
 
 @Service
-class AppointmentServiceImpl(private val appointmentRepository: AppointmentRepository, private val patientService: PatientService, private val scheduleService: ScheduleService, private val userService: UserService) : AppointmentService {
+class AppointmentServiceImpl(
+        private val appointmentRepository: AppointmentRepository,
+        private val patientService: PatientService,
+        private val scheduleService: ScheduleService,
+        private val userService: UserService)
+    : AppointmentService {
     override fun getAllAppointments(): List<Appointment> {
         return appointmentRepository.findAll()
     }

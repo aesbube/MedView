@@ -5,7 +5,7 @@ import app.medview.domain.users.Specialist
 import jakarta.persistence.*
 
 @Entity
-class Diagnosis(
+data class Diagnosis(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,

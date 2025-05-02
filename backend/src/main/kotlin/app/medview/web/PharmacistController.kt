@@ -1,13 +1,19 @@
 package app.medview.web
 
+import app.medview.domain.Prescription
+import app.medview.domain.dto.PrescriptionDto
+import app.medview.domain.dto.PrescriptionScanDto
 import app.medview.domain.dto.users.PharmacistDto
 import app.medview.domain.users.Pharmacist
 import app.medview.service.users.PharmacistService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -20,8 +26,27 @@ class PharmacistController(private val pharmacistService: PharmacistService) {
     }
 
     @PostMapping("/update")
-    fun addDetailsToDoctor(@RequestBody pharmacistDto: PharmacistDto): ResponseEntity<String> {
-        val response = pharmacistService.addDetailsToPharmacist(pharmacistDto)
+    fun addDetailsToDoctor(@RequestBody pharmacist: Pharmacist): ResponseEntity<String> {
+        val response = pharmacistService.addDetailsToPharmacist(pharmacist)
         return ResponseEntity.ok(response.message)
+    }
+
+    @GetMapping("/prescription")
+    fun getPrescription(
+        @RequestBody prescriptionScanDto: PrescriptionScanDto
+    ) : ResponseEntity<Prescription>{
+        val pharmacist = pharmacistService.getCurrentPharmacist()
+        val prescription = pharmacistService
+            .getPrescription( pharmacist.id ,prescriptionScanDto)
+        return ResponseEntity(prescription,HttpStatus.OK)
+    }
+
+    @PostMapping("/prescription")
+    fun redeemPrescription(
+        @RequestBody prescriptionScanDto: PrescriptionScanDto
+    ) : ResponseEntity<Prescription> {
+        val pharmacist = pharmacistService.getCurrentPharmacist()
+        val prescription = pharmacistService.validatePrescription( pharmacist.id ,prescriptionScanDto)
+        return ResponseEntity(prescription,HttpStatus.OK)
     }
 }

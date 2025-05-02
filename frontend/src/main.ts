@@ -5,7 +5,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthInterceptor } from './app/interceptors/auth.interceptor';
-import { AuthService } from './app/services/auth.service';
+import { AuthService } from './app/core/services/auth.service';
 import { AuthGuard } from './app/guards/auth.guard';
 import { importProvidersFrom } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

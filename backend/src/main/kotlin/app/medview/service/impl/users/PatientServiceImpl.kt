@@ -1,23 +1,27 @@
 package app.medview.service.impl.users
 
+import app.medview.domain.Prescription
 import app.medview.domain.Role
 import app.medview.domain.dto.MessageResponse
-import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.users.Doctor
 import app.medview.domain.users.Patient
+import app.medview.exceptions.PatientNotFoundException
 import app.medview.repository.PatientRepository
-import app.medview.repository.UserRepository
-import app.medview.service.users.DoctorService
+import app.medview.service.PrescriptionService
 import app.medview.service.users.PatientService
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
 class PatientServiceImpl(
     private val patientRepository: PatientRepository,
-    private val doctorService: DoctorService,
-    private val userRepository: UserRepository
+    private val prescriptionService: PrescriptionService
 ) : PatientService {
+
+    val logger = org.slf4j.LoggerFactory.getLogger(PatientServiceImpl::class.java)
+
+
     override fun getAllPatients(): List<Patient> {
         return patientRepository.findAll()
     }
@@ -28,22 +32,40 @@ class PatientServiceImpl(
         }
     }
 
-    override fun addDetailsToPatient(patientDto: PatientDto): MessageResponse {
-        val auth = SecurityContextHolder.getContext().authentication
-        val username = auth.name
+    override fun getCurrentPatient(): Patient {
+        logger.info(SecurityContextHolder.getContext().authentication.name)
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
 
-        val patient = patientRepository.findByUsername(username)
-            ?: throw RuntimeException("Patient not found with username: $username")
+        return patientRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+    }
+
+    override fun getPatientByEmail(email: String): Patient {
+        return patientRepository.findByEmail(email)
+            ?: throw PatientNotFoundException("email: $email")
+    }
+
+    override fun addDetailsToPatient(patient: Patient): MessageResponse {
+        val auth = SecurityContextHolder.getContext().authentication
 
         if (patient.role != Role.PATIENT) {
             throw RuntimeException("User is not a patient")
         }
 
-        val doctor: Doctor = doctorService.getDoctorById(patientDto.doctorId)
+        val doctor: Doctor? = patient.doctor
 
         patient.doctor = doctor
 
         patientRepository.save(patient)
         return MessageResponse("Patient details added successfully")
+    }
+
+    override fun getPatientsByDoctor(doctorId: Long): List<Patient> {
+        return patientRepository.findByDoctorId(doctorId)
+    }
+
+    override fun getPrescriptionsOfPatient(patientId: Long): List<Prescription> {
+        return prescriptionService.getPrescriptionsByPatientId(patientId)
     }
 }
