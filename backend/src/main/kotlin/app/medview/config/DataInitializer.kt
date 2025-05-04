@@ -32,28 +32,28 @@ class DataInitializer(
             logger.info("Initializing mock data...")
 
             val doctor1 = Doctor(
-                username = "Cece",
-                password = passwordEncoder.encode("pass"),
-                email = "cece@example.com",
             ).apply {
+                username = "Cece"
+                password = passwordEncoder.encode("pass")
+                email = "cece@example.com"
                 specialty = "General Practitioner"
             }
             doctorRepository.save(doctor1)
 
             val doctor2 = Doctor(
-                username = "Stole",
-                password = passwordEncoder.encode("pass"),
-                email = "stole@example.com"
             ).apply {
+                username = "Stole"
+                password = passwordEncoder.encode("pass")
+                email = "stole@example.com"
                 specialty = "General Practitioner"
             }
             doctorRepository.save(doctor2)
 
             val specialist1 = Specialist(
-                username = "Xhoni",
-                password = passwordEncoder.encode("pass"),
-                email = "xhoni@example.com"
             ).apply {
+                username = "Xhoni"
+                password = passwordEncoder.encode("pass")
+                email = "xhoni@example.com"
                 specialty = "Gynecologist"
             }
             specialistRepository.save(specialist1)
@@ -61,62 +61,69 @@ class DataInitializer(
 
             // Create some patients for the doctor
             val patient1 = Patient(
-                username = "Sneze",
-                password = passwordEncoder.encode("pass"),
-                email = "sneze@example.com",
                 doctor = doctor1
-            )
+            ).apply {
+                username = "Sneze"
+                password = passwordEncoder.encode("pass")
+                email = "sneze@example.com"
+            }
             patientRepository.save(patient1)
 
             val patient2 = Patient(
-                username = "Boki",
-                password = passwordEncoder.encode("pass"),
-                email = "boki@example.com",
                 doctor = doctor1
-            )
+            ).apply {
+                username = "Boki"
+                password = passwordEncoder.encode("pass")
+                email = "boki@example.com"
+            }
             patientRepository.save(patient2)
 
             val patient3 = Patient(
-                username = "Janko",
-                password = passwordEncoder.encode("pass"),
-                email = "janko@example.com",
                 doctor = doctor2
-            )
+            ).apply {
+                username = "Janko"
+                password = passwordEncoder.encode("pass")
+                email = "janko@example.com"
+            }
             patientRepository.save(patient3)
 
             val patient4 = Patient(
-                username = "Trajanka",
-                password = passwordEncoder.encode("pass"),
-                email = "trajanka@example.com",
                 doctor = doctor2
-            )
+            ).apply {
+                username = "Trajanka"
+                password = passwordEncoder.encode("pass")
+                email = "trajanka@example.com"
+            }
             patientRepository.save(patient4)
 
 
 
             val pharmacist1 = Pharmacist(
-                username = "Bile",
-                password = passwordEncoder.encode("pass"),
-                email = "bile@example.com",
-            )
+            ).apply {
+                username = "Bile"
+                password = passwordEncoder.encode("pass")
+                email = "bile@example.com"
+            }
             pharmacistRepository.save(pharmacist1)
 
             val prescription1 = Prescription(
-                patient = patient1,
-                doctor = doctor1,
                 medicine = "Analgin",
                 frequency = "1x Day",
                 lastModifiedBy = doctor2.username
-            )
+            ).apply {
+                patientId = patient1.id
+                doctorId = doctor1.id
+            }
             prescriptionRepository.save(prescription1)
 
             val prescription2 = Prescription(
-                patient = patient1,
-                doctor = doctor1,
                 medicine = "Paracetamol",
                 frequency = "Every 6h",
                 lastModifiedBy = doctor2.username
-            )
+            ).apply {
+                patientId = patient1.id
+                doctorId = doctor1.id
+            }
             prescriptionRepository.save(prescription2)
 
 

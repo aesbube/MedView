@@ -10,8 +10,8 @@ import java.time.temporal.ChronoUnit
 
 data class PrescriptionDto(
     val id: String?,
-    val patient: PatientDto,
-    val doctor: DoctorDto,
+    val patientId: Long?,
+    val doctorId: Long?,
     val medicine: String?,
     val frequency: String?,
     var status: PrescriptionStatus = PrescriptionStatus.ACTIVE,

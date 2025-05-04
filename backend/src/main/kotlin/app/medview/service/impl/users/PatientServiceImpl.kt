@@ -10,6 +10,7 @@ import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.dto.users.PatientRequestDto
 import app.medview.domain.users.Doctor
 import app.medview.domain.users.Patient
+import app.medview.exceptions.NullDoctorException
 import app.medview.exceptions.PatientNotFoundException
 import app.medview.repository.PatientRepository
 import app.medview.service.PrescriptionService
@@ -23,7 +24,7 @@ class PatientServiceImpl(
     private val patientRepository: PatientRepository,
     private val prescriptionService: PrescriptionService,
     private val patientConverter: PatientEntityToDtoConverter,
-    private val prescriptionConverter: PrescriptionEntityToDtoConverter
+    private val prescriptionConverter: PrescriptionEntityToDtoConverter,
 ) : PatientService {
 
     val logger = org.slf4j.LoggerFactory.getLogger(PatientServiceImpl::class.java)
@@ -37,6 +38,10 @@ class PatientServiceImpl(
         return patientConverter.convert(patientRepository.findById(id).orElseThrow {
             throw RuntimeException("Patient not found with id: $id")
         })
+    }
+
+    override fun getPatientEntityById(id: Long): Patient {
+        return patientRepository.getById(id)
     }
 
     override fun getCurrentPatient(): PatientDto {
@@ -66,7 +71,7 @@ class PatientServiceImpl(
         }
 
         val updatedPatient = patient.copy(
-            doctor = patientRequestDto.doctor ?: patient.doctor,
+            doctor = patient.doctor
         )
 
         patientRepository.save(updatedPatient)
@@ -77,7 +82,13 @@ class PatientServiceImpl(
         return patientRepository.findByDoctorId(doctorId).map { patientConverter.convert(it) }
     }
 
-    override fun getPrescriptionsOfPatient(patientId: Long): List<PrescriptionDto> {
-        return prescriptionService.getPrescriptionsByPatientId(patientId).map { prescriptionConverter.convert(it) }
+    override fun getPrescriptionsOfPatient(): List<PrescriptionDto> {
+        logger.info(SecurityContextHolder.getContext().authentication.name)
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
+        val patient = patientRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+
+        return prescriptionService.getPrescriptionsByPatientId(patient.id).map { prescriptionConverter.convert(it) }
     }
 }

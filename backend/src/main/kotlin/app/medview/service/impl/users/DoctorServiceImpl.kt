@@ -73,32 +73,57 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
             ?: throw UsernameNotFoundException("User not found with username: $username"))
     }
 
-    override fun getPatientOfDoctor(doctorId: Long, patientId:Long): PatientDto {
+    override fun getPatientOfDoctor(patientId:Long): PatientDto {
         val patient = patientService.getPatientById(patientId)
 
-        if (patient.doctor != getDoctorById(doctorId))
-            throw IllegalDoctorPatientOperation (doctorId,patientId)
+        logger.info(SecurityContextHolder.getContext().authentication.name)
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
+        val doctor = doctorRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+
+        if (patient.doctor != getDoctorById(doctor.id))
+            throw IllegalDoctorPatientOperation (doctor.id,patientId)
 
         return patient
     }
 
-    override fun getPatientsOfDoctor(doctorId: Long): List<PatientDto> {
-        return patientService.getPatientsByDoctor(doctorId)
+    override fun getPatientsOfDoctor(): List<PatientDto> {
+        logger.info(SecurityContextHolder.getContext().authentication.name)
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
+        val doctor = doctorRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+
+        return patientService.getPatientsByDoctor(doctor.id)
     }
 
-    override fun getPrescriptionsOfPatientsOfDoctor(doctorId: Long, patientId:Long): List<PrescriptionDto> {
+    override fun getPrescriptionsOfPatientsOfDoctor(patientId:Long): List<PrescriptionDto> {
         return prescriptionService.getPrescriptionsByPatientId(patientId).map { prescriptionConverter.convert(it) }
     }
 
-    override fun writePrescription(doctorId: Long, patientId:Long, prescriptionRequestDto: PrescriptionRequestDto) : PrescriptionDto {
+    override fun writePrescription(patientId:Long, prescriptionRequestDto: PrescriptionRequestDto) : PrescriptionDto {
+        logger.info(SecurityContextHolder.getContext().authentication.name)
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
+        val doctor = doctorRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+
         return prescriptionConverter.convert(
-            prescriptionService.create(patientId,doctorId,prescriptionRequestDto)
+            prescriptionService.create(patientId,doctor.id,prescriptionRequestDto)
         )
     }
 
-    override fun cancelPrescription(doctorId: Long, patientId:Long, prescriptionId: String): PrescriptionDto {
+    override fun cancelPrescription(patientId:Long, prescriptionId: String): PrescriptionDto {
+        logger.info(SecurityContextHolder.getContext().authentication.name)
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
+        val doctor = doctorRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+
+
         return prescriptionConverter.convert(
-            prescriptionService.cancel(patientId,doctorId, prescriptionId)
+            prescriptionService.cancel(patientId,doctor.id, prescriptionId)
         )
     }
 

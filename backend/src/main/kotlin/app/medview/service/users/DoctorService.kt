@@ -16,9 +16,9 @@ interface DoctorService {
     fun addDetailsToDoctor(doctorUpdateRequestDto: DoctorUpdateRequestDto): MessageResponse
 
     fun getCurrentDoctor(): DoctorDto
-    fun getPatientOfDoctor(doctorId: Long, patientId: Long) : PatientDto
-    fun getPatientsOfDoctor(doctorId: Long) : List<PatientDto>
-    fun getPrescriptionsOfPatientsOfDoctor(doctorId: Long, patientId:Long) : List<PrescriptionDto>
-    fun writePrescription(doctorId: Long, patientId:Long, prescriptionRequestDto: PrescriptionRequestDto) : PrescriptionDto
-    fun cancelPrescription(doctorId: Long, patientId:Long, prescriptionId: String) : PrescriptionDto
+    fun getPatientsOfDoctor() : List<PatientDto>
+    fun getPatientOfDoctor(patientId: Long) : PatientDto
+    fun getPrescriptionsOfPatientsOfDoctor(patientId:Long) : List<PrescriptionDto>
+    fun writePrescription(patientId:Long, prescriptionRequestDto: PrescriptionRequestDto) : PrescriptionDto
+    fun cancelPrescription(patientId:Long, prescriptionId: String) : PrescriptionDto
 }

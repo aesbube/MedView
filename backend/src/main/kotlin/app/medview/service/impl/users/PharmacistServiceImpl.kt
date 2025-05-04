@@ -3,7 +3,9 @@ package app.medview.service.impl.users
 import app.medview.domain.Prescription
 import app.medview.domain.Role
 import app.medview.domain.converter.PharmacistEntityToDtoConverter
+import app.medview.domain.converter.PrescriptionEntityToDtoConverter
 import app.medview.domain.dto.MessageResponse
+import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.PrescriptionScanDto
 import app.medview.domain.dto.users.PharmacistDto
 import app.medview.domain.dto.users.PharmacistUpdateRequestDto
@@ -21,8 +23,8 @@ import org.springframework.stereotype.Service
 class PharmacistServiceImpl(
     private val pharmacistRepository: PharmacistRepository,
     private val prescriptionService: PrescriptionService,
-    private val patientRepository: PatientRepository,
-    private val pharmacistConverter: PharmacistEntityToDtoConverter
+    private val pharmacistConverter: PharmacistEntityToDtoConverter,
+    private val prescriptionConverter: PrescriptionEntityToDtoConverter
 ) : PharmacistService {
 
     val logger = org.slf4j.LoggerFactory.getLogger(PharmacistServiceImpl::class.java)
@@ -48,37 +50,42 @@ class PharmacistServiceImpl(
         }
 
         val updatedPharmacist = pharmacist.copy(
-
+            pharmacyName = pharmacistUpdateRequestDto.pharmacyName ?: pharmacist.pharmacyName,
+            pharmacyAddress = pharmacistUpdateRequestDto.pharmacyAddress ?: pharmacist.pharmacyAddress,
+            licenseNumber = pharmacistUpdateRequestDto.licenseNumber ?: pharmacist.licenseNumber
         )
 
-        pharmacist.pharmacyName = pharmacist.pharmacyName
-        pharmacist.pharmacyAddress = pharmacist.pharmacyAddress
-        pharmacist.licenseNumber = pharmacist.licenseNumber
-
-        pharmacistRepository.save(pharmacist)
+        pharmacistRepository.save(updatedPharmacist)
         return MessageResponse("Pharmacist details added successfully")
     }
 
-    override fun getCurrentPharmacist(): Pharmacist {
+    override fun getCurrentPharmacist(): PharmacistDto {
         logger.info(SecurityContextHolder.getContext().authentication.name)
         val authentication = SecurityContextHolder.getContext().authentication
         val username = authentication.name
 
-        return pharmacistRepository.findByUsername(username)
-            ?: throw UsernameNotFoundException("User not found with username: $username")
+        return pharmacistConverter.convert(pharmacistRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username"))
     }
 
-    override fun getPrescription(pharmacistId: Long, prescriptionScanDto: PrescriptionScanDto): Prescription {
+    override fun getPrescription( prescriptionScanDto: PrescriptionScanDto): PrescriptionDto {
         val patientId = prescriptionScanDto.patientId
         val prescriptionId = prescriptionScanDto.prescriptionId
         val prescription = prescriptionService.getPrescriptionById(prescriptionId)
 
-        if (patientRepository.getById(patientId) != prescriptionService.getPrescriptionById(prescriptionId).patient)
+        if (prescriptionScanDto.patientId != prescription.patientId)
             throw IllegalPrescriptionRedeemerException(prescriptionId,patientId)
-        return prescription
+
+        return prescriptionConverter.convert(prescription)
     }
 
-    override fun validatePrescription(pharmacistId: Long, prescriptionScanDto: PrescriptionScanDto) : Prescription {
-        return prescriptionService.redeem(pharmacistId,prescriptionScanDto.prescriptionId,prescriptionScanDto.patientId)
+    override fun validatePrescription( prescriptionScanDto: PrescriptionScanDto) : PrescriptionDto {
+        logger.info(SecurityContextHolder.getContext().authentication.name)
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
+        val pharmacist = pharmacistRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+
+        return prescriptionConverter.convert(prescriptionService.redeem(pharmacist.id,prescriptionScanDto.prescriptionId,prescriptionScanDto.patientId))
     }
 }

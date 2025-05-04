@@ -28,12 +28,11 @@ class PrescriptionServiceImpl(
     @Transactional
     override fun create(patientId: Long, doctorId: Long, prescriptionRequestDto: PrescriptionRequestDto): Prescription {
 
-        val patient = patientService.getPatientById(patientId)
         val doctor = doctorService.getDoctorById(doctorId)
 
         val prescription = Prescription(
-            patient = patient,
-            doctor = doctor,
+            patientId = patientId,
+            doctorId = doctorId,
             medicine = prescriptionRequestDto.medicine,
             frequency = prescriptionRequestDto.frequency,
             lastModifiedBy = doctor.username
@@ -49,7 +48,8 @@ class PrescriptionServiceImpl(
             .findById(prescriptionId)
             .orElseThrow{PrescriptionNotFoundException(prescriptionId)}
 
-        if (prescription.patient != patientService.getPatientById(patientId))
+        if (patientService.getPatientById(prescription.patientId ?: throw NullPatientException())
+            != patientService.getPatientById(patientId))
             throw IllegalPrescriptionRedeemerException(prescriptionId,patientId)
 
         if(prescription.status == PrescriptionStatus.CANCELED)

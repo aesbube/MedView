@@ -6,14 +6,11 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "pharmacists")
+@PrimaryKeyJoinColumn(name = "id")
 data class Pharmacist(
     var pharmacyName: String = "",
     var pharmacyAddress: String = "",
     var licenseNumber: Int = 0,
 ) : User(
     role = Role.PHARMACIST
-){
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val pharmacistId: Long = 0
-}
+)

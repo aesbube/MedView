@@ -30,7 +30,7 @@ class AppointmentServiceImpl(
     }
 
     override fun createAppointment(appointmentDto: AppointmentDto): MessageResponse {
-        val patient = patientService.getPatientById(appointmentDto.patientId)
+        val patient = patientService.getPatientEntityById(appointmentDto.patientId)
         val schedule = scheduleService.getScheduleById(appointmentDto.scheduleId)
         val assignee = userService.getCurrentUser()
         val appointment = Appointment(
@@ -48,7 +48,7 @@ class AppointmentServiceImpl(
 
     override fun updateAppointment(id: Long, appointmentDto: AppointmentDto): MessageResponse {
         val existingAppointment = appointmentRepository.findById(id).orElseThrow { Exception("Appointment not found") }
-        val patient = patientService.getPatientById(appointmentDto.patientId)
+        val patient = patientService.getPatientEntityById(appointmentDto.patientId)
         val schedule = scheduleService.getScheduleById(appointmentDto.scheduleId)
         existingAppointment.apply {
             this.schedule = schedule

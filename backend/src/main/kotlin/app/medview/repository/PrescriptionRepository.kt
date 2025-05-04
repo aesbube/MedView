@@ -9,8 +9,6 @@ import java.util.*
 
 interface PrescriptionRepository : JpaRepository<Prescription, String> {
     override fun findById(id: String): Optional<Prescription>;
-    fun findByPatient(patient: Patient): List<Prescription>
     fun findByPatientId(patientId: Long): List<Prescription>
-    fun findByDoctor(doctor: Doctor): List<Prescription>
     fun findByDoctorId(doctorId: Long): List<Prescription>
 }

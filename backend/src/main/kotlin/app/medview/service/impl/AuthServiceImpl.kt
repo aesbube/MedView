@@ -71,34 +71,38 @@ class AuthServiceImpl(
         when (signupRequest.role) {
             Role.DOCTOR -> {
                 val doctor = Doctor(
-                    username = signupRequest.username,
-                    email = signupRequest.email,
+                ).apply {
+                    username = signupRequest.username
+                    email = signupRequest.email
                     password = encodedPassword
-                )
+                }
                 doctorRepository.save(doctor)
             }
             Role.PATIENT -> {
                 val patient = Patient(
-                    username = signupRequest.username,
-                    email = signupRequest.email,
+                ).apply {
+                    username = signupRequest.username
+                    email = signupRequest.email
                     password = encodedPassword
-                )
+                }
                 patientRepository.save(patient)
             }
             Role.PHARMACIST -> {
                 val pharmacist = Pharmacist(
-                    username = signupRequest.username,
-                    email = signupRequest.email,
+                ).apply {
+                    username = signupRequest.username
+                    email = signupRequest.email
                     password = encodedPassword
-                )
+                }
                 pharmacistRepository.save(pharmacist)
             }
             Role.SPECIALIST -> {
                 val specialist = Specialist(
-                    username = signupRequest.username,
-                    email = signupRequest.email,
+                ).apply {
+                    username = signupRequest.username
+                    email = signupRequest.email
                     password = encodedPassword
-                )
+                }
                 specialistRepository.save(specialist)
             }
             else -> {

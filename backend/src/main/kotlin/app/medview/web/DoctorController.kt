@@ -4,6 +4,7 @@ import app.medview.domain.Prescription
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.PrescriptionRequestDto
 import app.medview.domain.dto.users.DoctorDto
+import app.medview.domain.dto.users.DoctorUpdateRequestDto
 import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.users.Doctor
 import app.medview.domain.users.Patient
@@ -28,51 +29,44 @@ class DoctorController(private val doctorService: DoctorService) {
     }
 
     @PostMapping("/update")
-    fun addDetailsToDoctor(@RequestBody doctorDto: DoctorDto): ResponseEntity<String> {
-        val response = doctorService.addDetailsToDoctor(doctorDto)
+    fun addDetailsToDoctor(@RequestBody doctorUpdateRequestDto: DoctorUpdateRequestDto): ResponseEntity<String> {
+        val response = doctorService.addDetailsToDoctor(doctorUpdateRequestDto)
         return ResponseEntity.ok(response.message)
     }
 
     @GetMapping("/me")
-    fun getCurrentDoctor():ResponseEntity<Doctor> {
+    fun getCurrentDoctor():ResponseEntity<DoctorDto> {
         return ResponseEntity.ok(doctorService.getCurrentDoctor())
     }
 
     @GetMapping("/me/patients")
-    fun getPatientsOfDoctor() : ResponseEntity<List<Patient>>{
-        val doctor = doctorService.getCurrentDoctor()
-        return ResponseEntity.ok(doctorService.getPatientsOfDoctor(doctor.id))
+    fun getPatientsOfDoctor() : ResponseEntity<List<PatientDto>>{
+        return ResponseEntity.ok(doctorService.getPatientsOfDoctor())
     }
 
     @GetMapping("/me/patients/{id}")
-    fun getPatientOfDoctor(@PathVariable ("id") patientId : Long) : ResponseEntity<Patient>{
-        val doctor = doctorService.getCurrentDoctor()
-        return ResponseEntity.ok(doctorService.getPatientOfDoctor(doctor.id, patientId))
+    fun getPatientOfDoctor(@PathVariable ("id") patientId : Long) : ResponseEntity<PatientDto>{
+        return ResponseEntity.ok(doctorService.getPatientOfDoctor(patientId))
     }
 
     @GetMapping("/me/patients/{id}/prescriptions")
-    fun getPrescriptionsOfPatientOfDoctor(@PathVariable ("id") patientId: Long) : ResponseEntity<List<Prescription>>{
-        val doctor = doctorService.getCurrentDoctor()
-        return ResponseEntity.ok(doctorService.getPrescriptionsOfPatientsOfDoctor(doctor.id, patientId))
+    fun getPrescriptionsOfPatientOfDoctor(@PathVariable ("id") patientId: Long) : ResponseEntity<List<PrescriptionDto>>{
+        return ResponseEntity.ok(doctorService.getPrescriptionsOfPatientsOfDoctor(patientId))
     }
 
     @PostMapping("/me/patients/{id}/prescriptions/new")
     fun writePrescription(
         @PathVariable ("id") patientId: Long,
         @RequestBody prescription: PrescriptionRequestDto
-        ) : ResponseEntity<Prescription>{
-        val doctor = doctorService.getCurrentDoctor()
-
-        return ResponseEntity(doctorService.writePrescription(doctor.id, patientId, prescription), HttpStatus.CREATED)
+        ) : ResponseEntity<PrescriptionDto>{
+        return ResponseEntity(doctorService.writePrescription(patientId, prescription), HttpStatus.CREATED)
     }
 
     @PostMapping("/me/patients/{patientId}/prescriptions/{prescriptionId}")
     fun cancelPrescription(
         @PathVariable ("patientId") patientId: Long,
         @PathVariable ("prescriptionId") prescriptionId: String,
-    ) : ResponseEntity<Prescription>{
-        val doctor = doctorService.getCurrentDoctor()
-
-        return ResponseEntity(doctorService.cancelPrescription(doctor.id,patientId,prescriptionId), HttpStatus.OK)
+    ) : ResponseEntity<PrescriptionDto>{
+        return ResponseEntity(doctorService.cancelPrescription(patientId,prescriptionId), HttpStatus.OK)
     }
 }
