@@ -5,6 +5,8 @@ import app.medview.domain.Role
 import app.medview.domain.converter.PharmacistEntityToDtoConverter
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.PrescriptionScanDto
+import app.medview.domain.dto.users.PharmacistDto
+import app.medview.domain.dto.users.PharmacistUpdateRequestDto
 import app.medview.domain.users.Pharmacist
 import app.medview.exceptions.*
 import app.medview.repository.PatientRepository
@@ -19,27 +21,35 @@ import org.springframework.stereotype.Service
 class PharmacistServiceImpl(
     private val pharmacistRepository: PharmacistRepository,
     private val prescriptionService: PrescriptionService,
-    private val patientRepository: PatientRepository
+    private val patientRepository: PatientRepository,
+    private val pharmacistConverter: PharmacistEntityToDtoConverter
 ) : PharmacistService {
 
     val logger = org.slf4j.LoggerFactory.getLogger(PharmacistServiceImpl::class.java)
 
-    override fun getAllPharmacists(): List<Pharmacist> {
-        return pharmacistRepository.findAll()
+    override fun getAllPharmacists(): List<PharmacistDto> {
+        return pharmacistRepository.findAll().map { pharmacistConverter.convert(it) }
     }
 
-    override fun getPharmacistById(id: Long): Pharmacist {
-        return pharmacistRepository.findById(id).orElseThrow {
+    override fun getPharmacistById(id: Long): PharmacistDto {
+        return pharmacistConverter.convert(pharmacistRepository.findById(id).orElseThrow {
             throw IllegalArgumentException("Pharmacist not found with id: $id")
-        }
+        })
     }
 
-    override fun addDetailsToPharmacist(pharmacist: Pharmacist): MessageResponse {
+    override fun addDetailsToPharmacist(pharmacistUpdateRequestDto: PharmacistUpdateRequestDto): MessageResponse {
         val auth = SecurityContextHolder.getContext().authentication
+        val username = auth.name
+        val pharmacist = pharmacistRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
 
         if (pharmacist.role != Role.PHARMACIST) {
             throw RuntimeException("User is not a pharmacist")
         }
+
+        val updatedPharmacist = pharmacist.copy(
+
+        )
 
         pharmacist.pharmacyName = pharmacist.pharmacyName
         pharmacist.pharmacyAddress = pharmacist.pharmacyAddress

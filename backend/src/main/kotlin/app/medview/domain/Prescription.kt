@@ -23,7 +23,7 @@ data class Prescription(
     val medicine: String? = null,
     val frequency: String? = null,
     var status: PrescriptionStatus = PrescriptionStatus.ACTIVE,
-    val expirationDate: LocalDate? = LocalDate.now().plus(3, ChronoUnit.MONTHS),
-    var lastModifiedDate: LocalDate? = LocalDate.now(),
+    val expirationDate: LocalDate = LocalDate.now().plus(3, ChronoUnit.MONTHS),
+    var lastModifiedDate: LocalDate = LocalDate.now(),
     var lastModifiedBy: String? = null
 )

@@ -7,5 +7,5 @@ data class PharmacistDto(
     val email: String,
     val licenseNumber: Int,
     val pharmacyName: String,
-    val pharmacyAddress: String,
+    val pharmacyAddress: String
 )

@@ -2,23 +2,18 @@ package app.medview.domain.users
 
 import app.medview.domain.Role
 import app.medview.domain.User
-import jakarta.persistence.Entity
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.Table
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "patients")
-class Patient(
-    id: Long = 0,
-    username: String = "",
-    password: String = "",
-    email: String = "",
+data class Patient(
     @ManyToOne
+    @JoinColumn(name = "doctor_id")
     var doctor: Doctor? = null,
 ) : User(
-    id = id,
-    username = username,
-    password = password,
-    email = email,
     role = Role.PATIENT
-)
+){
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val patientId: Long = 0
+}

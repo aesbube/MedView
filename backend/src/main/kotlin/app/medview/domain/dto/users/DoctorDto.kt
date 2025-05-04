@@ -1,7 +1,5 @@
 package app.medview.domain.dto.users
 
-import jakarta.validation.constraints.Email
-
 data class DoctorDto(
     val username: String,
     val email: String,

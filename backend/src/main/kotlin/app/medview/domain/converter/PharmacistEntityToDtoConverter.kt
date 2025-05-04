@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class PharmacistEntityToDtoConverter {
-    fun convert (pharmacist: Pharmacist) : PharmacistDto = PharmacistDto(
+    fun convert (pharmacist: Pharmacist) = PharmacistDto(
             username = pharmacist.username,
             email = pharmacist.email,
             licenseNumber = pharmacist.licenseNumber,

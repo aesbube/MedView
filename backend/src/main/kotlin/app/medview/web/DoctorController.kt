@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/doctors")
 class DoctorController(private val doctorService: DoctorService) {
     @GetMapping
-    fun getAllDoctors(): ResponseEntity<List<Doctor>> {
+    fun getAllDoctors(): ResponseEntity<List<DoctorDto>> {
         val doctors = doctorService.getAllDoctors()
         return ResponseEntity.ok(doctors)
     }
 
     @PostMapping("/update")
-    fun addDetailsToDoctor(@RequestBody doctor: Doctor): ResponseEntity<String> {
-        val response = doctorService.addDetailsToDoctor(doctor)
+    fun addDetailsToDoctor(@RequestBody doctorDto: DoctorDto): ResponseEntity<String> {
+        val response = doctorService.addDetailsToDoctor(doctorDto)
         return ResponseEntity.ok(response.message)
     }
 

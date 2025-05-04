@@ -4,13 +4,16 @@ import app.medview.domain.Prescription
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.users.Patient
+import app.medview.exceptions.NullDoctorException
 import org.springframework.stereotype.Component
 
 @Component
-class PatientEntityToDtoConverter {
-    fun convert (patient: Patient) : PatientDto = PatientDto(
+class PatientEntityToDtoConverter(
+    private val doctorConverter: DoctorEntityToDtoConverter
+) {
+    fun convert (patient: Patient) = PatientDto(
             username = patient.username,
             email = patient.email,
-            doctorId = patient.doctor?.id
+            doctor = doctorConverter.convert(patient.doctor ?: throw NullDoctorException())
         )
 }

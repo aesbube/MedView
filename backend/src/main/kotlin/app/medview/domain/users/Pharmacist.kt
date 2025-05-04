@@ -2,23 +2,18 @@ package app.medview.domain.users
 
 import app.medview.domain.Role
 import app.medview.domain.User
-import jakarta.persistence.Entity
-import jakarta.persistence.Table
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "pharmacists")
-class Pharmacist(
-    id: Long = 0,
-    username: String = "",
-    password: String = "",
-    email: String = "",
+data class Pharmacist(
     var pharmacyName: String = "",
     var pharmacyAddress: String = "",
     var licenseNumber: Int = 0,
 ) : User(
-    id = id,
-    username = username,
-    password = password,
-    email = email,
     role = Role.PHARMACIST
-)
+){
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val pharmacistId: Long = 0
+}

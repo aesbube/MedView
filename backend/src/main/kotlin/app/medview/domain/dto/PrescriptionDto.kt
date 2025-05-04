@@ -10,10 +10,10 @@ import java.time.temporal.ChronoUnit
 
 data class PrescriptionDto(
     val id: String?,
-    val patient: Patient,
-    val doctor: Doctor,
-    val medicine: String,
-    val frequency: String,
+    val patient: PatientDto,
+    val doctor: DoctorDto,
+    val medicine: String?,
+    val frequency: String?,
     var status: PrescriptionStatus = PrescriptionStatus.ACTIVE,
     val expirationDate: LocalDate? = LocalDate.now().plus(3, ChronoUnit.MONTHS),
 )

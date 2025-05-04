@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class DoctorEntityToDtoConverter {
-    fun convert (doctor: Doctor) : DoctorDto = DoctorDto(
+    fun convert (doctor: Doctor) = DoctorDto(
             username = doctor.username,
             email = doctor.email,
             specialty = doctor.specialty,
