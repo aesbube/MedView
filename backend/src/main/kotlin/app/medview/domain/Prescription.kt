@@ -14,8 +14,10 @@ data class Prescription(
     @GeneratedValue(generator = "prescription_id_generator")
     @GenericGenerator(name = "prescription_id_generator", strategy = "app.medview.util.PrescriptionIdGenerator")
     val id: String? = null,
-    var patientId: Long? = null,
-    var doctorId: Long? = null,
+    @ManyToOne
+    var patient: Patient? = null,
+    @ManyToOne
+    var doctor: Doctor? = null,
     val medicine: String? = null,
     val frequency: String? = null,
     var status: PrescriptionStatus = PrescriptionStatus.ACTIVE,

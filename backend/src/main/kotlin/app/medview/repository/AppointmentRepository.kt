@@ -10,4 +10,5 @@ interface AppointmentRepository : JpaRepository<Appointment, Long> {
     fun findByAssigneeId(assigneeId: Long): List<Appointment>
     fun findByScheduleId(scheduleId: Long): List<Appointment>
     fun findByLocation(location: String): List<Appointment>
+    fun findByScheduleSpecialistId(specialistId: Long): List<Appointment>
 }

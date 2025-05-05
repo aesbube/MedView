@@ -2,6 +2,7 @@ package app.medview.web
 
 import app.medview.domain.Appointment
 import app.medview.domain.dto.AppointmentDto
+import app.medview.domain.dto.AppointmentRequestDto
 import app.medview.service.AppointmentService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -32,11 +33,11 @@ class AppointmentController(private val appointmentService: AppointmentService) 
         }
     }
 
-    @PostMapping("/create")
-    fun createAppointment(@RequestBody appointmentDto: AppointmentDto): ResponseEntity<String> {
-        val response = appointmentService.createAppointment(appointmentDto)
-        return ResponseEntity.ok(response.message)
-    }
+//    @PostMapping("/create")
+//    fun createAppointment(@RequestBody appointmentRequestDto: AppointmentRequestDto): ResponseEntity<String> {
+//        val response = appointmentService.createAppointment(appointmentRequestDto)
+//        return ResponseEntity.ok(response.message)
+//    }
 
     @PostMapping("/update/{id}")
     fun updateAppointment(@PathVariable id: Long, @RequestBody appointmentDto: AppointmentDto): ResponseEntity<String> {

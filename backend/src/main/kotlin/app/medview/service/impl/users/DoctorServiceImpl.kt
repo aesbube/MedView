@@ -3,9 +3,7 @@ package app.medview.service.impl.users
 import app.medview.domain.converter.DoctorEntityToDtoConverter
 import app.medview.domain.converter.PatientEntityToDtoConverter
 import app.medview.domain.converter.PrescriptionEntityToDtoConverter
-import app.medview.domain.dto.MessageResponse
-import app.medview.domain.dto.PrescriptionDto
-import app.medview.domain.dto.PrescriptionRequestDto
+import app.medview.domain.dto.*
 import app.medview.domain.dto.users.DoctorDto
 import app.medview.domain.dto.users.DoctorUpdateRequestDto
 import app.medview.domain.dto.users.PatientDto
@@ -14,6 +12,7 @@ import app.medview.exceptions.IllegalDoctorPatientOperation
 import app.medview.repository.DoctorRepository
 import app.medview.repository.PatientRepository
 import app.medview.service.PrescriptionService
+import app.medview.service.impl.AppointmentServiceImpl
 import app.medview.service.users.DoctorService
 import app.medview.service.users.PatientService
 import org.springframework.security.core.context.SecurityContextHolder
@@ -25,9 +24,9 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
                         private val patientService: PatientService,
                         private val prescriptionService: PrescriptionService,
                         private val doctorConverter: DoctorEntityToDtoConverter,
-                        private val patientConverter: PatientEntityToDtoConverter,
                         private val prescriptionConverter: PrescriptionEntityToDtoConverter,
-                        private val patientRepository: PatientRepository
+                        private val patientRepository: PatientRepository,
+                        private val appointmentService: AppointmentServiceImpl
 ) :
     DoctorService {
     val logger = org.slf4j.LoggerFactory.getLogger(DoctorServiceImpl::class.java)
@@ -127,7 +126,7 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
             ?: throw UsernameNotFoundException("User not found with username: $username")
 
         return prescriptionConverter.convert(
-            prescriptionService.create(patientId, doctor.id, prescriptionRequestDto)
+            prescriptionService.create(patientId, doctor, prescriptionRequestDto)
         )
     }
 
@@ -142,6 +141,17 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
         return prescriptionConverter.convert(
             prescriptionService.cancel(patientId, doctor.id, prescriptionId)
         )
+    }
+
+    override fun scheduleAppointment(patientId: Long, appointmentRequestDto: AppointmentRequestDto): MessageResponse {
+        logger.info(SecurityContextHolder.getContext().authentication.name)
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
+        val assignee = doctorRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+
+        appointmentService.createAppointment(patientId, assignee, appointmentRequestDto)
+        return MessageResponse("Appointment scheduled successfully")
     }
 
 

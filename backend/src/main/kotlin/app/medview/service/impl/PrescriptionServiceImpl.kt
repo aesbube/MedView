@@ -4,7 +4,9 @@ package app.medview.service.impl
 import app.medview.domain.Prescription
 import app.medview.domain.PrescriptionStatus
 import app.medview.domain.dto.PrescriptionRequestDto
+import app.medview.domain.users.Doctor
 import app.medview.exceptions.*
+import app.medview.repository.PatientRepository
 import app.medview.repository.PrescriptionRepository
 import app.medview.service.PrescriptionService
 import app.medview.service.users.DoctorService
@@ -23,17 +25,17 @@ class PrescriptionServiceImpl(
     @Lazy
     private val doctorService: DoctorService,
     @Lazy
-    private val pharmacistService: PharmacistService
-    ) : PrescriptionService {
+    private val pharmacistService: PharmacistService,
+    private val patientRepository: PatientRepository
+) : PrescriptionService {
 
     @Transactional
-    override fun create(patientId: Long, doctorId: Long, prescriptionRequestDto: PrescriptionRequestDto): Prescription {
-
-        val doctor = doctorService.getDoctorById(doctorId)
-
+    override fun create(patientId: Long, doctor: Doctor, prescriptionRequestDto: PrescriptionRequestDto): Prescription {
+        val patient = patientRepository.findById(patientId)
+            .orElseThrow { PatientNotFoundException(patientId.toString()) }
         val prescription = Prescription(
-            patientId = patientId,
-            doctorId = doctorId,
+            patient = patient,
+            doctor = doctor,
             medicine = prescriptionRequestDto.medicine,
             frequency = prescriptionRequestDto.frequency,
             lastModifiedBy = doctor.username
@@ -42,18 +44,18 @@ class PrescriptionServiceImpl(
     }
 
     @Transactional
-    override fun redeem(pharmacistId: Long, prescriptionId: String, patientId: Long) : Prescription {
+    override fun redeem(pharmacistId: Long, prescriptionId: String, patientId: Long): Prescription {
 
         val prescription: Prescription =
             prescriptionRepository
-            .findById(prescriptionId)
-            .orElseThrow{PrescriptionNotFoundException(prescriptionId)}
+                .findById(prescriptionId)
+                .orElseThrow { PrescriptionNotFoundException(prescriptionId) }
 
-        if (patientService.getPatientById(prescription.patientId ?: throw NullPatientException())
+        if (patientService.getPatientById(prescription.patient?.id ?: throw NullPatientException())
             != patientService.getPatientById(patientId))
-            throw IllegalPrescriptionRedeemerException(prescriptionId,patientId)
+            throw IllegalPrescriptionRedeemerException(prescriptionId, patientId)
 
-        if(prescription.status == PrescriptionStatus.CANCELED)
+        if (prescription.status == PrescriptionStatus.CANCELED)
             throw PrescriptionCanceledException(prescriptionId)
 
         if (prescription.status == PrescriptionStatus.EXPIRED)
@@ -76,12 +78,12 @@ class PrescriptionServiceImpl(
         val doctor = doctorService.getDoctorById(doctorId)
 
         if (patient.doctor != doctor)
-            throw IllegalDoctorPatientOperation(doctorId,patientId)
+            throw IllegalDoctorPatientOperation(doctorId, patientId)
 
         val prescription: Prescription =
             prescriptionRepository
                 .findById(prescriptionId)
-                .orElseThrow{PrescriptionNotFoundException(prescriptionId)}
+                .orElseThrow { PrescriptionNotFoundException(prescriptionId) }
 
         if (prescription.status == PrescriptionStatus.REDEEMED)
             throw PrescriptionAlreadyRedeemedException(prescriptionId)
@@ -97,7 +99,7 @@ class PrescriptionServiceImpl(
 
 
     override fun getPrescriptionById(prescriptionId: String): Prescription {
-        return prescriptionRepository.findById(prescriptionId).orElseThrow{PrescriptionNotFoundException(prescriptionId)}
+        return prescriptionRepository.findById(prescriptionId).orElseThrow { PrescriptionNotFoundException(prescriptionId) }
     }
 
     override fun getPrescriptionsByPatientId(patientId: Long): List<Prescription> {

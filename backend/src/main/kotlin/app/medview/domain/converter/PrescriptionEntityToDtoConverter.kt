@@ -11,8 +11,8 @@ class PrescriptionEntityToDtoConverter (
 ){
     fun convert (prescription: Prescription) = PrescriptionDto(
         id = prescription.id,
-        patientId = prescription.patientId,
-        doctorId = prescription.doctorId,
+        patientId = prescription.patient?.id,
+        doctorId = prescription.doctor?.id,
         medicine = prescription.medicine,
         frequency = prescription.frequency,
         status = prescription.status,

@@ -41,10 +41,6 @@ class PatientServiceImpl(
         })
     }
 
-    override fun getPatientEntityById(id: Long): Patient {
-        return patientRepository.findById(id).get()
-    }
-
     override fun getCurrentPatient(): PatientDto {
         logger.info(SecurityContextHolder.getContext().authentication.name)
         val authentication = SecurityContextHolder.getContext().authentication

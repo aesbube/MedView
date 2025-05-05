@@ -48,4 +48,5 @@ class ScheduleServiceImpl(private val scheduleRepository: ScheduleRepository, pr
         scheduleRepository.delete(schedule)
         return MessageResponse("Schedule deleted successfully")
     }
+
 }

@@ -1,7 +1,7 @@
 package app.medview.service.impl
 
 import app.medview.domain.Role
-import app.medview.domain.User
+import app.medview.domain.Schedule
 import app.medview.domain.dto.JwtResponse
 import app.medview.domain.dto.LoginRequest
 import app.medview.domain.dto.MessageResponse
@@ -10,11 +10,7 @@ import app.medview.domain.users.Doctor
 import app.medview.domain.users.Patient
 import app.medview.domain.users.Pharmacist
 import app.medview.domain.users.Specialist
-import app.medview.repository.DoctorRepository
-import app.medview.repository.PatientRepository
-import app.medview.repository.PharmacistRepository
-import app.medview.repository.SpecialistRepository
-import app.medview.repository.UserRepository
+import app.medview.repository.*
 import app.medview.security.JwtTokenProvider
 import app.medview.service.AuthService
 import org.springframework.security.authentication.AuthenticationManager
@@ -32,7 +28,8 @@ class AuthServiceImpl(
     private val specialistRepository: SpecialistRepository,
     private val passwordEncoder: PasswordEncoder,
     private val authenticationManager: AuthenticationManager,
-    private val jwtTokenProvider: JwtTokenProvider
+    private val jwtTokenProvider: JwtTokenProvider,
+    private val scheduleRepository: ScheduleRepository
 ) : AuthService {
     val logger = org.slf4j.LoggerFactory.getLogger(AuthServiceImpl::class.java)
     override fun authenticateUser(loginRequest: LoginRequest): JwtResponse {
@@ -92,6 +89,10 @@ class AuthServiceImpl(
                     password = encodedPassword
                 )
                 specialistRepository.save(specialist)
+                val schedule = Schedule(
+                    specialist = specialist,
+                )
+                scheduleRepository.save(schedule)
             }
             else -> {
                 val patient = Patient(

@@ -1,7 +1,9 @@
 package app.medview.web
 
+import app.medview.domain.dto.ScheduleDto
 import app.medview.domain.dto.users.SpecialistDto
 import app.medview.domain.users.Specialist
+import app.medview.service.impl.ScheduleServiceImpl
 import app.medview.service.users.SpecialistService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/specialists")
-class SpecialistController(private val specialistService: SpecialistService) {
+class SpecialistController(private val specialistService: SpecialistService, private val scheduleService: ScheduleServiceImpl) {
     @GetMapping
     fun getAllSpecialists(): ResponseEntity<List<Specialist>> {
         val specialists = specialistService.getAllSpecialists()
@@ -23,5 +25,11 @@ class SpecialistController(private val specialistService: SpecialistService) {
     fun addDetailsToSpecialist(@RequestBody specialistDto: SpecialistDto): ResponseEntity<String> {
         val response = specialistService.addDetailsToSpecialist(specialistDto)
         return ResponseEntity.ok(response.message)
+    }
+
+    @GetMapping("/schedule")
+    fun getScheduleBySpecialistId(specialistId: Long): ResponseEntity<ScheduleDto> {
+        val schedule = specialistService.getSpecialistScheduleById(specialistId)
+        return ResponseEntity.ok(schedule)
     }
 }

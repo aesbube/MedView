@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ScheduleRepository : JpaRepository<Schedule, Long> {
-    fun findBySpecialistId(specialistId: Long): List<Schedule>
-    fun findBySpecialistUsername(username: String): List<Schedule>
+    fun findBySpecialistId(specialistId: Long): Schedule
+    fun findBySpecialistUsername(username: String): Schedule
 }

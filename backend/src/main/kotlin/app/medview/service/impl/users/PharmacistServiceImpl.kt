@@ -66,24 +66,24 @@ class PharmacistServiceImpl(
             ?: throw UsernameNotFoundException("User not found with username: $username"))
     }
 
-    override fun getPrescription( prescriptionScanDto: PrescriptionScanDto): PrescriptionDto {
+    override fun getPrescription(prescriptionScanDto: PrescriptionScanDto): PrescriptionDto {
         val patientId = prescriptionScanDto.patientId
         val prescriptionId = prescriptionScanDto.prescriptionId
         val prescription = prescriptionService.getPrescriptionById(prescriptionId)
 
-        if (prescriptionScanDto.patientId != prescription.patientId)
-            throw IllegalPrescriptionRedeemerException(prescriptionId,patientId)
+        if (prescriptionScanDto.patientId != prescription.patient?.id)
+            throw IllegalPrescriptionRedeemerException(prescriptionId, patientId)
 
         return prescriptionConverter.convert(prescription)
     }
 
-    override fun validatePrescription( prescriptionScanDto: PrescriptionScanDto) : PrescriptionDto {
+    override fun validatePrescription(prescriptionScanDto: PrescriptionScanDto): PrescriptionDto {
         logger.info(SecurityContextHolder.getContext().authentication.name)
         val authentication = SecurityContextHolder.getContext().authentication
         val username = authentication.name
         val pharmacist = pharmacistRepository.findByUsername(username)
             ?: throw UsernameNotFoundException("User not found with username: $username")
 
-        return prescriptionConverter.convert(prescriptionService.redeem(pharmacist.id,prescriptionScanDto.prescriptionId,prescriptionScanDto.patientId))
+        return prescriptionConverter.convert(prescriptionService.redeem(pharmacist.id, prescriptionScanDto.prescriptionId, prescriptionScanDto.patientId))
     }
 }
