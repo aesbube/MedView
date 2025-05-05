@@ -77,14 +77,6 @@ class AuthServiceImpl(
                 )
                 doctorRepository.save(doctor)
             }
-            Role.PATIENT -> {
-                val patient = Patient(
-                    username = signupRequest.username,
-                    email = signupRequest.email,
-                    password = encodedPassword
-                )
-                patientRepository.save(patient)
-            }
             Role.PHARMACIST -> {
                 val pharmacist = Pharmacist(
                     username = signupRequest.username,
@@ -102,13 +94,12 @@ class AuthServiceImpl(
                 specialistRepository.save(specialist)
             }
             else -> {
-                val user = User(
+                val patient = Patient(
                     username = signupRequest.username,
                     email = signupRequest.email,
                     password = encodedPassword,
-                    role = signupRequest.role ?: Role.PATIENT
                 )
-                userRepository.save(user)
+                patientRepository.save(patient)
             }
         }
         return MessageResponse("User registered successfully!")

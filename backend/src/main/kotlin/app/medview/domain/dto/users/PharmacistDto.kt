@@ -1,7 +1,11 @@
 package app.medview.domain.dto.users
 
+import jakarta.validation.constraints.Email
+
 data class PharmacistDto(
-    val pharmacyName: String,
-    val pharmacyAddress: String,
+    val username: String,
+    val email: String,
     val licenseNumber: Int,
+    val pharmacyName: String,
+    val pharmacyAddress: String
 )

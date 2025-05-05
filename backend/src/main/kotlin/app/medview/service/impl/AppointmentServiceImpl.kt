@@ -11,7 +11,12 @@ import app.medview.service.users.PatientService
 import org.springframework.stereotype.Service
 
 @Service
-class AppointmentServiceImpl(private val appointmentRepository: AppointmentRepository, private val patientService: PatientService, private val scheduleService: ScheduleService, private val userService: UserService) : AppointmentService {
+class AppointmentServiceImpl(
+        private val appointmentRepository: AppointmentRepository,
+        private val patientService: PatientService,
+        private val scheduleService: ScheduleService,
+        private val userService: UserService)
+    : AppointmentService {
     override fun getAllAppointments(): List<Appointment> {
         return appointmentRepository.findAll()
     }
@@ -25,7 +30,7 @@ class AppointmentServiceImpl(private val appointmentRepository: AppointmentRepos
     }
 
     override fun createAppointment(appointmentDto: AppointmentDto): MessageResponse {
-        val patient = patientService.getPatientById(appointmentDto.patientId)
+        val patient = patientService.getPatientEntityById(appointmentDto.patientId)
         val schedule = scheduleService.getScheduleById(appointmentDto.scheduleId)
         val assignee = userService.getCurrentUser()
         val appointment = Appointment(
@@ -43,7 +48,7 @@ class AppointmentServiceImpl(private val appointmentRepository: AppointmentRepos
 
     override fun updateAppointment(id: Long, appointmentDto: AppointmentDto): MessageResponse {
         val existingAppointment = appointmentRepository.findById(id).orElseThrow { Exception("Appointment not found") }
-        val patient = patientService.getPatientById(appointmentDto.patientId)
+        val patient = patientService.getPatientEntityById(appointmentDto.patientId)
         val schedule = scheduleService.getScheduleById(appointmentDto.scheduleId)
         existingAppointment.apply {
             this.schedule = schedule

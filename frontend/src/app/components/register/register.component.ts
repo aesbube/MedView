@@ -6,8 +6,8 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ValidationService } from '../../services/validation.service';
-import { AuthService } from '../../services/auth.service';
+import { ValidationService } from '../../core/services/validation.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
