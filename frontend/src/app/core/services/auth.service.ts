@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 interface LoginResponse {
   token: string;
@@ -17,8 +18,13 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$: Observable<boolean> =
     this.isAuthenticatedSubject.asObservable();
+  public jwtHelper: JwtHelperService = new JwtHelperService();
 
-  constructor(private http: HttpClient, private router: Router) {
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {
     this.checkAuthStatus();
   }
 
@@ -30,7 +36,12 @@ export class AuthService {
           this.setToken(response.token);
           this.isAuthenticatedSubject.next(true);
         }),
-        map(() => true)
+        map(() => true),
+        catchError(error => { //Handle login errors
+          console.error('Login failed:', error);
+          this.isAuthenticatedSubject.next(false);  //Important to set to false
+          return of(false);  //Return false to signal login failure
+        })
       );
   }
 
@@ -68,8 +79,23 @@ export class AuthService {
     }
   }
 
-  isLoggedIn(): any{
-    return !(this.getToken() == null)
+  isLoggedIn(): boolean {
+    return this.getToken() !== null;
+  }
+
+  getRole(): string {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const decodedToken = this.jwtHelper.decodeToken(token);
+        console.log("Decoded Token", decodedToken)
+        return decodedToken?.role || "ROLE_GUEST";
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return "ROLE_GUEST";
+      }
+    }
+    return "ROLE_GUEST";
   }
 
 }

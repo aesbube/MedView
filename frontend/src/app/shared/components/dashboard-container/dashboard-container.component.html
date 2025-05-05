@@ -1,0 +1,27 @@
+
+<div *ngIf="userRole === 'ROLE_ADMIN'">
+  <app-admin-dashboard></app-admin-dashboard>
+</div>
+
+<div *ngIf="userRole === 'ROLE_DOCTOR'">
+  <app-doctor-dashboard></app-doctor-dashboard>
+</div>
+
+<div *ngIf="userRole === 'ROLE_PATIENT'">
+  <app-patient-dashboard></app-patient-dashboard>
+</div>
+
+<div *ngIf="userRole === 'ROLE_SPECIALIST'">
+  <app-specialist-dashboard></app-specialist-dashboard>
+</div>
+
+<div *ngIf="userRole === 'ROLE_PHARMACIST'">
+  <app-pharmacist-dashboard></app-pharmacist-dashboard>
+</div>
+
+
+<div *ngIf="!userRole">
+  <!-- Optional: Handle cases where the role is not available.  For example: -->
+  <p>Loading user information...</p>
+</div>
+

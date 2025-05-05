@@ -16,6 +16,7 @@ import app.medview.service.AuthService
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -40,6 +41,10 @@ class AuthServiceImpl(
         logger.info("Authentication successful for user: ${loginRequest.username}")
 
         SecurityContextHolder.getContext().authentication = authentication
+
+        val userDetails = authentication.principal as UserDetails
+        val role = userDetails.authorities.firstOrNull()?.authority ?: "PATIENT"
+
         logger.info(SecurityContextHolder.getContext().authentication.name)
         logger.info("Generating JWT token for user: ${loginRequest.username}")
         val jwt = jwtTokenProvider.generateToken(authentication)
@@ -50,7 +55,7 @@ class AuthServiceImpl(
             token = jwt,
             id = user.id,
             username = user.username,
-            role = user.role,
+            role = role,
         )
     }
 

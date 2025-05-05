@@ -7,5 +7,5 @@ data class JwtResponse(
     val type: String = "Bearer",
     val id: Long,
     val username: String,
-    val role: Role,
+    val role: String,
 )

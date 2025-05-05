@@ -22,8 +22,11 @@ class JwtTokenProvider(private val jwtConfig: JwtConfig) {
         val now = Date()
         val expiryDate = Date(now.time + jwtConfig.expirationMs)
 
+        val role = userDetails.authorities.firstOrNull()?.authority ?: "PATIENT"
+
         return Jwts.builder()
             .setSubject(userDetails.username)
+            .claim("role", role)
             .setIssuedAt(now)
             .setExpiration(expiryDate)
             .signWith(key, SignatureAlgorithm.HS256)
