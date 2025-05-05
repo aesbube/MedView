@@ -1,7 +1,5 @@
 package app.medview.service.impl.users
 
-import app.medview.domain.Prescription
-import app.medview.domain.Role
 import app.medview.domain.converter.DoctorEntityToDtoConverter
 import app.medview.domain.converter.PatientEntityToDtoConverter
 import app.medview.domain.converter.PrescriptionEntityToDtoConverter
@@ -11,10 +9,10 @@ import app.medview.domain.dto.PrescriptionRequestDto
 import app.medview.domain.dto.users.DoctorDto
 import app.medview.domain.dto.users.DoctorUpdateRequestDto
 import app.medview.domain.dto.users.PatientDto
-import app.medview.domain.users.Doctor
-import app.medview.domain.users.Patient
+import app.medview.domain.dto.users.PatientRequestDto
 import app.medview.exceptions.IllegalDoctorPatientOperation
 import app.medview.repository.DoctorRepository
+import app.medview.repository.PatientRepository
 import app.medview.service.PrescriptionService
 import app.medview.service.users.DoctorService
 import app.medview.service.users.PatientService
@@ -28,7 +26,8 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
                         private val prescriptionService: PrescriptionService,
                         private val doctorConverter: DoctorEntityToDtoConverter,
                         private val patientConverter: PatientEntityToDtoConverter,
-                        private val prescriptionConverter: PrescriptionEntityToDtoConverter
+                        private val prescriptionConverter: PrescriptionEntityToDtoConverter,
+                        private val patientRepository: PatientRepository
 ) :
     DoctorService {
     val logger = org.slf4j.LoggerFactory.getLogger(DoctorServiceImpl::class.java)
@@ -53,13 +52,33 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
         logger.info("Adding doctor details for user: $username")
         logger.info("Doctor DTO: $doctorUpdateRequestDto")
 
-            doctor.specialty = doctorUpdateRequestDto.specialty ?: doctor.specialty
-            doctor.licenseNumber = doctorUpdateRequestDto.licenseNumber ?: doctor.licenseNumber
-            doctor.yearsOfExperience = doctorUpdateRequestDto.yearsOfExperience ?: doctor.yearsOfExperience
-            doctor.hospitalName = doctorUpdateRequestDto.hospitalName ?: doctor.hospitalName
+        doctor.specialty = doctorUpdateRequestDto.specialty ?: doctor.specialty
+        doctor.licenseNumber = doctorUpdateRequestDto.licenseNumber ?: doctor.licenseNumber
+        doctor.yearsOfExperience = doctorUpdateRequestDto.yearsOfExperience ?: doctor.yearsOfExperience
+        doctor.hospitalName = doctorUpdateRequestDto.hospitalName ?: doctor.hospitalName
 
         doctorRepository.save(doctor)
         return MessageResponse("Doctor details added successfully")
+    }
+
+    override fun addPatientToDoctor(patientRequestDto: PatientRequestDto): MessageResponse {
+        logger.info("Adding patient to doctor")
+        val auth = SecurityContextHolder.getContext().authentication
+        val username = auth.name
+
+        val doctor = doctorRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+
+        logger.info("Adding patient to doctor for user: $username")
+        logger.info("Patient DTO: $patientRequestDto")
+
+        val patient = patientRepository.findByUsername(patientRequestDto.username)
+            ?: throw UsernameNotFoundException("User not found with username: ${patientRequestDto.username}")
+
+        patient.doctor = doctor
+        patientRepository.save(patient)
+
+        return MessageResponse("Patient added successfully")
     }
 
     override fun getCurrentDoctor(): DoctorDto {
@@ -71,7 +90,7 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
             ?: throw UsernameNotFoundException("User not found with username: $username"))
     }
 
-    override fun getPatientOfDoctor(patientId:Long): PatientDto {
+    override fun getPatientOfDoctor(patientId: Long): PatientDto {
         val patient = patientService.getPatientById(patientId)
 
         logger.info(SecurityContextHolder.getContext().authentication.name)
@@ -81,7 +100,7 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
             ?: throw UsernameNotFoundException("User not found with username: $username")
 
         if (patient.doctor != getDoctorById(doctor.id))
-            throw IllegalDoctorPatientOperation (doctor.id,patientId)
+            throw IllegalDoctorPatientOperation(doctor.id, patientId)
 
         return patient
     }
@@ -96,11 +115,11 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
         return patientService.getPatientsByDoctor(doctor.id)
     }
 
-    override fun getPrescriptionsOfPatientsOfDoctor(patientId:Long): List<PrescriptionDto> {
+    override fun getPrescriptionsOfPatientsOfDoctor(patientId: Long): List<PrescriptionDto> {
         return prescriptionService.getPrescriptionsByPatientId(patientId).map { prescriptionConverter.convert(it) }
     }
 
-    override fun writePrescription(patientId:Long, prescriptionRequestDto: PrescriptionRequestDto) : PrescriptionDto {
+    override fun writePrescription(patientId: Long, prescriptionRequestDto: PrescriptionRequestDto): PrescriptionDto {
         logger.info(SecurityContextHolder.getContext().authentication.name)
         val authentication = SecurityContextHolder.getContext().authentication
         val username = authentication.name
@@ -108,11 +127,11 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
             ?: throw UsernameNotFoundException("User not found with username: $username")
 
         return prescriptionConverter.convert(
-            prescriptionService.create(patientId,doctor.id,prescriptionRequestDto)
+            prescriptionService.create(patientId, doctor.id, prescriptionRequestDto)
         )
     }
 
-    override fun cancelPrescription(patientId:Long, prescriptionId: String): PrescriptionDto {
+    override fun cancelPrescription(patientId: Long, prescriptionId: String): PrescriptionDto {
         logger.info(SecurityContextHolder.getContext().authentication.name)
         val authentication = SecurityContextHolder.getContext().authentication
         val username = authentication.name
@@ -121,7 +140,7 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
 
 
         return prescriptionConverter.convert(
-            prescriptionService.cancel(patientId,doctor.id, prescriptionId)
+            prescriptionService.cancel(patientId, doctor.id, prescriptionId)
         )
     }
 

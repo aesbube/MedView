@@ -1,11 +1,13 @@
 package app.medview.web
 
 import app.medview.domain.Prescription
+import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.PrescriptionRequestDto
 import app.medview.domain.dto.users.DoctorDto
 import app.medview.domain.dto.users.DoctorUpdateRequestDto
 import app.medview.domain.dto.users.PatientDto
+import app.medview.domain.dto.users.PatientRequestDto
 import app.medview.domain.users.Doctor
 import app.medview.domain.users.Patient
 import app.medview.service.users.DoctorService
@@ -32,6 +34,12 @@ class DoctorController(private val doctorService: DoctorService) {
     fun addDetailsToDoctor(@RequestBody doctorUpdateRequestDto: DoctorUpdateRequestDto): ResponseEntity<String> {
         val response = doctorService.addDetailsToDoctor(doctorUpdateRequestDto)
         return ResponseEntity.ok(response.message)
+    }
+
+    @PostMapping("/add-patient")
+    fun addPatientToDoctor(@RequestBody patientRequestDto: PatientRequestDto): MessageResponse {
+        val response = doctorService.addPatientToDoctor(patientRequestDto)
+        return MessageResponse(response.message)
     }
 
     @GetMapping("/me")
