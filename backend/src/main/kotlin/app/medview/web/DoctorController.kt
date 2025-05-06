@@ -86,4 +86,10 @@ class DoctorController(private val doctorService: DoctorService) {
     ): ResponseEntity<MessageResponse> {
         return ResponseEntity.ok(doctorService.scheduleAppointment(patientId, occupyAppointmentDto))
     }
+
+//    @PostMapping("/me/patients/claim-patient/{patientId}")
+//    fun claimPatient(@PathVariable("patientId") patientId: Long): ResponseEntity<MessageResponse> {
+//        val response = doctorService.claimPatient(patientId)
+//        return ResponseEntity.ok(response)
+//    }
 }

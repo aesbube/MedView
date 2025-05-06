@@ -11,5 +11,4 @@ interface ScheduleService {
     fun createSchedule(scheduleDto: ScheduleDto): MessageResponse
     fun updateSchedule(id: Long, scheduleDto: ScheduleDto): MessageResponse
     fun deleteSchedule(id: Long): MessageResponse
-    fun setFreeAppointments(appointments: List<FreeAppointmentDto>): MessageResponse
 }

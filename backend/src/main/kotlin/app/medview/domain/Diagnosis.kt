@@ -11,10 +11,11 @@ data class Diagnosis(
     val id: Long = 0,
     val name: String = "",
     val description: String = "",
-    val icdCode: String = "",
     val treatment: String = "",
     @ManyToOne
     val patient: Patient? = null,
     @ManyToOne
     val specialist: Specialist? = null,
+    @OneToOne
+    val appointment: Appointment? = null
 )

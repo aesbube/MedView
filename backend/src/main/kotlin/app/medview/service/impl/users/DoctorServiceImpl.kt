@@ -20,13 +20,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
-class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
-                        private val patientService: PatientService,
-                        private val prescriptionService: PrescriptionService,
-                        private val doctorConverter: DoctorEntityToDtoConverter,
-                        private val prescriptionConverter: PrescriptionEntityToDtoConverter,
-                        private val patientRepository: PatientRepository,
-                        private val appointmentService: AppointmentServiceImpl
+class DoctorServiceImpl(
+    private val doctorRepository: DoctorRepository,
+    private val patientService: PatientService,
+    private val prescriptionService: PrescriptionService,
+    private val doctorConverter: DoctorEntityToDtoConverter,
+    private val prescriptionConverter: PrescriptionEntityToDtoConverter,
+    private val patientRepository: PatientRepository,
+    private val appointmentService: AppointmentServiceImpl
 ) :
     DoctorService {
     val logger = org.slf4j.LoggerFactory.getLogger(DoctorServiceImpl::class.java)
@@ -85,8 +86,10 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
         val authentication = SecurityContextHolder.getContext().authentication
         val username = authentication.name
 
-        return doctorConverter.convert(doctorRepository.findByUsername(username)
-            ?: throw UsernameNotFoundException("User not found with username: $username"))
+        return doctorConverter.convert(
+            doctorRepository.findByUsername(username)
+                ?: throw UsernameNotFoundException("User not found with username: $username")
+        )
     }
 
     override fun getPatientOfDoctor(patientId: Long): PatientDto {
@@ -150,9 +153,26 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
         val assignee = doctorRepository.findByUsername(username)
             ?: throw UsernameNotFoundException("User not found with username: $username")
 
-        appointmentService.occupyAppointment(patientId, assignee, occupyAppointmentDto)
+        appointmentService.occupyAppointment(occupyAppointmentDto.appointmentId, patientId, assignee, occupyAppointmentDto)
         return MessageResponse("Appointment scheduled successfully")
     }
+
+//    override fun claimPatient(patientId: Long): MessageResponse {
+//        logger.info(SecurityContextHolder.getContext().authentication.name)
+//        val authentication = SecurityContextHolder.getContext().authentication
+//        val username = authentication.name
+//        val doctor = doctorRepository.findByUsername(username)
+//            ?: throw UsernameNotFoundException("User not found with username: $username")
+//
+//        val patient = patientRepository.findById(patientId).orElseThrow {
+//            throw UsernameNotFoundException("User not found with id: $patientId")
+//        }
+//
+//        patient.doctor = doctor
+//
+//        patientRepository.save(patient)
+//        return MessageResponse("Patient claimed successfully")
+//    }
 
 
 }

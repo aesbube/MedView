@@ -2,6 +2,7 @@ package app.medview.service.impl
 
 import app.medview.domain.Appointment
 import app.medview.domain.AppointmentStatus
+import app.medview.domain.Schedule
 import app.medview.domain.dto.*
 import app.medview.domain.users.Doctor
 import app.medview.repository.AppointmentRepository
@@ -32,14 +33,15 @@ class AppointmentServiceImpl(
         return appointmentRepository.findByScheduleId(scheduleId)
     }
 
-    override fun occupyAppointment(appointmentId: Long, doctor: Doctor, occupyAppointmentDto: OccupyAppointmentDto): MessageResponse {
+    override fun occupyAppointment(appointmentId: Long, patientId: Long, doctor: Doctor, occupyAppointmentDto: OccupyAppointmentDto): MessageResponse {
         val existingAppointment = appointmentRepository.findById(appointmentId).orElseThrow { Exception("Appointment not found") }
-        val patient = patientRepository.findById(occupyAppointmentDto.patientId).orElseThrow() { Exception("Patient not found") }
+        val patient = patientRepository.findById(patientId).orElseThrow() { Exception("Patient not found") }
         val schedule = scheduleRepository.findById(occupyAppointmentDto.scheduleId).orElseThrow() { Exception("Schedule not found") }
         existingAppointment.apply {
             this.schedule = schedule
             this.patient = patient
             this.status = AppointmentStatus.OCCUPIED
+            this.refNumber = occupyAppointmentDto.refNumber
             this.assignee = doctor
         }
 
@@ -53,8 +55,7 @@ class AppointmentServiceImpl(
         return MessageResponse("Appointment deleted successfully")
     }
 
-    override fun createFreeAppointment(freeAppointmentDto: FreeAppointmentDto): MessageResponse {
-        val schedule = scheduleRepository.findById(freeAppointmentDto.scheduleId).orElseThrow() { Exception("Schedule not found") }
+    override fun createFreeAppointment(freeAppointmentDto: FreeAppointmentDto, schedule: Schedule): MessageResponse {
         val appointment = Appointment(
             schedule = schedule,
             date = freeAppointmentDto.date,

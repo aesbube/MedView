@@ -11,9 +11,8 @@ import org.springframework.stereotype.Service
 @Service
 class ScheduleServiceImpl(
     private val scheduleRepository: ScheduleRepository,
-    private val specialistService: SpecialistService,
-    private val appointmentService: AppointmentService)
-    : ScheduleService {
+    private val specialistService: SpecialistService
+) : ScheduleService {
     override fun getAllSchedules(): List<Schedule> {
         return scheduleRepository.findAll()
     }
@@ -51,13 +50,6 @@ class ScheduleServiceImpl(
         }
         scheduleRepository.delete(schedule)
         return MessageResponse("Schedule deleted successfully")
-    }
-
-    override fun setFreeAppointments(appointments: List<FreeAppointmentDto>): MessageResponse {
-        appointments.forEach { appointment ->
-            appointmentService.createFreeAppointment(appointment)
-        }
-        return MessageResponse("Appointments set successfully")
     }
 
 }

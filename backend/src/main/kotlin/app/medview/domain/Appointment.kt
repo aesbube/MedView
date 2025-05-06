@@ -22,5 +22,5 @@ class Appointment(
     var time: String = "",
     var location: String = "",
     var status: AppointmentStatus = AppointmentStatus.FREE,
-    val refNumber: String = "",
+    var refNumber: String = "",
 )

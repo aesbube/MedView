@@ -42,7 +42,7 @@ class SecurityConfig(
                     .requestMatchers("/users/pharmacist", "/pharmacists/**").hasAnyRole("PHARMACIST", "ADMIN")
                     .requestMatchers("/users/doctor", "/doctors/**").hasAnyRole("DOCTOR", "ADMIN")
                     .requestMatchers("/users/patient", "/patients/**").hasAnyRole("PATIENT", "ADMIN")
-                    .requestMatchers("/users/specialist", "/specialists/**").hasAnyRole("SPECIALIST", "ADMIN")
+                    .requestMatchers("/users/specialist", "/specialists/**", "/schedules").hasAnyRole("SPECIALIST", "ADMIN")
                     .requestMatchers("/users/**").hasRole("ADMIN")
                     .anyRequest().hasRole("ADMIN")
             }

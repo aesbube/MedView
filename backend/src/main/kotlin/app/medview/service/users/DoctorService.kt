@@ -18,4 +18,5 @@ interface DoctorService {
     fun writePrescription(patientId: Long, prescriptionRequestDto: PrescriptionRequestDto): PrescriptionDto
     fun cancelPrescription(patientId: Long, prescriptionId: String): PrescriptionDto
     fun scheduleAppointment(patientId: Long, occupyAppointmentDto: OccupyAppointmentDto): MessageResponse
+//    fun claimPatient(patientId: Long): MessageResponse
 }

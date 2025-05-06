@@ -1,7 +1,9 @@
 package app.medview.service.users
 
+import app.medview.domain.Schedule
+import app.medview.domain.dto.DiagnosisDto
+import app.medview.domain.dto.FreeAppointmentDto
 import app.medview.domain.dto.MessageResponse
-import app.medview.domain.dto.ScheduleDto
 import app.medview.domain.dto.users.SpecialistDto
 import app.medview.domain.users.Specialist
 
@@ -9,6 +11,8 @@ interface SpecialistService {
     fun getAllSpecialists(): List<Specialist>
     fun getSpecialistsByUsername(username: String): List<Specialist>
     fun getSpecialistById(id: Long): Specialist
-    fun getSpecialistScheduleById(id: Long): ScheduleDto
+    fun getSpecialistScheduleById(id: Long): Schedule
     fun addDetailsToSpecialist(specialistDto: SpecialistDto): MessageResponse
+    fun setFreeAppointments(appointments: List<FreeAppointmentDto>): MessageResponse
+    fun writeDiagnosis(appointmentId: Long, diagnosisDto: DiagnosisDto): MessageResponse
 }
