@@ -101,21 +101,19 @@ class DataInitializer(
             val prescription1 = Prescription(
                 medicine = "Analgin",
                 frequency = "1x Day",
-                lastModifiedBy = doctor2.username
-            ).apply {
-                patientId = patient1.id
-                doctorId = doctor1.id
-            }
+                lastModifiedBy = doctor2.username,
+                patient = patient1,
+                doctor = doctor1
+            )
             prescriptionRepository.save(prescription1)
 
             val prescription2 = Prescription(
                 medicine = "Paracetamol",
                 frequency = "Every 6h",
-                lastModifiedBy = doctor2.username
-            ).apply {
-                patientId = patient1.id
-                doctorId = doctor1.id
-            }
+                lastModifiedBy = doctor2.username,
+                patient = patient1,
+                doctor = doctor1
+            )
             prescriptionRepository.save(prescription2)
 
 
