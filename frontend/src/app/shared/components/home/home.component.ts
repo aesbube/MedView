@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SearchesComponent } from '../searches/searches.component';
+import { SearchesComponent } from '../searches/component/searches.component';
 import { MapComponent } from '../map/map.component';
 
 @Component({

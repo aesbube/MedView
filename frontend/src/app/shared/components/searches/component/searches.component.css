@@ -18,10 +18,18 @@ mat-form-field{
   border-radius: 20px;
 }
 
-button{
-  height: 50px;
+.timeslot-btn{
   margin-bottom: 19.5px;
 }
+
+.search-form>button{
+  margin-bottom: 0px;
+}
+
+#appointment-form input{
+  width: 200px;
+}
+
 
 /* #search-wrapper {
   display: flex;

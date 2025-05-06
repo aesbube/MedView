@@ -29,7 +29,7 @@ class SpecialistController(
 
     @GetMapping("/search")
     fun getSpecialistsByUsername(
-        @RequestParam ("username", required = true
+        @RequestParam ("name", required = true
         ) username: String): ResponseEntity<List<Specialist>> {
         val specialists = specialistService.getSpecialistsByUsername(username)
         return ResponseEntity.ok(specialists)

@@ -15,6 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
@@ -31,6 +34,7 @@ class SecurityConfig(
             .headers { headers ->
                 headers.frameOptions { it.disable() }
             }
+            .cors { val configurationSource = corsConfigurationSource() }
             .authorizeHttpRequests { authz ->
                 authz
                     .requestMatchers("/auth/**", "/h2/**", "/doctors/all", "/specialists/search").permitAll()
@@ -69,5 +73,19 @@ class SecurityConfig(
     @Bean
     fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager {
         return config.authenticationManager
+    }
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = listOf("http://localhost:4200")  // Replace with your frontend's origin
+        configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        configuration.allowedHeaders = listOf("Authorization", "Content-Type", "Cache-Control")
+        configuration.allowCredentials = true  // Important: Only use in development
+        configuration.maxAge = 3600
+
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration) // Apply CORS to all paths
+        return source
     }
 }
