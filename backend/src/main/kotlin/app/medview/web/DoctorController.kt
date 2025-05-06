@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/doctors")
 class DoctorController(private val doctorService: DoctorService) {
-    @GetMapping
+    @GetMapping("/all")
     fun getAllDoctors(): ResponseEntity<List<DoctorDto>> {
         val doctors = doctorService.getAllDoctors()
         return ResponseEntity.ok(doctors)
