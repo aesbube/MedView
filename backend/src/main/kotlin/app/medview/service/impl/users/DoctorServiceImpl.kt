@@ -143,14 +143,14 @@ class DoctorServiceImpl(private val doctorRepository: DoctorRepository,
         )
     }
 
-    override fun scheduleAppointment(patientId: Long, appointmentRequestDto: AppointmentRequestDto): MessageResponse {
+    override fun scheduleAppointment(patientId: Long, occupyAppointmentDto: OccupyAppointmentDto): MessageResponse {
         logger.info(SecurityContextHolder.getContext().authentication.name)
         val authentication = SecurityContextHolder.getContext().authentication
         val username = authentication.name
         val assignee = doctorRepository.findByUsername(username)
             ?: throw UsernameNotFoundException("User not found with username: $username")
 
-        appointmentService.createAppointment(patientId, assignee, appointmentRequestDto)
+        appointmentService.occupyAppointment(patientId, assignee, occupyAppointmentDto)
         return MessageResponse("Appointment scheduled successfully")
     }
 

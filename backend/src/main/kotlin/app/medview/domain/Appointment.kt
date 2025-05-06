@@ -17,8 +17,10 @@ class Appointment(
     @ManyToOne
     var patient: Patient? = null,
     @ManyToOne
-    val assignee: Doctor? = null,
+    var assignee: Doctor? = null,
     var date: LocalDate? = null,
     var time: String = "",
     var location: String = "",
+    var status: AppointmentStatus = AppointmentStatus.FREE,
+    val refNumber: String = "",
 )

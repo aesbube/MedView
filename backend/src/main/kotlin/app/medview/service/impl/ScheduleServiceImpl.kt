@@ -1,15 +1,19 @@
 package app.medview.service.impl
 
 import app.medview.domain.Schedule
-import app.medview.domain.dto.MessageResponse
-import app.medview.domain.dto.ScheduleDto
+import app.medview.domain.dto.*
 import app.medview.repository.ScheduleRepository
+import app.medview.service.AppointmentService
 import app.medview.service.ScheduleService
 import app.medview.service.users.SpecialistService
 import org.springframework.stereotype.Service
 
 @Service
-class ScheduleServiceImpl(private val scheduleRepository: ScheduleRepository, private val specialistService: SpecialistService) : ScheduleService {
+class ScheduleServiceImpl(
+    private val scheduleRepository: ScheduleRepository,
+    private val specialistService: SpecialistService,
+    private val appointmentService: AppointmentService)
+    : ScheduleService {
     override fun getAllSchedules(): List<Schedule> {
         return scheduleRepository.findAll()
     }
@@ -47,6 +51,13 @@ class ScheduleServiceImpl(private val scheduleRepository: ScheduleRepository, pr
         }
         scheduleRepository.delete(schedule)
         return MessageResponse("Schedule deleted successfully")
+    }
+
+    override fun setFreeAppointments(appointments: List<FreeAppointmentDto>): MessageResponse {
+        appointments.forEach { appointment ->
+            appointmentService.createFreeAppointment(appointment)
+        }
+        return MessageResponse("Appointments set successfully")
     }
 
 }

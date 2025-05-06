@@ -1,6 +1,7 @@
 package app.medview.service
 
 import app.medview.domain.Schedule
+import app.medview.domain.dto.FreeAppointmentDto
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.ScheduleDto
 
@@ -10,4 +11,5 @@ interface ScheduleService {
     fun createSchedule(scheduleDto: ScheduleDto): MessageResponse
     fun updateSchedule(id: Long, scheduleDto: ScheduleDto): MessageResponse
     fun deleteSchedule(id: Long): MessageResponse
+    fun setFreeAppointments(appointments: List<FreeAppointmentDto>): MessageResponse
 }

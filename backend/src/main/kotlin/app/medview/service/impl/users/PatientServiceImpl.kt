@@ -1,18 +1,16 @@
 package app.medview.service.impl.users
 
-import app.medview.domain.Prescription
 import app.medview.domain.Role
+import app.medview.domain.converter.AppointmentEntityToDtoConverter
 import app.medview.domain.converter.PatientEntityToDtoConverter
 import app.medview.domain.converter.PrescriptionEntityToDtoConverter
+import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.dto.users.PatientRequestDto
-import app.medview.domain.users.Doctor
-import app.medview.domain.users.Patient
-import app.medview.exceptions.NullDoctorException
-import app.medview.exceptions.NullPatientException
 import app.medview.exceptions.PatientNotFoundException
+import app.medview.repository.AppointmentRepository
 import app.medview.repository.PatientRepository
 import app.medview.service.PrescriptionService
 import app.medview.service.users.PatientService
@@ -26,6 +24,8 @@ class PatientServiceImpl(
     private val prescriptionService: PrescriptionService,
     private val patientConverter: PatientEntityToDtoConverter,
     private val prescriptionConverter: PrescriptionEntityToDtoConverter,
+    private val appointmentRepository: AppointmentRepository,
+    private val appointmentEntityToDtoConverter: AppointmentEntityToDtoConverter,
 ) : PatientService {
 
     val logger = org.slf4j.LoggerFactory.getLogger(PatientServiceImpl::class.java)
@@ -88,4 +88,18 @@ class PatientServiceImpl(
 
         return prescriptionService.getPrescriptionsByPatientId(patient.id).map { prescriptionConverter.convert(it) }
     }
+
+    override fun getAppointmentOfPatient(refNumber: String): AppointmentDto {
+        logger.info(SecurityContextHolder.getContext().authentication.name)
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
+        val patient = patientRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+
+        val appointment = appointmentRepository.findByRefNumberAndPatientId(refNumber, patient.id)
+            ?: throw RuntimeException("Appointment not found with refNumber: $refNumber and patientId: ${patient.id}")
+
+        return appointmentEntityToDtoConverter.convert(appointment)
+    }
+
 }

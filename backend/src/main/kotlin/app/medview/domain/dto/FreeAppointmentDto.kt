@@ -2,7 +2,7 @@ package app.medview.domain.dto
 
 import java.time.LocalDate
 
-data class AppointmentRequestDto(
+data class FreeAppointmentDto(
     val scheduleId: Long,
     val date: LocalDate,
     val time: String,

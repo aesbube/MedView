@@ -1,6 +1,7 @@
 package app.medview.web
 
 import app.medview.domain.Prescription
+import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.dto.users.PatientRequestDto
@@ -9,11 +10,7 @@ import app.medview.service.users.PatientService
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/patients")
@@ -31,13 +28,19 @@ class PatientController(private val patientService: PatientService) {
     }
 
     @GetMapping("/me")
-    fun getCurrentPatient() : ResponseEntity<PatientDto> {
+    fun getCurrentPatient(): ResponseEntity<PatientDto> {
         return ResponseEntity(patientService.getCurrentPatient(), HttpStatus.OK)
     }
 
     @GetMapping("/me/prescriptions")
-    fun getPrescriptionsOfCurrentUser() : ResponseEntity<List<PrescriptionDto>>{
+    fun getPrescriptionsOfCurrentUser(): ResponseEntity<List<PrescriptionDto>> {
         return ResponseEntity(patientService.getPrescriptionsOfPatient(), HttpStatus.OK)
+    }
+
+    @GetMapping("/appointment/{refNumber}")
+    fun getAppointmentByRefNumber(@PathVariable refNumber: String): ResponseEntity<AppointmentDto> {
+        val appointment = patientService.getAppointmentOfPatient(refNumber)
+        return ResponseEntity.ok(appointment)
     }
 
 }

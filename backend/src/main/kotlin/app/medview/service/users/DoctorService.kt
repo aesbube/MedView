@@ -17,5 +17,5 @@ interface DoctorService {
     fun getPrescriptionsOfPatientsOfDoctor(patientId: Long): List<PrescriptionDto>
     fun writePrescription(patientId: Long, prescriptionRequestDto: PrescriptionRequestDto): PrescriptionDto
     fun cancelPrescription(patientId: Long, prescriptionId: String): PrescriptionDto
-    fun scheduleAppointment(patientId: Long, appointmentRequestDto: AppointmentRequestDto): MessageResponse
+    fun scheduleAppointment(patientId: Long, occupyAppointmentDto: OccupyAppointmentDto): MessageResponse
 }

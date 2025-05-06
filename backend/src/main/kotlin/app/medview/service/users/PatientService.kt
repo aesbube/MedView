@@ -1,6 +1,7 @@
 package app.medview.service.users
 
 import app.medview.domain.Prescription
+import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.users.PatientDto
@@ -15,4 +16,5 @@ interface PatientService {
     fun addDetailsToPatient(patientRequestDto: PatientRequestDto): MessageResponse
     fun getPatientsByDoctor(doctorId: Long): List<PatientDto>
     fun getPrescriptionsOfPatient(): List<PrescriptionDto>
+    fun getAppointmentOfPatient(refNumber: String): AppointmentDto
 }

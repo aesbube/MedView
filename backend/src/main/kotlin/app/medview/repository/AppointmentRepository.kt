@@ -1,6 +1,7 @@
 package app.medview.repository
 
 import app.medview.domain.Appointment
+import app.medview.domain.AppointmentStatus
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
@@ -11,4 +12,6 @@ interface AppointmentRepository : JpaRepository<Appointment, Long> {
     fun findByScheduleId(scheduleId: Long): List<Appointment>
     fun findByLocation(location: String): List<Appointment>
     fun findByScheduleSpecialistId(specialistId: Long): List<Appointment>
+    fun findByRefNumberAndPatientId(refNumber: String, patientId: Long): Appointment?
+    fun findByStatus(status: AppointmentStatus): List<Appointment>
 }

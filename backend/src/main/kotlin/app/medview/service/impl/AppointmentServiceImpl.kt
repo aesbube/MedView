@@ -1,23 +1,20 @@
 package app.medview.service.impl
 
 import app.medview.domain.Appointment
-import app.medview.domain.dto.AppointmentDto
-import app.medview.domain.dto.AppointmentRequestDto
-import app.medview.domain.dto.MessageResponse
+import app.medview.domain.AppointmentStatus
+import app.medview.domain.dto.*
 import app.medview.domain.users.Doctor
 import app.medview.repository.AppointmentRepository
 import app.medview.repository.PatientRepository
+import app.medview.repository.ScheduleRepository
 import app.medview.service.AppointmentService
-import app.medview.service.ScheduleService
-import app.medview.service.UserService
-import app.medview.service.users.PatientService
 import org.springframework.stereotype.Service
 
 @Service
 class AppointmentServiceImpl(
     private val appointmentRepository: AppointmentRepository,
-    private val scheduleService: ScheduleService,
-    private val patientRepository: PatientRepository)
+    private val patientRepository: PatientRepository,
+    private val scheduleRepository: ScheduleRepository)
     : AppointmentService {
     override fun getAllAppointments(): List<Appointment> {
         return appointmentRepository.findAll()
@@ -35,32 +32,15 @@ class AppointmentServiceImpl(
         return appointmentRepository.findByScheduleId(scheduleId)
     }
 
-    override fun createAppointment(patientId: Long, assignee: Doctor, appointmentRequestDto: AppointmentRequestDto): MessageResponse {
-        val patient = patientRepository.findById(patientId).orElseThrow() { Exception("Patient not found") }
-        val schedule = scheduleService.getScheduleById(appointmentRequestDto.scheduleId)
-        val appointment = Appointment(
-            schedule = schedule,
-            patient = patient,
-            date = appointmentRequestDto.date,
-            time = appointmentRequestDto.time,
-            location = appointmentRequestDto.location,
-            assignee = assignee,
-        )
-
-        appointmentRepository.save(appointment)
-        return MessageResponse("Appointment created successfully")
-    }
-
-    override fun updateAppointment(id: Long, appointmentDto: AppointmentDto): MessageResponse {
-        val existingAppointment = appointmentRepository.findById(id).orElseThrow { Exception("Appointment not found") }
-        val patient = patientRepository.findById(appointmentDto.patientId).orElseThrow() { Exception("Patient not found") }
-        val schedule = scheduleService.getScheduleById(appointmentDto.scheduleId)
+    override fun occupyAppointment(appointmentId: Long, doctor: Doctor, occupyAppointmentDto: OccupyAppointmentDto): MessageResponse {
+        val existingAppointment = appointmentRepository.findById(appointmentId).orElseThrow { Exception("Appointment not found") }
+        val patient = patientRepository.findById(occupyAppointmentDto.patientId).orElseThrow() { Exception("Patient not found") }
+        val schedule = scheduleRepository.findById(occupyAppointmentDto.scheduleId).orElseThrow() { Exception("Schedule not found") }
         existingAppointment.apply {
             this.schedule = schedule
             this.patient = patient
-            this.date = appointmentDto.date
-            this.time = appointmentDto.time
-            this.location = appointmentDto.location
+            this.status = AppointmentStatus.OCCUPIED
+            this.assignee = doctor
         }
 
         appointmentRepository.save(existingAppointment)
@@ -71,5 +51,18 @@ class AppointmentServiceImpl(
         val appointment = appointmentRepository.findById(id).orElseThrow { Exception("Appointment not found") }
         appointmentRepository.delete(appointment)
         return MessageResponse("Appointment deleted successfully")
+    }
+
+    override fun createFreeAppointment(freeAppointmentDto: FreeAppointmentDto): MessageResponse {
+        val schedule = scheduleRepository.findById(freeAppointmentDto.scheduleId).orElseThrow() { Exception("Schedule not found") }
+        val appointment = Appointment(
+            schedule = schedule,
+            date = freeAppointmentDto.date,
+            time = freeAppointmentDto.time,
+            location = freeAppointmentDto.location,
+            status = AppointmentStatus.FREE,
+        )
+        appointmentRepository.save(appointment)
+        return MessageResponse("Free appointment created successfully")
     }
 }
