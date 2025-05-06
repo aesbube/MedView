@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -23,6 +24,14 @@ class SpecialistController(
     @GetMapping
     fun getAllSpecialists(): ResponseEntity<List<Specialist>> {
         val specialists = specialistService.getAllSpecialists()
+        return ResponseEntity.ok(specialists)
+    }
+
+    @GetMapping("/search")
+    fun getSpecialistsByUsername(
+        @RequestParam ("username", required = true
+        ) username: String): ResponseEntity<List<Specialist>> {
+        val specialists = specialistService.getSpecialistsByUsername(username)
         return ResponseEntity.ok(specialists)
     }
 

@@ -7,6 +7,7 @@ import app.medview.domain.users.Specialist
 
 interface SpecialistService {
     fun getAllSpecialists(): List<Specialist>
+    fun getSpecialistsByUsername(username: String): List<Specialist>
     fun getSpecialistById(id: Long): Specialist
     fun getSpecialistScheduleById(id: Long): ScheduleDto
     fun addDetailsToSpecialist(specialistDto: SpecialistDto): MessageResponse

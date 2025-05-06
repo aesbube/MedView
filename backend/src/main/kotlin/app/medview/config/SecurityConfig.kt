@@ -33,7 +33,7 @@ class SecurityConfig(
             }
             .authorizeHttpRequests { authz ->
                 authz
-                    .requestMatchers("/auth/**", "/h2/**", "/doctors/all").permitAll()
+                    .requestMatchers("/auth/**", "/h2/**", "/doctors/all", "/specialists/search").permitAll()
                     .requestMatchers("/users/me").hasAnyRole("ADMIN", "SPECIALIST", "PHARMACIST", "DOCTOR", "PATIENT")
                     .requestMatchers("/users/pharmacist", "/pharmacists/**").hasAnyRole("PHARMACIST", "ADMIN")
                     .requestMatchers("/users/doctor", "/doctors/**").hasAnyRole("DOCTOR", "ADMIN")
