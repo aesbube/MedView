@@ -37,7 +37,6 @@ export class SearchesComponent {
   specialistsOrEquipments: Specialist[] = [];
   filteredSpecialists$: Observable<Specialist[]> | undefined;
 
-  private searchTerms = new Subject<string>();
 
   constructor(private router: Router) {}
 

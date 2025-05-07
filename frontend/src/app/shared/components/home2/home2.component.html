@@ -1,0 +1,8 @@
+<div class="row" [class.flexUp] = "flexUp1">
+  <app-home-card uniqueAction="map" />
+  <app-home-card uniqueAction="app" (customFlex)="setFlex($event)"/>
+</div>
+<div class="row" [class.flexUp] = "flexUp2">
+  <app-home-card uniqueAction="spec" (customFlex)="setFlex($event)"/>
+  <app-home-card uniqueAction="eq" (customFlex)="setFlex($event)"/>
+</div>

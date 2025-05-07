@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './shared/components/home/home.component';
+import { Home2Component } from './shared/components/home2/home2.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { AuthRedirectGuard } from './core/guards/auth-redirect.guard';
@@ -9,7 +10,7 @@ import { AppointmentComponent } from './shared/components/appointment/appointmen
 import { SpecialistComponent } from './shared/components/specialist/specialist.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: Home2Component },
   {
     path: 'dashboard',
     component: DashboardContainerComponent,
