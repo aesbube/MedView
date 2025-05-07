@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { DoctorDashboardComponent } from '../../../features/doctor/components/doctor-dashboard/doctor-dashboard.component';
 import { AdminDashboardComponent } from '../../../features/admin/components/admin-dashboard/admin-dashboard.component';
 import { PatientDashboardComponent } from '../../../features/patient/components/patient-dashboard/patient-dashboard.component';
@@ -20,7 +20,7 @@ import { AuthService } from '../../../core/services/auth.service';
   templateUrl: './dashboard-container.component.html',
   styleUrl: './dashboard-container.component.css'
 })
-export class DashboardContainerComponent {
+export class DashboardContainerComponent implements OnInit {
 
   authService = inject(AuthService)
   userRole: String = "ROLE_GUEST"

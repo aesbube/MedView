@@ -1,11 +1,17 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AppointmentComponent} from '../../../../shared/components/appointment/appointment.component';
 
 @Component({
+  standalone: true,
   selector: 'app-doctor-dashboard',
-  imports: [],
+  imports: [AppointmentComponent],
   templateUrl: './doctor-dashboard.component.html',
   styleUrl: './doctor-dashboard.component.css'
 })
-export class DoctorDashboardComponent {
+export class DoctorDashboardComponent implements OnInit {
+
+  ngOnInit(): void {
+
+  }
 
 }

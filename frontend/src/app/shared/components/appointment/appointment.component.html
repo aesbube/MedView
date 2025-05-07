@@ -1,1 +1,16 @@
-<p>appointment works!</p>
+<div class="container">
+  <mat-form-field appearance="outline">
+    <mat-label>Meeting time</mat-label>
+    <mat-select [(value)]="time" (selectionChange)="onTimeChange($event.value)">
+      <mat-option *ngFor="let option of timeOptions" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-card>
+    <mat-calendar [selected]="value" (selectedChange)="onDateChange($event!!)" [minDate]="minDate" [maxDate]="maxDate"></mat-calendar>
+  </mat-card>
+
+  <p>Selected date & time: {{ value | date: 'yyyy-MM-dd HH:mm' }}</p>
+</div>
