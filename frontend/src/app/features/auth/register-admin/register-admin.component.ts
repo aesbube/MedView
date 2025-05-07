@@ -1,24 +1,20 @@
-import { Component, inject, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { ValidationService } from '../../../core/services/validation.service';
-import { AuthService } from '../../../core/services/auth.service';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ValidationService} from '../../../core/services/validation.service';
+import {AuthService} from '../../../core/services/auth.service';
+import {Router} from '@angular/router';
+import {NgIf} from '@angular/common';
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
-  providers: [ValidationService],
+  selector: 'app-register-admin',
+  imports: [
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  templateUrl: './register-admin.component.html',
+  styleUrl: './register-admin.component.css'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterAdminComponent implements OnInit {
   myForm: FormGroup;
   strongPasswordPattern =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/;
@@ -37,10 +33,12 @@ export class RegisterComponent implements OnInit {
         Validators.minLength(8),
         Validators.pattern(this.strongPasswordPattern),
       ]),
+      role: new FormControl('', Validators.required)
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   onSubmit() {
     console.log('Submit');
@@ -55,7 +53,9 @@ export class RegisterComponent implements OnInit {
           this.myForm.reset();
           this.myForm.markAsPristine();
           this.myForm.markAsUntouched();
-          this.router.navigate(['/login']);
+          setTimeout(() => {
+            this.successMessage = null;
+          }, 5000);
         },
         error: (error) => {
           console.error('Registration failed:', error);

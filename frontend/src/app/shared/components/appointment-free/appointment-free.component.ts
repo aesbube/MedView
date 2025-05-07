@@ -4,17 +4,13 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTimepickerModule} from '@angular/material/timepicker';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormsModule} from '@angular/forms';
-import {MatOption, provideNativeDateAdapter} from '@angular/material/core';
+import {MatOption} from '@angular/material/core';
 import {MatCard} from '@angular/material/card';
 import {DatePipe, NgForOf} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 
 @Component({
-  standalone: true,
-  selector: 'app-appointment',
-  templateUrl: './appointment.component.html',
-  styleUrl: './appointment.component.css',
-  providers: [provideNativeDateAdapter()],
+  selector: 'app-appointment-free',
   imports: [
     MatFormFieldModule,
     MatInputModule,
@@ -27,8 +23,12 @@ import {MatSelectModule} from '@angular/material/select';
     MatOption,
     NgForOf,
   ],
+  templateUrl: './appointment-free.component.html',
+  styleUrl: './appointment-free.component.css'
 })
-export class AppointmentComponent {
+export class AppointmentFreeComponent {
+  selectedAppointments: Date[] = [];
+
   value: Date = new Date();
   time: string = this.value.toTimeString().slice(0, 5);
   minDate: Date = new Date();
@@ -54,16 +54,22 @@ export class AppointmentComponent {
     const [hours, minutes] = this.time.split(':').map(Number);
     const updatedDate = new Date(date);
     updatedDate.setHours(hours, minutes, 0, 0);
-    this.value = updatedDate;
+
+    // Add only if not already selected
+    if (!this.selectedAppointments.find(d => d.getTime() === updatedDate.getTime())) {
+      this.selectedAppointments.push(updatedDate);
+    }
   }
 
   onTimeChange(timeStr: string) {
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    const newDate = new Date(this.value);
-    newDate.setHours(hours, minutes, 0, 0);
-    this.value = newDate;
+    this.time = timeStr;
   }
 
+  removeAppointment(index: number) {
+    this.selectedAppointments.splice(index, 1);
+  }
+
+  submitAppointments() {
+    console.log('Sending appointments:', this.selectedAppointments);
+  }
 }
-
-

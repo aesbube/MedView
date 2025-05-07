@@ -7,7 +7,7 @@
   background-color: hsl(205, 89%, 90%);
 }
 
-.register-wrapper {
+.login-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,6 +67,7 @@ input:focus + label {
   flex-direction: column-reverse;
   align-items: start;
   height: 45px;
+  margin-bottom: 15px;
 }
 
 .submit-button {

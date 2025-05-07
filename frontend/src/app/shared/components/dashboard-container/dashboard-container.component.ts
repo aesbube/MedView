@@ -15,7 +15,6 @@ import { AuthService } from '../../../core/services/auth.service';
     SpecialistDashboardComponent,
     PharmacistDashboardComponent,
     AdminDashboardComponent,
-    NgIf
   ],
   templateUrl: './dashboard-container.component.html',
   styleUrl: './dashboard-container.component.css'

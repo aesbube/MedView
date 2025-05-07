@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import {AppointmentComponent} from '../../../../shared/components/appointment/appointment.component';
+import {AppointmentFreeComponent} from '../../../../shared/components/appointment-free/appointment-free.component';
 
 @Component({
   standalone: true,
   selector: 'app-specialist-dashboard',
-  imports: [AppointmentComponent],
+  imports: [AppointmentFreeComponent],
   templateUrl: './specialist-dashboard.component.html',
   styleUrl: './specialist-dashboard.component.css'
 })
