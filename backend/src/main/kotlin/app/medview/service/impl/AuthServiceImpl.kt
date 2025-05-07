@@ -2,6 +2,7 @@ package app.medview.service.impl
 
 import app.medview.domain.Role
 import app.medview.domain.Schedule
+import app.medview.domain.User
 import app.medview.domain.dto.JwtResponse
 import app.medview.domain.dto.LoginRequest
 import app.medview.domain.dto.MessageResponse
@@ -98,6 +99,15 @@ class AuthServiceImpl(
                     specialist = specialist,
                 )
                 scheduleRepository.save(schedule)
+            }
+            Role.ADMIN -> {
+                val admin = User(
+                    username = signupRequest.username,
+                    email = signupRequest.email,
+                    password = encodedPassword,
+                    role = Role.ADMIN
+                )
+                userRepository.save(admin)
             }
             else -> {
                 val patient = Patient(
