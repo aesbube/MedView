@@ -62,11 +62,11 @@ class AuthServiceImpl(
 
     override fun registerUser(signupRequest: SignupRequest): MessageResponse {
         if (userRepository.existsByUsername(signupRequest.username)) {
-            return MessageResponse("Error: Username is already taken!")
+            throw RuntimeException("Error: Username is already taken!")
         }
 
         if (userRepository.existsByEmail(signupRequest.email)) {
-            return MessageResponse("Error: Email is already in use!")
+            throw RuntimeException("Error: Email is already in use!")
         }
 
         val encodedPassword = passwordEncoder.encode(signupRequest.password)
@@ -80,6 +80,7 @@ class AuthServiceImpl(
                 )
                 doctorRepository.save(doctor)
             }
+
             Role.PHARMACIST -> {
                 val pharmacist = Pharmacist(
                     username = signupRequest.username,
@@ -88,6 +89,7 @@ class AuthServiceImpl(
                 )
                 pharmacistRepository.save(pharmacist)
             }
+
             Role.SPECIALIST -> {
                 val specialist = Specialist(
                     username = signupRequest.username,
@@ -100,6 +102,7 @@ class AuthServiceImpl(
                 )
                 scheduleRepository.save(schedule)
             }
+
             Role.ADMIN -> {
                 val admin = User(
                     username = signupRequest.username,
@@ -109,6 +112,7 @@ class AuthServiceImpl(
                 )
                 userRepository.save(admin)
             }
+
             else -> {
                 val patient = Patient(
                     username = signupRequest.username,

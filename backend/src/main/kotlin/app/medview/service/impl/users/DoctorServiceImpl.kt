@@ -1,7 +1,6 @@
 package app.medview.service.impl.users
 
 import app.medview.domain.converter.DoctorEntityToDtoConverter
-import app.medview.domain.converter.PatientEntityToDtoConverter
 import app.medview.domain.converter.PrescriptionEntityToDtoConverter
 import app.medview.domain.dto.*
 import app.medview.domain.dto.users.DoctorDto

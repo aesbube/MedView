@@ -1,15 +1,11 @@
 package app.medview.web
 
 import app.medview.domain.Schedule
-import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.DiagnosisDto
 import app.medview.domain.dto.FreeAppointmentDto
-import app.medview.domain.dto.ScheduleDto
 import app.medview.domain.dto.users.SpecialistDto
 import app.medview.domain.users.Specialist
-import app.medview.service.ScheduleService
 import app.medview.service.users.SpecialistService
-import org.slf4j.Logger
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
