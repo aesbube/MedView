@@ -68,5 +68,10 @@ export class SearchesComponent {
     this.router.navigate(['/appointment', this.searchControl2.value]);
   }
 
+  onOptionSelected(event: any) {
+    const selectedUsername = event.option.value;
+    this.router.navigate(['/specialist', selectedUsername]);
+  }
+
 
 }
