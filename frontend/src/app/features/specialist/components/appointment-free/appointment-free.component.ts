@@ -1,22 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { FormsModule } from '@angular/forms';
-import { MatCard } from '@angular/material/card';
-import { DatePipe } from '@angular/common';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatIconModule } from '@angular/material/icon';
-import { Appointment } from '../../../../models/appointment.model';
-import { SpecialistService } from '../../specialist.service';
+import {Component, inject, OnInit} from '@angular/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {FormsModule} from '@angular/forms';
+import {MatCard} from '@angular/material/card';
+import {DatePipe} from '@angular/common';
+import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatIconModule} from '@angular/material/icon';
+import {Appointment} from '../../../../models/appointment.model';
+import {SpecialistService} from '../../specialist.service';
+import {FreeAppointment} from '../../../../models/free-appointment.model';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {RouterLink} from '@angular/router';
 
-export interface FreeAppointment {
-  date: Date;
-  time: string;
-  location: string;
-}
 
 @Component({
   selector: 'app-appointment-free',
@@ -33,10 +31,13 @@ export interface FreeAppointment {
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatProgressSpinner,
+    RouterLink
   ]
 })
 export class AppointmentFreeComponent implements OnInit {
+  service = inject(SpecialistService);
   value: Date | null = null;
   time: string = '';
   location: string = '';
@@ -46,8 +47,9 @@ export class AppointmentFreeComponent implements OnInit {
   disabledTimeOptions: Set<string> = new Set();
   occupiedAppointments: Appointment[] = [];
   selectedAppointments: { date: Date; location: string }[] = [];
+  appointmentsLoaded = false;
 
-  constructor(private specialistService: SpecialistService) {
+  constructor() {
     this.generateTimeOptions();
   }
 
@@ -93,9 +95,13 @@ export class AppointmentFreeComponent implements OnInit {
     );
 
     if (!alreadyExists) {
-      this.selectedAppointments.push({ date: updatedDate, location: this.location });
+      this.selectedAppointments.push({date: updatedDate, location: this.location});
+      this.selectedAppointments.sort((a, b) => a['date'].getTime() - b['date'].getTime());
       this.updateDisabledTimes();
-      this.selectNextAvailableTime();
+
+      this.value = null;
+      this.time = '';
+      this.location = '';
     }
   }
 
@@ -111,7 +117,7 @@ export class AppointmentFreeComponent implements OnInit {
       location: date['location']
     }));
 
-    this.specialistService.setFreeAppointments(appointments).subscribe({
+    this.service.setFreeAppointments(appointments).subscribe({
       next: () => {
         console.log('Appointments sent successfully');
         this.loadOccupiedAppointments();
@@ -126,19 +132,6 @@ export class AppointmentFreeComponent implements OnInit {
     return this.selectedAppointments.some(appointment =>
       this.isSameDay(appointment['date'], date)
     );
-  }
-
-  isTimeSlotBooked(date: Date, timeStr: string): boolean {
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    return this.selectedAppointments.some(appointment =>
-      this.isSameDay(appointment['date'], date) &&
-      appointment['date'].getHours() === hours &&
-      appointment['date'].getMinutes() === minutes
-    );
-  }
-
-  getAvailableTimeOptions(date: Date): string[] {
-    return this.timeOptions.filter(timeStr => !this.isTimeSlotBooked(date, timeStr));
   }
 
   private isSameDay(date1: Date, date2: Date): boolean {
@@ -168,28 +161,12 @@ export class AppointmentFreeComponent implements OnInit {
     }
   }
 
-  private selectNextAvailableTime() {
-    if (!this.value) return;
-
-    const availableTime = this.timeOptions.find(timeOption => !this.disabledTimeOptions.has(timeOption));
-
-    if (availableTime) {
-      this.time = availableTime;
-    }
-  }
-
   dateClass = (date: Date) => {
     return this.isDateSelected(date) ? 'selected-date' : '';
   }
 
-  onCalendarDateChange(date: Date) {
-    this.value = date;
-    this.updateDisabledTimes();
-    this.selectNextAvailableTime();
-  }
-
   loadOccupiedAppointments() {
-    this.specialistService.getOccupiedAppointments().subscribe(appointments => {
+    this.service.getSavedFreeAppointments().subscribe(appointments => {
       this.occupiedAppointments = appointments;
 
       this.selectedAppointments = appointments.map(app => {
@@ -200,10 +177,11 @@ export class AppointmentFreeComponent implements OnInit {
           location: app.location
         };
       });
+      this.selectedAppointments.sort((a, b) => a['date'].getTime() - b['date'].getTime());
 
       this.extractOccupiedSlots();
       this.updateDisabledTimes();
-      this.selectNextAvailableTime();
+      this.appointmentsLoaded = true;
     });
   }
 }

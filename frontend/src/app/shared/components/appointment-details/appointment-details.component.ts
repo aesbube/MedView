@@ -1,0 +1,18 @@
+import {Component, Input} from '@angular/core';
+import {Appointment} from '../../../models/appointment.model';
+import {MatCard, MatCardContent, MatCardHeader, MatCardModule} from '@angular/material/card';
+
+@Component({
+  selector: 'app-appointment-details',
+  imports: [
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatCardModule
+  ],
+  templateUrl: './appointment-details.component.html',
+  styleUrl: './appointment-details.component.css'
+})
+export class AppointmentDetailsComponent {
+  @Input() appointment!: Appointment
+}

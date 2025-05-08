@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import {AppointmentFreeComponent} from '../appointment-free/appointment-free.component';
+import {RouterLink, RouterLinkActive} from '@angular/router';
+import {MatListItem, MatNavList} from '@angular/material/list';
 
 @Component({
-  standalone: true,
   selector: 'app-specialist-dashboard',
-  imports: [AppointmentFreeComponent],
+  imports: [RouterLink, RouterLinkActive, MatNavList, MatListItem],
   templateUrl: './specialist-dashboard.component.html',
   styleUrl: './specialist-dashboard.component.css'
 })

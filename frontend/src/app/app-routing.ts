@@ -7,6 +7,16 @@ import {RoleGuard} from './core/guards/role.guard';
 import {DashboardContainerComponent} from './shared/components/dashboard-container/dashboard-container.component';
 import {AppointmentComponent} from './features/doctor/components/appointment/appointment.component';
 import {SpecialistComponent} from './shared/components/specialist/specialist.component';
+import {
+  SpecialistDetailsComponent
+} from './features/specialist/components/specialist-details/specialist-details.component';
+import {
+  AppointmentOccupiedComponent
+} from './features/specialist/components/appointment-occupied/appointment-occupied.component';
+import {AppointmentFreeComponent} from './features/specialist/components/appointment-free/appointment-free.component';
+import {DoctorPatientsComponent} from './features/doctor/components/doctor-patients/doctor-patients.component';
+import {ClaimPatientComponent} from './features/doctor/components/claim-patient/claim-patient.component';
+import {DoctorDetailsComponent} from './features/doctor/components/doctor-details/doctor-details.component';
 
 export const routes: Routes = [
   {path: '', component: Home2Component},
@@ -20,5 +30,26 @@ export const routes: Routes = [
   {path: 'register', component: RegisterComponent},
 
   {path: 'appointment/:id', component: AppointmentComponent},
-  {path: 'specialist/:id', component: SpecialistComponent}
+  {path: 'specialist/:id', component: SpecialistComponent},
+  {
+    path: 'dashboard',
+    canActivate: [RoleGuard],
+    data: {"expectedRole": ["ROLE_SPECIALIST"]},
+    children: [
+      {path: 'info', component: SpecialistDetailsComponent},
+      {path: 'appointments', component: AppointmentOccupiedComponent},
+      {path: 'free-appointments', component: AppointmentFreeComponent}
+    ]
+  },
+  // treba da se sredi so info patekata
+  {
+    path: 'dashboard',
+    canActivate: [RoleGuard],
+    data: {"expectedRole": ["ROLE_DOCTOR"]},
+    children: [
+      {path: 'info', component: DoctorDetailsComponent},
+      {path: 'patients', component: DoctorPatientsComponent},
+      {path: 'claim-patient', component: ClaimPatientComponent}
+    ]
+  }
 ];

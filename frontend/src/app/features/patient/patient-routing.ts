@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { PatientDashboardComponent } from './components/patient-dashboard/patient-dashboard.component';
 import { BasicInfoComponent } from './components/basic-info/basic-info.component';
 import { PatientAppointmentsComponent } from './components/patient-appointments/patient-appointments.component';
 import { PatientPrescriptionsComponent } from './components/patient-prescriptions/patient-prescriptions.component';

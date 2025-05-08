@@ -4,7 +4,6 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  margin-top: 20px;
 }
 
 .appointment-selector {
@@ -77,6 +76,19 @@ ul {
 
 button[color="primary"] {
   margin-top: 16px;
+}
+
+.back-button {
+  position: relative;
+  top: 20px;
+  left: 20px;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
 }
 
 @media screen and (min-width: 768px) {

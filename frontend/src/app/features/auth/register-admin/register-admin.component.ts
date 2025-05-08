@@ -3,7 +3,6 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {ValidationService} from '../../../core/services/validation.service';
 import {AuthService} from '../../../core/services/auth.service';
 import {Router} from '@angular/router';
-import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-register-admin',

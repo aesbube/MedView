@@ -4,8 +4,8 @@ import { AdminDashboardComponent } from '../../../features/admin/components/admi
 import { PatientDashboardComponent } from '../../../features/patient/components/patient-dashboard/patient-dashboard.component';
 import { SpecialistDashboardComponent } from '../../../features/specialist/components/specialist-dashboard/specialist-dashboard.component';
 import { PharmacistDashboardComponent } from '../../../features/pharmacist/components/pharmacist-dashboard/pharmacist-dashboard.component';
-import { NgIf } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
+import {Roles} from '../../../models/roles.model';
 
 @Component({
   selector: 'app-dashboard-container',
@@ -28,4 +28,5 @@ export class DashboardContainerComponent implements OnInit {
     this.userRole = this.authService.getRole()
   }
 
+  protected readonly Roles = Roles;
 }
