@@ -40,8 +40,11 @@ export class LoginComponent {
 
       this.authService.login(LoginData).subscribe({
         next: (response) => {
+          if(this.authService.getRole()=="ROLE_ADMIN")
+            this.router.navigate(['/dashboard']);
+          else
+            this.router.navigate(['']);
           console.log('Login successful!', response);
-          this.router.navigate(['']);
         },
         error: (error) => {
           console.error('Login failed:', error);
