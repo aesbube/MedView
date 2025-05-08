@@ -5,7 +5,7 @@ import {AppointmentFreeComponent} from '../../../../shared/components/appointmen
 @Component({
   standalone: true,
   selector: 'app-specialist-dashboard',
-  imports: [AppointmentFreeComponent],
+  imports: [AppointmentComponent],
   templateUrl: './specialist-dashboard.component.html',
   styleUrl: './specialist-dashboard.component.css'
 })
