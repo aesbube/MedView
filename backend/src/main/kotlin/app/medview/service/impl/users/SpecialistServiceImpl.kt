@@ -3,6 +3,7 @@ package app.medview.service.impl.users
 import app.medview.domain.Diagnosis
 import app.medview.domain.Role
 import app.medview.domain.Schedule
+import app.medview.domain.converter.SpecialistEntityToDtoConverter
 import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.DiagnosisDto
 import app.medview.domain.dto.FreeAppointmentDto
@@ -28,6 +29,7 @@ class SpecialistServiceImpl(
     private val appointmentRepository: AppointmentRepository,
     private val diagnosisRepository: DiagnosisRepository,
     private val appointmentService: AppointmentService,
+    private val specialistEntityToDtoConverter: SpecialistEntityToDtoConverter,
 ) : SpecialistService {
     val logger = org.slf4j.LoggerFactory.getLogger(SpecialistServiceImpl::class.java)
     override fun getAllSpecialists(): List<Specialist> {
@@ -97,12 +99,9 @@ class SpecialistServiceImpl(
     override fun getAppointments(): List<AppointmentDto> {
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
-        logger.info("Setting free appointments for specialist: $username")
         val specialist = specialistRepository.findByUsername(username)
             ?: throw RuntimeException("Specialist not found with username: $username")
-        logger.info("Specialist found with username: $username")
         val schedule = scheduleRepository.findBySpecialistId(specialist.id)
-        logger.info("Schedule found for specialist: $username with id ${schedule.id}")
 
         return appointmentService.getAppointmentsByScheduleId(schedule.id)
     }
@@ -139,5 +138,24 @@ class SpecialistServiceImpl(
 
         diagnosisRepository.save(diagnosis)
         return MessageResponse("Diagnosis written successfully")
+    }
+
+    override fun getOccupiedAppointments(): List<AppointmentDto> {
+        val auth = SecurityContextHolder.getContext().authentication
+        val username = auth.name
+        val specialist = specialistRepository.findByUsername(username)
+            ?: throw RuntimeException("Specialist not found with username: $username")
+        val schedule = scheduleRepository.findBySpecialistId(specialist.id)
+
+        return appointmentService.getOccupiedAppointmentsByScheduleId(schedule.id)
+    }
+
+    override fun getSpecialist(): SpecialistDto {
+        val auth = SecurityContextHolder.getContext().authentication
+        val username = auth.name
+        val specialist = specialistRepository.findByUsername(username)
+            ?: throw RuntimeException("Specialist not found with username: $username")
+
+        return specialistEntityToDtoConverter.convert(specialist)
     }
 }

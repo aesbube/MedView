@@ -14,6 +14,6 @@ interface AppointmentRepository : JpaRepository<Appointment, Long> {
     fun findByLocation(location: String): List<Appointment>
     fun findByScheduleSpecialistId(specialistId: Long): List<Appointment>
     fun findByRefNumberAndPatientId(refNumber: String, patientId: Long): Appointment?
-    fun findByStatus(status: AppointmentStatus): List<Appointment>
+    fun findByStatusAndScheduleId(status: AppointmentStatus, scheduleId: Long): List<Appointment>
     fun existsByDateAndTimeAndScheduleId(date: LocalDate, time: String, scheduleId: Long): Boolean
 }

@@ -37,6 +37,12 @@ class SpecialistController(
         return ResponseEntity.ok(specialists)
     }
 
+    @GetMapping("/me")
+    fun getSpecialist(): ResponseEntity<SpecialistDto> {
+        val specialist = specialistService.getSpecialist()
+        return ResponseEntity.ok(specialist)
+    }
+
     @PostMapping("/update")
     fun addDetailsToSpecialist(@RequestBody specialistDto: SpecialistDto): ResponseEntity<String> {
         val response = specialistService.addDetailsToSpecialist(specialistDto)
@@ -58,6 +64,12 @@ class SpecialistController(
     @GetMapping("/appointments")
     fun getAppointments(): ResponseEntity<List<AppointmentDto>> {
         val appointments = specialistService.getAppointments()
+        return ResponseEntity.ok(appointments)
+    }
+
+    @GetMapping("/occupied-appointments")
+    fun getOccupiedAppointments(): ResponseEntity<List<AppointmentDto>> {
+        val appointments = specialistService.getOccupiedAppointments()
         return ResponseEntity.ok(appointments)
     }
 

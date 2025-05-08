@@ -3,6 +3,7 @@ package app.medview.service.impl
 import app.medview.domain.Appointment
 import app.medview.domain.AppointmentStatus
 import app.medview.domain.Schedule
+import app.medview.domain.converter.AppointmentEntityToDtoConverter
 import app.medview.domain.dto.*
 import app.medview.domain.users.Doctor
 import app.medview.repository.AppointmentRepository
@@ -15,8 +16,9 @@ import org.springframework.stereotype.Service
 class AppointmentServiceImpl(
     private val appointmentRepository: AppointmentRepository,
     private val patientRepository: PatientRepository,
-    private val scheduleRepository: ScheduleRepository)
-    : AppointmentService {
+    private val scheduleRepository: ScheduleRepository,
+    private val appointmentEntityToDtoConverter: AppointmentEntityToDtoConverter
+) : AppointmentService {
     override fun getAllAppointments(): List<Appointment> {
         return appointmentRepository.findAll()
     }
@@ -30,24 +32,29 @@ class AppointmentServiceImpl(
     }
 
     override fun getAppointmentsByScheduleId(scheduleId: Long): List<AppointmentDto> {
-        return appointmentRepository.findByScheduleId(scheduleId).map { appointment ->
-            AppointmentDto(
-                scheduleId = appointment.schedule?.id,
-                patientName = appointment.patient?.username,
-                assigneeName = appointment.assignee?.username,
-                date = appointment.date,
-                time = appointment.time,
-                location = appointment.location,
-                refNumber = appointment.refNumber,
-                status = appointment.status
-            )
+        return appointmentRepository.findByScheduleId(scheduleId).map {
+            appointmentEntityToDtoConverter.convert(it)
         }
     }
 
-    override fun occupyAppointment(appointmentId: Long, patientId: Long, doctor: Doctor, occupyAppointmentDto: OccupyAppointmentDto): MessageResponse {
-        val existingAppointment = appointmentRepository.findById(appointmentId).orElseThrow { Exception("Appointment not found") }
+    override fun getOccupiedAppointmentsByScheduleId(scheduleId: Long): List<AppointmentDto> {
+        return appointmentRepository.findByStatusAndScheduleId(AppointmentStatus.OCCUPIED, scheduleId)
+            .map {
+                appointmentEntityToDtoConverter.convert(it)
+            }
+    }
+
+    override fun occupyAppointment(
+        appointmentId: Long,
+        patientId: Long,
+        doctor: Doctor,
+        occupyAppointmentDto: OccupyAppointmentDto
+    ): MessageResponse {
+        val existingAppointment =
+            appointmentRepository.findById(appointmentId).orElseThrow { Exception("Appointment not found") }
         val patient = patientRepository.findById(patientId).orElseThrow() { Exception("Patient not found") }
-        val schedule = scheduleRepository.findById(occupyAppointmentDto.scheduleId).orElseThrow() { Exception("Schedule not found") }
+        val schedule = scheduleRepository.findById(occupyAppointmentDto.scheduleId)
+            .orElseThrow() { Exception("Schedule not found") }
         existingAppointment.apply {
             this.schedule = schedule
             this.patient = patient
