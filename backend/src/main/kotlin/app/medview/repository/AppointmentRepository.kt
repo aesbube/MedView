@@ -4,6 +4,7 @@ import app.medview.domain.Appointment
 import app.medview.domain.AppointmentStatus
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 
 @Repository
 interface AppointmentRepository : JpaRepository<Appointment, Long> {
@@ -14,4 +15,5 @@ interface AppointmentRepository : JpaRepository<Appointment, Long> {
     fun findByScheduleSpecialistId(specialistId: Long): List<Appointment>
     fun findByRefNumberAndPatientId(refNumber: String, patientId: Long): Appointment?
     fun findByStatus(status: AppointmentStatus): List<Appointment>
+    fun existsByDateAndTimeAndScheduleId(date: LocalDate, time: String, scheduleId: Long): Boolean
 }

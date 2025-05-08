@@ -29,8 +29,19 @@ class AppointmentServiceImpl(
         return appointmentRepository.findByScheduleSpecialistId(specialistId)
     }
 
-    override fun getAppointmentsByScheduleId(scheduleId: Long): List<Appointment> {
-        return appointmentRepository.findByScheduleId(scheduleId)
+    override fun getAppointmentsByScheduleId(scheduleId: Long): List<AppointmentDto> {
+        return appointmentRepository.findByScheduleId(scheduleId).map { appointment ->
+            AppointmentDto(
+                scheduleId = appointment.schedule?.id,
+                patientName = appointment.patient?.username,
+                assigneeName = appointment.assignee?.username,
+                date = appointment.date,
+                time = appointment.time,
+                location = appointment.location,
+                refNumber = appointment.refNumber,
+                status = appointment.status
+            )
+        }
     }
 
     override fun occupyAppointment(appointmentId: Long, patientId: Long, doctor: Doctor, occupyAppointmentDto: OccupyAppointmentDto): MessageResponse {
@@ -56,6 +67,14 @@ class AppointmentServiceImpl(
     }
 
     override fun createFreeAppointment(freeAppointmentDto: FreeAppointmentDto, schedule: Schedule): MessageResponse {
+        if (appointmentRepository.existsByDateAndTimeAndScheduleId(
+                date = freeAppointmentDto.date,
+                time = freeAppointmentDto.time,
+                scheduleId = schedule.id
+            )
+        ) {
+            return MessageResponse("Appointment already exists")
+        }
         val appointment = Appointment(
             schedule = schedule,
             date = freeAppointmentDto.date,

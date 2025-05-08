@@ -3,10 +3,10 @@ package app.medview.service.impl.users
 import app.medview.domain.Diagnosis
 import app.medview.domain.Role
 import app.medview.domain.Schedule
+import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.DiagnosisDto
 import app.medview.domain.dto.FreeAppointmentDto
 import app.medview.domain.dto.MessageResponse
-import app.medview.domain.dto.ScheduleDto
 import app.medview.domain.dto.users.SpecialistDto
 import app.medview.domain.users.Specialist
 import app.medview.repository.AppointmentRepository
@@ -14,8 +14,7 @@ import app.medview.repository.DiagnosisRepository
 import app.medview.repository.PatientRepository
 import app.medview.repository.ScheduleRepository
 import app.medview.repository.SpecialistRepository
-import app.medview.service.ScheduleService
-import app.medview.service.impl.AppointmentServiceImpl
+import app.medview.service.AppointmentService
 import app.medview.service.users.SpecialistService
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
@@ -28,7 +27,7 @@ class SpecialistServiceImpl(
     private val patientRepository: PatientRepository,
     private val appointmentRepository: AppointmentRepository,
     private val diagnosisRepository: DiagnosisRepository,
-    private val appointmentService: AppointmentServiceImpl,
+    private val appointmentService: AppointmentService,
 ) : SpecialistService {
     val logger = org.slf4j.LoggerFactory.getLogger(SpecialistServiceImpl::class.java)
     override fun getAllSpecialists(): List<Specialist> {
@@ -78,11 +77,34 @@ class SpecialistServiceImpl(
         logger.info("Specialist found with username: $username")
         val schedule = scheduleRepository.findBySpecialistId(specialist.id)
         logger.info("Schedule found for specialist: $username with id ${schedule.id}")
+        val appointmentsInDb = appointmentRepository.findByScheduleId(schedule.id)
+        val incomingSet = appointments.map { it.date to it.time }.toSet()
+
+        for (appointment in appointmentsInDb) {
+            val key = appointment.date to appointment.time
+            if (key !in incomingSet) {
+                logger.info("Deleting obsolete appointment: ${appointment.date} ${appointment.time}")
+                appointmentService.deleteAppointment(appointment.id)
+            }
+        }
         appointments.forEach { appointment ->
             appointmentService.createFreeAppointment(appointment, schedule)
         }
 
         return MessageResponse("Appointments set successfully")
+    }
+
+    override fun getAppointments(): List<AppointmentDto> {
+        val auth = SecurityContextHolder.getContext().authentication
+        val username = auth.name
+        logger.info("Setting free appointments for specialist: $username")
+        val specialist = specialistRepository.findByUsername(username)
+            ?: throw RuntimeException("Specialist not found with username: $username")
+        logger.info("Specialist found with username: $username")
+        val schedule = scheduleRepository.findBySpecialistId(specialist.id)
+        logger.info("Schedule found for specialist: $username with id ${schedule.id}")
+
+        return appointmentService.getAppointmentsByScheduleId(schedule.id)
     }
 
     override fun writeDiagnosis(

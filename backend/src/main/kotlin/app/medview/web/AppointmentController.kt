@@ -21,15 +21,15 @@ class AppointmentController(private val appointmentService: AppointmentService) 
         }
     }
 
-    @GetMapping("/schedule/{scheduleId}")
-    fun getAppointmentsByScheduleId(@PathVariable scheduleId: Long): ResponseEntity<List<Appointment>> {
-        val appointments = appointmentService.getAppointmentsByScheduleId(scheduleId)
-        return if (appointments.isNotEmpty()) {
-            ResponseEntity.ok(appointments)
-        } else {
-            ResponseEntity.notFound().build()
-        }
-    }
+//    @GetMapping("/schedule/{scheduleId}")
+//    fun getAppointmentsByScheduleId(@PathVariable scheduleId: Long): ResponseEntity<List<Appointment>> {
+//        val appointments = appointmentService.getAppointmentsByScheduleId(scheduleId)
+//        return if (appointments.isNotEmpty()) {
+//            ResponseEntity.ok(appointments)
+//        } else {
+//            ResponseEntity.notFound().build()
+//        }
+//    }
 
 //    @PostMapping("/create")
 //    fun createAppointment(@RequestBody appointmentRequestDto: AppointmentRequestDto): ResponseEntity<String> {

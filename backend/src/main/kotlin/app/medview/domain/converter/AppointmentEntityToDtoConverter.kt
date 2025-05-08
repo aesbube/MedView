@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component
 class AppointmentEntityToDtoConverter {
     fun convert(appointment: Appointment) = AppointmentDto(
         scheduleId = appointment.schedule!!.id,
-        patientId = appointment.patient!!.id,
-        assigneeId = appointment.assignee!!.id,
+        patientName = appointment.patient!!.username,
+        assigneeName = appointment.assignee!!.username,
         date = appointment.date,
         time = appointment.time,
         location = appointment.location,

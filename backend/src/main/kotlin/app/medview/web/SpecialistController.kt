@@ -1,6 +1,7 @@
 package app.medview.web
 
 import app.medview.domain.Schedule
+import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.DiagnosisDto
 import app.medview.domain.dto.FreeAppointmentDto
 import app.medview.domain.dto.users.SpecialistDto
@@ -48,10 +49,16 @@ class SpecialistController(
         return ResponseEntity.ok(schedule)
     }
 
-    @PostMapping("/appointments")
+    @PostMapping("/appointments/set")
     fun setFreeAppointments(@RequestBody appointments: List<FreeAppointmentDto>): ResponseEntity<String> {
         val response = specialistService.setFreeAppointments(appointments)
         return ResponseEntity.ok(response.message)
+    }
+
+    @GetMapping("/appointments")
+    fun getAppointments(): ResponseEntity<List<AppointmentDto>> {
+        val appointments = specialistService.getAppointments()
+        return ResponseEntity.ok(appointments)
     }
 
     @PostMapping("/appointments/{appointmentId}/diagnosis")

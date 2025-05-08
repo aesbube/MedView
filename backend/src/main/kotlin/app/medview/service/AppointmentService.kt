@@ -9,7 +9,7 @@ interface AppointmentService {
     fun getAllAppointments(): List<Appointment>
     fun getAppointmentsByPatientId(patientId: Long): List<Appointment>
     fun getAppointmentsBySpecialistId(specialistId: Long): List<Appointment>
-    fun getAppointmentsByScheduleId(scheduleId: Long): List<Appointment>
+    fun getAppointmentsByScheduleId(scheduleId: Long): List<AppointmentDto>
     fun occupyAppointment(appointmentId: Long, patientId: Long, doctor: Doctor, occupyAppointmentDto: OccupyAppointmentDto): MessageResponse
     fun deleteAppointment(id: Long): MessageResponse
     fun createFreeAppointment(freeAppointmentDto: FreeAppointmentDto, schedule: Schedule): MessageResponse

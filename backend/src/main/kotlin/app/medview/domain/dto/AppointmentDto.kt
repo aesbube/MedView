@@ -5,8 +5,8 @@ import java.time.LocalDate
 
 data class AppointmentDto(
     val scheduleId: Long?,
-    val patientId: Long?,
-    val assigneeId: Long?,
+    val patientName: String?,
+    val assigneeName: String?,
     val date: LocalDate?,
     val time: String,
     val location: String,
