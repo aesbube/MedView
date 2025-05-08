@@ -8,6 +8,7 @@ import { AuthService } from './app/core/services/auth.service';
 import { AuthGuard } from './app/core/guards/auth.guard';
 import { importProvidersFrom } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -17,5 +18,6 @@ bootstrapApplication(AppComponent, {
     AuthGuard,
     importProvidersFrom(FormsModule),
     importProvidersFrom(ReactiveFormsModule),
+    provideNativeDateAdapter()
   ],
 }).catch((err) => console.error(err));

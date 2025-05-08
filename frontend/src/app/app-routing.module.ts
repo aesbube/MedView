@@ -6,7 +6,7 @@ import {RegisterComponent} from './features/auth/register/register.component';
 import {AuthRedirectGuard} from './core/guards/auth-redirect.guard';
 import {RoleGuard} from './core/guards/role.guard';
 import {DashboardContainerComponent} from './shared/components/dashboard-container/dashboard-container.component';
-import {AppointmentComponent} from './shared/components/appointment/appointment.component';
+import {AppointmentComponent} from './features/doctor/components/appointment/appointment.component';
 import {SpecialistComponent} from './shared/components/specialist/specialist.component';
 
 export const routes: Routes = [

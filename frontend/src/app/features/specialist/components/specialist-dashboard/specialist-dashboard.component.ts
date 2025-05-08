@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import {AppointmentComponent} from '../../../../shared/components/appointment/appointment.component';
-import {AppointmentFreeComponent} from '../../../../shared/components/appointment-free/appointment-free.component';
+import {AppointmentFreeComponent} from '../appointment-free/appointment-free.component';
 
 @Component({
   standalone: true,

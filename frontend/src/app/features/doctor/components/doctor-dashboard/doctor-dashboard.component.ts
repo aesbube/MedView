@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AppointmentComponent} from '../../../../shared/components/appointment/appointment.component';
+import {AppointmentComponent} from '../appointment/appointment.component';
 
 @Component({
   standalone: true,
