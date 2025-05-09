@@ -102,4 +102,16 @@ class PatientServiceImpl(
         return appointmentEntityToDtoConverter.convert(appointment)
     }
 
+    override fun getAllAppointmentsOfPatient(): List<AppointmentDto> {
+        logger.info(SecurityContextHolder.getContext().authentication.name)
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
+        val patient = patientRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+
+        val appointments = appointmentRepository.findByPatientId(patient.id)
+
+        return appointments.map { appointmentEntityToDtoConverter.convert(it) }
+    }
+
 }

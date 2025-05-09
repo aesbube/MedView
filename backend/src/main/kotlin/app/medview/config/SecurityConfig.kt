@@ -40,7 +40,7 @@ class SecurityConfig(
                     .requestMatchers("/auth/**", "/h2/**", "/doctors/all", "/specialists/search").permitAll()
                     .requestMatchers("/users/me").hasAnyRole("ADMIN", "SPECIALIST", "PHARMACIST", "DOCTOR", "PATIENT")
                     .requestMatchers("/users/pharmacist", "/pharmacists/**").hasAnyRole("PHARMACIST", "ADMIN")
-                    .requestMatchers("/users/doctor", "/doctors/**").hasAnyRole("DOCTOR", "ADMIN")
+                    .requestMatchers("/users/doctor", "/doctors/**", "/patients").hasAnyRole("DOCTOR", "ADMIN")
                     .requestMatchers("/users/patient", "/patients/**").hasAnyRole("PATIENT", "ADMIN")
                     .requestMatchers("/users/specialist", "/specialists/**", "/schedules").hasAnyRole("SPECIALIST", "ADMIN")
                     .requestMatchers("/users/**").hasRole("ADMIN")

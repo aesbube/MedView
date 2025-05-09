@@ -43,4 +43,10 @@ class PatientController(private val patientService: PatientService) {
         return ResponseEntity.ok(appointment)
     }
 
+    @GetMapping("/appointments")
+    fun getAllAppointments(): ResponseEntity<List<AppointmentDto>> {
+        val appointments = patientService.getAllAppointmentsOfPatient()
+        return ResponseEntity.ok(appointments)
+    }
+
 }

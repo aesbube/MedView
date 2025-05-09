@@ -9,9 +9,10 @@ import org.springframework.stereotype.Component
 class PatientEntityToDtoConverter(
     private val doctorConverter: DoctorEntityToDtoConverter
 ) {
-    fun convert (patient: Patient) = PatientDto(
-            username = patient.username,
-            email = patient.email,
-            doctor = doctorConverter.convert(patient.doctor ?: throw NullDoctorException())
+    fun convert(patient: Patient) = PatientDto(
+        id = patient.id,
+        username = patient.username,
+        email = patient.email,
+        doctor = doctorConverter.convert(patient.doctor ?: throw NullDoctorException())
     )
 }

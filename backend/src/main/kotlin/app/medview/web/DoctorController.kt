@@ -48,22 +48,22 @@ class DoctorController(private val doctorService: DoctorService) {
         return ResponseEntity.ok(doctorService.getCurrentDoctor())
     }
 
-    @GetMapping("/me/patients")
+    @GetMapping("/patients")
     fun getPatientsOfDoctor(): ResponseEntity<List<PatientDto>> {
         return ResponseEntity.ok(doctorService.getPatientsOfDoctor())
     }
 
-    @GetMapping("/me/patients/{id}")
+    @GetMapping("/patients/{id}")
     fun getPatientOfDoctor(@PathVariable("id") patientId: Long): ResponseEntity<PatientDto> {
         return ResponseEntity.ok(doctorService.getPatientOfDoctor(patientId))
     }
 
-    @GetMapping("/me/patients/{id}/prescriptions")
+    @GetMapping("/patients/{id}/prescriptions")
     fun getPrescriptionsOfPatientOfDoctor(@PathVariable("id") patientId: Long): ResponseEntity<List<PrescriptionDto>> {
         return ResponseEntity.ok(doctorService.getPrescriptionsOfPatientsOfDoctor(patientId))
     }
 
-    @PostMapping("/me/patients/{id}/prescriptions/new")
+    @PostMapping("/patients/{id}/prescriptions/new")
     fun writePrescription(
         @PathVariable("id") patientId: Long,
         @RequestBody prescription: PrescriptionRequestDto
@@ -71,7 +71,7 @@ class DoctorController(private val doctorService: DoctorService) {
         return ResponseEntity(doctorService.writePrescription(patientId, prescription), HttpStatus.CREATED)
     }
 
-    @PostMapping("/me/patients/{patientId}/prescriptions/{prescriptionId}")
+    @GetMapping("/patients/{patientId}/prescriptions/{prescriptionId}")
     fun cancelPrescription(
         @PathVariable("patientId") patientId: Long,
         @PathVariable("prescriptionId") prescriptionId: String,
@@ -79,7 +79,7 @@ class DoctorController(private val doctorService: DoctorService) {
         return ResponseEntity.ok(doctorService.cancelPrescription(patientId, prescriptionId))
     }
 
-    @PostMapping("/me/patients/{patientId}/appointments")
+    @PostMapping("/patients/{patientId}/appointments")
     fun scheduleAppointment(
         @PathVariable("patientId") patientId: Long,
         @RequestBody occupyAppointmentDto: OccupyAppointmentDto
