@@ -1,18 +1,13 @@
 package app.medview.web
 
-import app.medview.domain.Prescription
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.OccupyAppointmentDto
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.PrescriptionRequestDto
 import app.medview.domain.dto.users.DoctorDto
-import app.medview.domain.dto.users.DoctorUpdateRequestDto
 import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.dto.users.PatientRequestDto
-import app.medview.domain.users.Doctor
-import app.medview.domain.users.Patient
 import app.medview.service.users.DoctorService
-import jdk.jfr.Frequency
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -32,8 +27,8 @@ class DoctorController(private val doctorService: DoctorService) {
     }
 
     @PostMapping("/update")
-    fun addDetailsToDoctor(@RequestBody doctorUpdateRequestDto: DoctorUpdateRequestDto): ResponseEntity<String> {
-        val response = doctorService.addDetailsToDoctor(doctorUpdateRequestDto)
+    fun addDetailsToDoctor(@RequestBody doctorDto: DoctorDto): ResponseEntity<String> {
+        val response = doctorService.addDetailsToDoctor(doctorDto)
         return ResponseEntity.ok(response.message)
     }
 

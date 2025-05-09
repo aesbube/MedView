@@ -19,6 +19,8 @@ import { ClaimPatientComponent } from './features/doctor/components/claim-patien
 import { DoctorDetailsComponent } from './features/doctor/components/doctor-details/doctor-details.component';
 import { PatientDetailsComponent } from './features/doctor/components/patient-details/patient-details.component';
 import { PrescriptionComponent } from './features/doctor/components/prescription/prescription.component';
+import {UsersAdminComponent} from './features/admin/components/users-admin/users-admin.component';
+import {RegisterAdminComponent} from './features/admin/components/register-admin/register-admin.component';
 
 export const routes: Routes = [
   { path: '', component: Home2Component },
@@ -49,12 +51,21 @@ export const routes: Routes = [
     canActivate: [RoleGuard],
     data: { "expectedRole": ["ROLE_DOCTOR"] },
     children: [
-      { path: 'info', component: DoctorDetailsComponent },
+      { path: 'info-d', component: DoctorDetailsComponent },
       { path: 'patients', component: DoctorPatientsComponent },
       { path: 'patients/:id', component: PatientDetailsComponent },
       { path: 'patients/:id/appointment', component: AppointmentComponent },
-      { path: 'patients/:id/prescripion', component: PrescriptionComponent },
+      { path: 'patients/:id/prescription', component: PrescriptionComponent },
       { path: 'claim-patient', component: ClaimPatientComponent }
+    ]
+  },
+  {
+    path: 'dashboard',
+    canActivate: [RoleGuard],
+    data: { "expectedRole": ["ROLE_ADMIN"] },
+    children: [
+      { path: 'users', component: UsersAdminComponent },
+      { path: 'register', component: RegisterAdminComponent },
     ]
   }
 ];

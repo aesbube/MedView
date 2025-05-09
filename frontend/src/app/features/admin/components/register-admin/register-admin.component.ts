@@ -1,14 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ValidationService} from '../../../core/services/validation.service';
-import {AuthService} from '../../../core/services/auth.service';
-import {Router} from '@angular/router';
+import {ValidationService} from '../../../../core/services/validation.service';
+import {AuthService} from '../../../../core/services/auth.service';
+import {Router, RouterLink} from '@angular/router';
+import {MatIconButton} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-register-admin',
   imports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule,
+    MatIconButton,
+    RouterLink
   ],
   templateUrl: './register-admin.component.html',
   styleUrl: './register-admin.component.css'

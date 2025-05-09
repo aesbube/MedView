@@ -20,6 +20,7 @@ export class DoctorPatientsComponent implements OnInit {
     this.service.getMyPatients().subscribe({
       next: (patients) => {
         this.patients = patients;
+        console.log('Patients loaded:', this.patients);
       },
       error: (error) => {
         console.error('Error loading patients:', error);

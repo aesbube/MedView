@@ -62,14 +62,14 @@ class SpecialistServiceImpl(
             throw RuntimeException("User is not a specialist")
         }
 
-        specialist.specialty = specialistDto.specialty
-        specialist.licenseNumber = specialistDto.licenseNumber
-        specialist.yearsOfExperience = specialistDto.yearsOfExperience
-        specialist.name = specialistDto.name!!
-        specialist.surname = specialistDto.surname!!
-        specialist.phone = specialistDto.phone!!
-        specialist.address = specialistDto.address!!
-        specialist.birthDate = specialistDto.birthDate!!
+        specialist.specialty = specialistDto.specialty ?: specialist.specialty
+        specialist.licenseNumber = specialistDto.licenseNumber ?: specialist.licenseNumber
+        specialist.yearsOfExperience = specialistDto.yearsOfExperience ?: specialist.yearsOfExperience
+        specialist.name = specialistDto.name ?: specialist.name
+        specialist.surname = specialistDto.surname ?: specialist.surname
+        specialist.phone = specialistDto.phone ?: specialist.phone
+        specialist.address = specialistDto.address ?: specialist.address
+        specialist.birthDate = specialistDto.birthDate ?: specialist.birthDate
 
         specialistRepository.save(specialist)
         return MessageResponse("Specialist details added successfully")

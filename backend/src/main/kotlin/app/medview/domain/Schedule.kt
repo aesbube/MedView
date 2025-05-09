@@ -9,6 +9,7 @@ class Schedule(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-    @OneToOne
+    @OneToOne()
+    @JoinColumn(nullable = false)
     var specialist: Specialist? = null,
 )

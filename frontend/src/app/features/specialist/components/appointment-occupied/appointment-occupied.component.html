@@ -3,7 +3,7 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
 </div>
-@if (occupiedAppointments && occupiedAppointments.length > 0) {
+@if (occupiedAppointments) {
 <div class="container">
   @for (appointment of occupiedAppointments; track appointment) {
   <app-appointment-details

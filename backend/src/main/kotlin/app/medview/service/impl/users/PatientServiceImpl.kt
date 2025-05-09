@@ -67,8 +67,6 @@ class PatientServiceImpl(
             throw RuntimeException("User is not a patient")
         }
 
-
-
         patient.doctor = patient.doctor
 
         patientRepository.save(patient)

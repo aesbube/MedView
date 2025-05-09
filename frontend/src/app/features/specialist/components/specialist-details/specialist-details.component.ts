@@ -39,11 +39,11 @@ export class SpecialistDetailsComponent implements OnInit {
     this.service.getSpecialistDetails().subscribe((specialist) => {
       this.form = this.fb.group({
         username: [{ value: specialist.username, disabled: true }],
-        email: [specialist.email],
+        email: [{ value: specialist.email, disabled: true }],
         phone: [specialist.phone],
         name: [specialist.name],
         surname: [specialist.surname],
-        birth: [specialist.birthDate],
+        birthDate: [specialist.birthDate],
         address: [specialist.address ?? ''],
         specialty: [specialist.specialty],
         licenseNumber: [specialist.licenseNumber],
@@ -55,7 +55,7 @@ export class SpecialistDetailsComponent implements OnInit {
   submit() {
     if (this.form.valid) {
       const updatedSpecialist = this.form.getRawValue();
-      updatedSpecialist.birth = this.formatDate(updatedSpecialist.birth);
+      updatedSpecialist.birthDate = this.formatDate(updatedSpecialist.birthDate);
       this.service.updateSpecialistDetails(updatedSpecialist).subscribe({
         next: (ok) => {
           console.log('Update successful', ok);

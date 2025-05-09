@@ -5,7 +5,7 @@ import {DoctorDetailsComponent} from '../../../features/doctor/components/doctor
 import {
   SpecialistDetailsComponent
 } from '../../../features/specialist/components/specialist-details/specialist-details.component';
-import {Roles} from '../../../models/roles.model';
+import {Role} from '../../../models/roles.model';
 
 @Component({
   selector: 'app-info-container',
@@ -29,6 +29,6 @@ export class InfoContainerComponent implements OnInit {
       this.router.navigate(['/login']);
   }
 
-  protected readonly Roles = Roles;
+  protected readonly Roles = Role;
 
 }

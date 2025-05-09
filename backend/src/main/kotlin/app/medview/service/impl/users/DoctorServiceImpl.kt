@@ -4,7 +4,6 @@ import app.medview.domain.converter.DoctorEntityToDtoConverter
 import app.medview.domain.converter.PrescriptionEntityToDtoConverter
 import app.medview.domain.dto.*
 import app.medview.domain.dto.users.DoctorDto
-import app.medview.domain.dto.users.DoctorUpdateRequestDto
 import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.dto.users.PatientRequestDto
 import app.medview.exceptions.IllegalDoctorPatientOperation
@@ -40,7 +39,7 @@ class DoctorServiceImpl(
         })
     }
 
-    override fun addDetailsToDoctor(doctorUpdateRequestDto: DoctorUpdateRequestDto): MessageResponse {
+    override fun addDetailsToDoctor(doctorDto: DoctorDto): MessageResponse {
         logger.info("Adding doctor details")
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
@@ -49,12 +48,17 @@ class DoctorServiceImpl(
             ?: throw UsernameNotFoundException("User not found with username: $username")
 
         logger.info("Adding doctor details for user: $username")
-        logger.info("Doctor DTO: $doctorUpdateRequestDto")
+        logger.info("Doctor DTO: $doctorDto")
 
-        doctor.specialty = doctorUpdateRequestDto.specialty ?: doctor.specialty
-        doctor.licenseNumber = doctorUpdateRequestDto.licenseNumber ?: doctor.licenseNumber
-        doctor.yearsOfExperience = doctorUpdateRequestDto.yearsOfExperience ?: doctor.yearsOfExperience
-        doctor.hospitalName = doctorUpdateRequestDto.hospitalName ?: doctor.hospitalName
+        doctor.name = doctorDto.name ?: doctor.name
+        doctor.surname = doctorDto.surname ?: doctor.surname
+        doctor.phone = doctorDto.phone ?: doctor.phone
+        doctor.address = doctorDto.address ?: doctor.address
+        doctor.birthDate = doctorDto.birthDate ?: doctor.birthDate
+        doctor.specialty = doctorDto.specialty ?: doctor.specialty
+        doctor.licenseNumber = doctorDto.licenseNumber ?: doctor.licenseNumber
+        doctor.yearsOfExperience = doctorDto.yearsOfExperience ?: doctor.yearsOfExperience
+        doctor.hospitalName = doctorDto.hospitalName ?: doctor.hospitalName
 
         doctorRepository.save(doctor)
         return MessageResponse("Doctor details added successfully")

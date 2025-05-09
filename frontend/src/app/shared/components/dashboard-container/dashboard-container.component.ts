@@ -5,7 +5,7 @@ import { PatientDashboardComponent } from '../../../features/patient/components/
 import { SpecialistDashboardComponent } from '../../../features/specialist/components/specialist-dashboard/specialist-dashboard.component';
 import { PharmacistDashboardComponent } from '../../../features/pharmacist/components/pharmacist-dashboard/pharmacist-dashboard.component';
 import { AuthService } from '../../../core/services/auth.service';
-import {Roles} from '../../../models/roles.model';
+import {Role} from '../../../models/roles.model';
 
 @Component({
   selector: 'app-dashboard-container',
@@ -28,5 +28,5 @@ export class DashboardContainerComponent implements OnInit {
     this.userRole = this.authService.getRole()
   }
 
-  protected readonly Roles = Roles;
+  protected readonly Roles = Role;
 }

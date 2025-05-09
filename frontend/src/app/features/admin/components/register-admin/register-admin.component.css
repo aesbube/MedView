@@ -123,3 +123,9 @@ select {
 select:focus {
   outline: 2px #074b7b solid;
 }
+
+.back-button {
+  position: fixed;
+  top: 70px;
+  left: 20px;
+}
