@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Appointment} from '../../models/appointment.model';
 import {FreeAppointment} from '../../models/free-appointment.model';
-import {Specialist} from '../../models/equipment.model';
+import { Specialist } from '../../models/specialist.model';
 
 @Injectable({
   providedIn: 'root'

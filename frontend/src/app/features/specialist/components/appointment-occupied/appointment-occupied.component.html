@@ -3,17 +3,18 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
 </div>
-@if (occupiedAppointments$ | async) {
-  <div class="container">
-    @for (appointment of occupiedAppointments$ | async; track appointment) {
-      <app-appointment-details [appointment]="appointment"></app-appointment-details>
-    } @empty {
-      <ng-content>No appointments found</ng-content>
-    }
-  </div>
+@if (occupiedAppointments && occupiedAppointments.length > 0) {
+<div class="container">
+  @for (appointment of occupiedAppointments; track appointment) {
+  <app-appointment-details
+    [appointment]="appointment"
+  ></app-appointment-details>
+  } @empty {
+  <ng-content>No appointments found</ng-content>
+  }
+</div>
 } @else {
-  <div class="spinner-container">
-    <mat-spinner [diameter]="60"></mat-spinner>
-  </div>
+<div class="spinner-container">
+  <mat-spinner [diameter]="60"></mat-spinner>
+</div>
 }
-

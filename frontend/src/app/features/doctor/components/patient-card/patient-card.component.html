@@ -1,0 +1,16 @@
+<div class="patient-item">
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Patient name: {{ patient.username }}</mat-card-title>
+      <mat-card-subtitle>Patient email: {{ patient.email }}</mat-card-subtitle>
+    </mat-card-header>
+    <button
+      mat-icon-button
+      color="warn"
+      [routerLink]="['/patients/' + patient.id]"
+      aria-label="View patient details"
+    >
+      View details
+    </button>
+  </mat-card>
+</div>
