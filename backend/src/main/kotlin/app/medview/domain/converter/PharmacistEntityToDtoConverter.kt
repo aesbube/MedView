@@ -9,6 +9,11 @@ class PharmacistEntityToDtoConverter {
     fun convert (pharmacist: Pharmacist) = PharmacistDto(
             username = pharmacist.username,
             email = pharmacist.email,
+            name = pharmacist.name,
+            surname = pharmacist.surname,
+            phone = pharmacist.phone,
+            address = pharmacist.address,
+            birthDate = pharmacist.birthDate,
             licenseNumber = pharmacist.licenseNumber,
             pharmacyName = pharmacist.pharmacyName,
             pharmacyAddress = pharmacist.pharmacyAddress

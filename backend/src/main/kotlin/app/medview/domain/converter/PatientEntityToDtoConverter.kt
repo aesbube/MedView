@@ -13,6 +13,14 @@ class PatientEntityToDtoConverter(
         id = patient.id,
         username = patient.username,
         email = patient.email,
-        doctor = doctorConverter.convert(patient.doctor ?: throw NullDoctorException())
+        doctor = doctorConverter.convert(patient.doctor ?: throw NullDoctorException()),
+        name = patient.name,
+        surname = patient.surname,
+        phone = patient.phone,
+        address = patient.address,
+        birthDate = patient.birthDate,
+        birthPlace = patient.birthPlace,
+        allergies = patient.allergies,
+        bloodType = patient.bloodType,
     )
 }

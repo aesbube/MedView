@@ -9,6 +9,11 @@ class DoctorEntityToDtoConverter {
     fun convert (doctor: Doctor) = DoctorDto(
             username = doctor.username,
             email = doctor.email,
+            name = doctor.name,
+            surname = doctor.surname,
+            phone = doctor.phone,
+            address = doctor.address,
+            birthDate = doctor.birthDate,
             specialty = doctor.specialty,
             licenseNumber = doctor.licenseNumber,
             yearsOfExperience = doctor.yearsOfExperience,
