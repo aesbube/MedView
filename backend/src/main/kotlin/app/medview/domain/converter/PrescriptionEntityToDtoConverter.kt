@@ -5,14 +5,13 @@ import app.medview.domain.dto.PrescriptionDto
 import org.springframework.stereotype.Component
 
 @Component
-class PrescriptionEntityToDtoConverter (
-    private val patientConverter: PatientEntityToDtoConverter,
-    private val doctorConverter: DoctorEntityToDtoConverter
-){
-    fun convert (prescription: Prescription) = PrescriptionDto(
+class PrescriptionEntityToDtoConverter {
+    fun convert(prescription: Prescription) = PrescriptionDto(
         id = prescription.id,
         patientId = prescription.patient?.id,
+        patientNameAndSurname = prescription.patient?.name + " " + prescription.patient?.surname,
         doctorId = prescription.doctor?.id,
+        doctorNameAndSurname = prescription.doctor?.name + " " + prescription.doctor?.surname,
         medicine = prescription.medicine,
         frequency = prescription.frequency,
         status = prescription.status,

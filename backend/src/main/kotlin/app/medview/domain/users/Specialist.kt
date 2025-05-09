@@ -17,7 +17,7 @@ class Specialist(
     var surname: String = "",
     var phone: String = "",
     var address: String = "",
-    var birthDate: LocalDate? = null,
+    var birthDate: LocalDate = LocalDate.now(),
     var specialty: String = "",
     var licenseNumber: String = "",
     var yearsOfExperience: Int = 0,
