@@ -1,0 +1,13 @@
+<zxing-scanner (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+<button mat-flat-button routerLink="/dashboard">Cancel</button>
+
+
+@if(qrResultString){
+  <div>
+    <small>Result</small>
+    <strong>{{ qrResultString }}</strong>
+  </div>
+  <button mat-flat-button (click)="clearResult()">Scan New Prescription</button>
+
+}
+

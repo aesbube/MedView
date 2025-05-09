@@ -1,19 +1,15 @@
-@if (role === Roles.DOCTOR) {
-  <ng-container>
+
+
+@if (userRole === Roles.ADMIN) {
+  <p>admin info</p>
+} @else if (userRole === Roles.DOCTOR) {
     <app-doctor-details></app-doctor-details>
-  </ng-container>
-} @else if (role === Roles.PATIENT) {
-  <!--  <ng-container>)-->
-    <!--    <app-patient-details></app-patient-details>-->
-    <!--  </ng-container>-->
-} @else if (role === Roles.SPECIALIST) {
-  <ng-container>
+} @else if (userRole === Roles.PATIENT) {
+  <p>patient info</p>
+} @else if (userRole === Roles.SPECIALIST) {
     <app-specialist-details></app-specialist-details>
-  </ng-container>
-} @else if (role === Roles.PHARMACIST) {
-  <!--  <ng-container>-->
-    <!--    <app-pharmacist-details></app-pharmacist-details>-->
-    <!--  </ng-container>-->
+} @else if (userRole === Roles.PHARMACIST) {
+  <p>pharmacist info</p>
 } @else {
   <p>Loading user information...</p>
 }

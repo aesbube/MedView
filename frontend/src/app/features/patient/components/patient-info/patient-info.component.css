@@ -5,6 +5,15 @@
 }
 
 .patient-wrapper{
+  min-height: 676px;
+}
+
+mat-spinner{
+  justify-self: center;
+  align-self: center;
+}
+
+.patient-wrapper{
   margin-top: 64px;
   width: 900px;
   border-radius: 30px;

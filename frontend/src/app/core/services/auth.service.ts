@@ -99,4 +99,19 @@ export class AuthService {
     return "ROLE_GUEST";
   }
 
+  getUserId(): number {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const decodedToken = this.jwtHelper.decodeToken(token);
+        console.log("Decoded Token", decodedToken)
+        return decodedToken?.id
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return 0
+      }
+    }
+    return 0
+  }
+
 }

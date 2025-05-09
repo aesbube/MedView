@@ -40,7 +40,12 @@ export class LoginComponent {
 
       this.authService.login(LoginData).subscribe({
         next: (response) => {
-          if(this.authService.getRole()=="ROLE_ADMIN")
+          if(
+            this.authService.getRole()=="ROLE_ADMIN" ||
+            this.authService.getRole()=="ROLE_DOCTOR" ||
+            this.authService.getRole()=="ROLE_PHARMACIST" ||
+            this.authService.getRole()=="ROLE_SPECIALIST"
+          )
             this.router.navigate(['/dashboard']);
           else
             this.router.navigate(['']);

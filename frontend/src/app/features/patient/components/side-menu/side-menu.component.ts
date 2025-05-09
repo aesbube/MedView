@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatListModule} from '@angular/material/list';
@@ -21,6 +21,7 @@ interface Options {
 })
 export class SideMenuComponent {
   lastClicked = "Basic Info"
+  @Output() currentTab = new EventEmitter<string>()
 
   setActiveButton(event: any) {
     const buttonText = (event.target as HTMLButtonElement).innerText.trim();
@@ -38,6 +39,7 @@ export class SideMenuComponent {
         this.lastClicked = "History";
         break;
     }
+    this.currentTab.emit(this.lastClicked)
     console.log(this.lastClicked)
   }
 

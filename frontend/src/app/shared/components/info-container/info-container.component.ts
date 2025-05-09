@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {AuthService} from '../../../core/services/auth.service';
 import {Router} from '@angular/router';
 import {DoctorDetailsComponent} from '../../../features/doctor/components/doctor-details/doctor-details.component';
@@ -17,17 +17,18 @@ import {Roles} from '../../../models/roles.model';
   styleUrl: './info-container.component.css'
 })
 export class InfoContainerComponent implements OnInit {
-  role: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router) {
-  }
+  authService = inject(AuthService)
+  userRole: String = "ROLE_GUEST"
 
-  ngOnInit(): void {
-    this.role = this.authService.getRole();
-    if (!["ROLE_PATIENT", "ROLE_DOCTOR", "ROLE_SPECIALIST", "ROLE_PHARMACIST", "ROLE_ADMIN"].includes(this.role ?? '')) {
-      this.router.navigate(['']);
-    }
+  constructor(private router: Router){}
+
+  ngOnInit(){
+    this.userRole = this.authService.getRole()
+    if (this.userRole == "ROLE_GUEST")
+      this.router.navigate(['/login']);
   }
 
   protected readonly Roles = Roles;
+
 }

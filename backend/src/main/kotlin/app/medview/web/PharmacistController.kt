@@ -34,10 +34,11 @@ class PharmacistController(private val pharmacistService: PharmacistService) {
 
     @GetMapping("/prescription")
     fun getPrescription(
-        @RequestBody prescriptionScanDto: PrescriptionScanDto
+        @RequestParam ("prescriptionId") prescriptionId : String,
+        @RequestParam ("patientId") patientId : Long,
     ) : ResponseEntity<PrescriptionDto>{
         val prescription = pharmacistService
-            .getPrescription(prescriptionScanDto)
+            .getPrescription(PrescriptionScanDto(prescriptionId,patientId))
         return ResponseEntity(prescription,HttpStatus.OK)
     }
 

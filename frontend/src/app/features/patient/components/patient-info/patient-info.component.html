@@ -1,4 +1,9 @@
-<div class="patient-wrapper">
+@if (!fetched) {
+  <div class="patient-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+}
+@else {<div class="patient-wrapper">
   <h2>Basic patient information</h2>
   <div class="info">
     <div class="info-item">
@@ -44,7 +49,6 @@
       <label for="gp">Drinks</label>
       <input type="text" name="gp" disabled [value]="patient.username">
     </div>
-
   </div>
-
 </div>
+}
