@@ -2,6 +2,7 @@ package app.medview.web
 
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.OccupyAppointmentDto
+import app.medview.domain.dto.PatientSearchDto
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.PrescriptionRequestDto
 import app.medview.domain.dto.users.DoctorDto
@@ -80,6 +81,18 @@ class DoctorController(private val doctorService: DoctorService) {
         @RequestBody occupyAppointmentDto: OccupyAppointmentDto
     ): ResponseEntity<MessageResponse> {
         return ResponseEntity.ok(doctorService.scheduleAppointment(patientId, occupyAppointmentDto))
+    }
+
+    @PostMapping("/search-patients")
+    fun searchPatientsByName(@RequestBody patientSearchDto: PatientSearchDto): ResponseEntity<List<PatientDto>> {
+        val patients = doctorService.searchPatientsByName(patientSearchDto)
+        return ResponseEntity.ok(patients)
+    }
+
+    @PostMapping("/search-patients-claim")
+    fun searchPatientsByNameClaim(@RequestBody patientSearchDto: PatientSearchDto): ResponseEntity<List<PatientDto>> {
+        val patients = doctorService.searchPatientsByNameClaim(patientSearchDto)
+        return ResponseEntity.ok(patients)
     }
 
 //    @PostMapping("/me/patients/claim-patient/{patientId}")

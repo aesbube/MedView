@@ -13,7 +13,7 @@ class PatientEntityToDtoConverter(
         id = patient.id,
         username = patient.username,
         email = patient.email,
-        doctor = doctorConverter.convert(patient.doctor ?: throw NullDoctorException()),
+        doctor = patient.doctor?.let { doctorConverter.convert(it) },
         name = patient.name?: "",
         surname = patient.surname?: "",
         phone = patient.phone?: "",

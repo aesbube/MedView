@@ -10,6 +10,16 @@ interface PatientRepository : JpaRepository<Patient, Long> {
     fun findByUsername(username: String): Patient?
     fun findByEmail(email: String): Patient?
     fun existsByUsername(username: String): Boolean
-    fun findByDoctor(doctor: Doctor) : List<Patient>
-    fun findByDoctorId(doctorId: Long) : List<Patient>
+    fun findByDoctor(doctor: Doctor): List<Patient>
+    fun findByDoctorId(doctorId: Long): List<Patient>
+    fun searchByNameContainingIgnoreCaseOrUsernameContainingIgnoreCase(
+        name: String,
+        username: String,
+    ): List<Patient>
+
+    fun searchByNameContainingIgnoreCaseOrUsernameContainingIgnoreCaseAndDoctorId(
+        name: String,
+        username: String,
+        doctorId: Long
+    ): List<Patient>
 }

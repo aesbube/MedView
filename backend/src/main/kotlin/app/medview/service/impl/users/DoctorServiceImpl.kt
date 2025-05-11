@@ -156,8 +156,36 @@ class DoctorServiceImpl(
         val assignee = doctorRepository.findByUsername(username)
             ?: throw UsernameNotFoundException("User not found with username: $username")
 
-        appointmentService.occupyAppointment(occupyAppointmentDto.appointmentId, patientId, assignee, occupyAppointmentDto)
+        appointmentService.occupyAppointment(
+            occupyAppointmentDto.appointmentId,
+            patientId,
+            assignee,
+            occupyAppointmentDto
+        )
         return MessageResponse("Appointment scheduled successfully")
+    }
+
+    override fun searchPatientsByName(patientSearchDto: PatientSearchDto): List<PatientDto> {
+        if (patientSearchDto.name == "") return this.getPatientsOfDoctor()
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
+        val doctor = doctorRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+        val patients = patientRepository.searchByNameContainingIgnoreCaseOrUsernameContainingIgnoreCaseAndDoctorId(
+            patientSearchDto.name!!,
+            patientSearchDto.name,
+            doctor.id
+        )
+        return patients.map { patientService.getPatientById(it.id) }
+
+    }
+
+    override fun searchPatientsByNameClaim(patientSearchDto: PatientSearchDto): List<PatientDto> {
+        val patients = patientRepository.searchByNameContainingIgnoreCaseOrUsernameContainingIgnoreCase(
+            patientSearchDto.name!!,
+            patientSearchDto.name
+        )
+        return patients.map { patientService.getPatientById(it.id) }
     }
 
 //    override fun claimPatient(patientId: Long): MessageResponse {
