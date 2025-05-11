@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ValidationService } from '../../../core/services/validation.service';
-import { AuthService } from '../../../core/services/auth.service';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import {ValidationService} from '../../../core/services/validation.service';
+import {AuthService} from '../../../core/services/auth.service';
+import {CommonModule} from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   myForm: FormGroup;
+  successMessage: string | null = null;
 
   constructor(
     public validationService: ValidationService,
@@ -30,8 +31,6 @@ export class LoginComponent {
     });
   }
 
-  ngOnInit() {}
-
   onSubmit() {
     console.log('Submit');
     if (this.myForm.valid) {
@@ -40,11 +39,12 @@ export class LoginComponent {
 
       this.authService.login(LoginData).subscribe({
         next: (response) => {
-          if(
-            this.authService.getRole()=="ROLE_ADMIN" ||
-            this.authService.getRole()=="ROLE_DOCTOR" ||
-            this.authService.getRole()=="ROLE_PHARMACIST" ||
-            this.authService.getRole()=="ROLE_SPECIALIST"
+          this.successMessage = null
+          if (
+            this.authService.getRole() == "ROLE_ADMIN" ||
+            this.authService.getRole() == "ROLE_DOCTOR" ||
+            this.authService.getRole() == "ROLE_PHARMACIST" ||
+            this.authService.getRole() == "ROLE_SPECIALIST"
           )
             this.router.navigate(['/dashboard']);
           else
@@ -52,6 +52,7 @@ export class LoginComponent {
           console.log('Login successful!', response);
         },
         error: (error) => {
+          this.successMessage = 'Wrong credentials';
           console.error('Login failed:', error);
         },
       });

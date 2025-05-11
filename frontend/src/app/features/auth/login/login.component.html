@@ -38,9 +38,14 @@
         </div>
       }
     </div>
-
+    @if (successMessage) {
+      <div class="success-message">
+        {{ successMessage }}
+      </div>
+    }
     <button type="submit" [disabled]="!myForm.valid" class="submit-button">
       Login
     </button>
+
   </form>
 </div>

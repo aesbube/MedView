@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
@@ -37,10 +37,10 @@ export class AuthService {
           this.isAuthenticatedSubject.next(true);
         }),
         map(() => true),
-        catchError(error => { //Handle login errors
+        catchError(error => {
           console.error('Login failed:', error);
-          this.isAuthenticatedSubject.next(false);  //Important to set to false
-          return of(false);  //Return false to signal login failure
+          this.isAuthenticatedSubject.next(false);
+          return throwError(() => error);
         })
       );
   }
