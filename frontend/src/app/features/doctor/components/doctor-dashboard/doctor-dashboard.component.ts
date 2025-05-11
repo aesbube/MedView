@@ -10,10 +10,6 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
   templateUrl: './doctor-dashboard.component.html',
   styleUrl: './doctor-dashboard.component.css'
 })
-export class DoctorDashboardComponent implements OnInit {
-
-  ngOnInit(): void {
-
-  }
+export class DoctorDashboardComponent {
 
 }

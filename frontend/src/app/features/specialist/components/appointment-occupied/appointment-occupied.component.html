@@ -3,14 +3,14 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
 </div>
-@if (occupiedAppointments) {
+@if (appointmentsLoaded) {
 <div class="container">
   @for (appointment of occupiedAppointments; track appointment) {
   <app-appointment-details
     [appointment]="appointment"
   ></app-appointment-details>
   } @empty {
-  <ng-content>No appointments found</ng-content>
+    <ng-content>No appointments found</ng-content>
   }
 </div>
 } @else {

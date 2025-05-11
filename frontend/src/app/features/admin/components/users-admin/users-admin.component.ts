@@ -13,6 +13,7 @@ import {
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-users-admin',
@@ -30,7 +31,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatRowDef,
     MatIconModule,
     MatIconButton,
-    RouterLink
+    RouterLink,
+    MatProgressSpinner
   ],
   templateUrl: './users-admin.component.html',
   styleUrl: './users-admin.component.css'
@@ -39,6 +41,7 @@ export class UsersAdminComponent implements OnInit {
   service = inject(AdminService);
   users: User[] = [];
   displayedColumns: string[] = ['id', 'name', 'email', 'actions'];
+  loaded = false;
 
   ngOnInit(): void {
     this.loadUsers();
@@ -48,6 +51,7 @@ export class UsersAdminComponent implements OnInit {
     this.service.getAllUsers().subscribe({
       next: (users) => {
         this.users = users;
+        this.loaded = true;
       },
       error: (error) => {
         console.error('Error loading users:', error);

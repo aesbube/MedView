@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class AppointmentOccupiedComponent implements OnInit {
   service = inject(SpecialistService);
   occupiedAppointments: Appointment[] = []
+  appointmentsLoaded = false;
 
   ngOnInit(): void {
     this.loadOccupiedAppointments()
@@ -33,6 +34,7 @@ export class AppointmentOccupiedComponent implements OnInit {
     this.service.getOccupiedAppointments().subscribe({
       next: (appointments) => {
         this.occupiedAppointments = appointments;
+        this.appointmentsLoaded = true;
       },
       error: (error) => {
         console.error('Error loading occupied appointments:', error);

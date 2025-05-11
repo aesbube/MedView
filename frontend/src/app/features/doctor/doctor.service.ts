@@ -21,12 +21,22 @@ export class DoctorService {
     return this.http.get<Patient[]>(`${this.baseUrl}/patients`);
   }
 
+  searchPatients(patient: string): Observable<Patient[]> {
+    return this.http.post<Patient[]>(`${this.baseUrl}/search-patients`, {name: patient});
+  }
+
+  searchPatientsClaim(patient: string): Observable<Patient[]> {
+    return this.http.post<Patient[]>(`${this.baseUrl}/search-patients-claim`, {name: patient});
+  }
+
   getAllPatients(): Observable<Patient[]> {
     return this.http.get<Patient[]>(`${this.patientsUrl}`);
   }
 
-  claimPatient(patientUsername: string): Observable<Patient> {
-    return this.http.post<Patient>(`${this.baseUrl}/add-patient`, {username: patientUsername});
+  claimPatient(patientUsername: string): Observable<string> {
+    return this.http.post(`${this.baseUrl}/add-patient`, {username: patientUsername}, {
+      responseType: 'text' as const
+    });
   }
 
   getPatientDetails(patientId: number): Observable<Patient> {
