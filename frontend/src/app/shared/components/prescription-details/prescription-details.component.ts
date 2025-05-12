@@ -1,10 +1,10 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { Prescription } from '../../../models/prescription.model';
-import { MatCard, MatCardContent, MatCardHeader, MatCardModule } from '@angular/material/card';
-import { AuthService } from '../../../core/services/auth.service';
-import { PrescriptionStatus } from '../../../models/prescription-status';
-import { QrCodeComponent } from '../qr-code/qr-code.component';
+import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
+import {Prescription} from '../../../models/prescription.model';
+import {MatCard, MatCardContent, MatCardHeader, MatCardModule} from '@angular/material/card';
+import {AuthService} from '../../../core/services/auth.service';
+import {QrCodeComponent} from '../qr-code/qr-code.component';
 import {MatButtonModule} from '@angular/material/button';
+import {PrescriptionStatusModel} from '../../../models/prescription-status.model';
 
 @Component({
   selector: 'app-prescription-details',
@@ -19,23 +19,23 @@ import {MatButtonModule} from '@angular/material/button';
   templateUrl: './prescription-details.component.html',
   styleUrl: './prescription-details.component.css'
 })
-export class PrescriptionDetailsComponent {
+export class PrescriptionDetailsComponent implements OnInit {
   @Input() prescription!: Prescription;
   @Input() isDoctor: boolean = false;
-  @Input() prescription!: Prescription;
   @Output() validate = new EventEmitter<boolean>()
-  PrescriptionStatus = PrescriptionStatus
+  PrescriptionStatus = PrescriptionStatusModel
 
   authService = inject(AuthService)
   userRole: String = "ROLE_GUEST"
   uniqueQrText = ""
   redeemed = false
-  ngOnInit(){
+
+  ngOnInit() {
     this.userRole = this.authService.getRole()
-    this.uniqueQrText = this.prescription.id+"-"+this.authService.getUserId()
+    this.uniqueQrText = this.prescription.id + "-" + this.authService.getUserId()
   }
 
-  emitValidation(){
+  emitValidation() {
     this.validate.emit(true)
   }
 }

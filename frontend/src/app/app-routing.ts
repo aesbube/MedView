@@ -21,6 +21,7 @@ import {UsersAdminComponent} from './features/admin/components/users-admin/users
 import {RegisterAdminComponent} from './features/admin/components/register-admin/register-admin.component';
 import {PatientPanelComponent} from './features/doctor/components/patient-panel/patient-panel.component';
 import {WritePrescriptionComponent} from './features/doctor/components/write-prescription/write-prescription.component';
+import {PharmacistScanComponent} from './features/pharmacist/components/pharmacist-scan/pharmacist-scan.component';
 
 export const routes: Routes = [
   { path: '', component: Home2Component },
@@ -46,7 +47,6 @@ export const routes: Routes = [
       { path: 'free-appointments', component: AppointmentFreeComponent }
     ]
   },
-  // treba da se sredi so info patekata
   {
     path: 'dashboard',
     canActivate: [RoleGuard],

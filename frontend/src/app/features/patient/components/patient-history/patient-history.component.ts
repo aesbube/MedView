@@ -6,7 +6,7 @@ import { Prescription } from '../../../../models/prescription.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppointmentDetailsComponent } from '../../../../shared/components/appointment-details/appointment-details.component';
 import { PrescriptionDetailsComponent } from '../../../../shared/components/prescription-details/prescription-details.component';
-import { PrescriptionStatus } from '../../../../models/prescription-status';
+import {PrescriptionStatusModel} from '../../../../models/prescription-status.model';
 
 @Component({
   selector: 'app-patient-history',
@@ -27,7 +27,7 @@ export class PatientHistoryComponent {
   prescriptions: Prescription[] = []
   numOfPrescriptions = 0
   fetchedPrescriptions = false
-  prescriptionStatus = PrescriptionStatus
+  prescriptionStatus = PrescriptionStatusModel
 
   subscription: Subscription | undefined;
 

@@ -5,7 +5,7 @@ import { PatientService } from '../../patient.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PrescriptionDetailsComponent } from '../../../../shared/components/prescription-details/prescription-details.component';
 import {MatButtonModule} from '@angular/material/button';
-import { PrescriptionStatus } from '../../../../models/prescription-status';
+import {PrescriptionStatusModel} from '../../../../models/prescription-status.model';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class PatientPrescriptionsComponent implements OnInit {
   numOfPrescriptions = 0
   fetched = false
   subscription: Subscription | undefined;
-  prescriptionStatus = PrescriptionStatus
+  prescriptionStatus = PrescriptionStatusModel
 
 
   constructor(private patientService: PatientService) { }

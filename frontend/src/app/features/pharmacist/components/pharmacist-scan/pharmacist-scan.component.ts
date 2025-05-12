@@ -7,7 +7,6 @@ import { PharmacistService } from '../../pharmacist.service';
 import { PrescriptionDetailsComponent } from '../../../../shared/components/prescription-details/prescription-details.component';
 import { Subscription } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { PrescriptionStatus } from '../../../../models/prescription-status';
 
 @Component({
   selector: 'app-pharmacist-scan',

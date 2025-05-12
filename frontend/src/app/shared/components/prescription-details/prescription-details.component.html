@@ -21,7 +21,7 @@
     </mat-card-content>
     @if (userRole == "ROLE_PATIENT" && prescription.status == PrescriptionStatus.ACTIVE){
       <div class="qr-wrap">
-        @if (redeemed == false) {
+        @if (!redeemed) {
           <button mat-flat-button (click)="redeemed=true">Redeem</button>
         }
         @else {
