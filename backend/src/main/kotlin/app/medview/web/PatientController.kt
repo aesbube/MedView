@@ -22,8 +22,8 @@ class PatientController(private val patientService: PatientService) {
     }
 
     @PostMapping("/update")
-    fun addDetailsToPatient(@RequestBody patientRequestDto: PatientRequestDto): ResponseEntity<String> {
-        val response = patientService.addDetailsToPatient(patientRequestDto)
+    fun addDetailsToPatient(@RequestBody patientDto: PatientDto): ResponseEntity<String> {
+        val response = patientService.addDetailsToPatient(patientDto)
         return ResponseEntity.ok(response.message)
     }
 

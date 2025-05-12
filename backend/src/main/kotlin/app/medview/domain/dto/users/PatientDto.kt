@@ -4,7 +4,7 @@ import app.medview.domain.BloodType
 import java.time.LocalDate
 
 data class PatientDto(
-    val id: Long,
+    val id: Long?,
     val doctor: DoctorDto?,
     val username: String,
     val email: String,

@@ -46,28 +46,40 @@ class PatientServiceImpl(
         val authentication = SecurityContextHolder.getContext().authentication
         val username = authentication.name
 
-        return patientConverter.convert(patientRepository.findByUsername(username)
-            ?: throw UsernameNotFoundException("User not found with username: $username"))
+        return patientConverter.convert(
+            patientRepository.findByUsername(username)
+                ?: throw UsernameNotFoundException("User not found with username: $username")
+        )
     }
 
     override fun getPatientByEmail(email: String): PatientDto {
-        return patientConverter.convert(patientRepository.findByEmail(email)
-            ?: throw PatientNotFoundException("email: $email"))
+        return patientConverter.convert(
+            patientRepository.findByEmail(email)
+                ?: throw PatientNotFoundException("email: $email")
+        )
     }
 
-    override fun addDetailsToPatient(patientRequestDto: PatientRequestDto): MessageResponse {
+    override fun addDetailsToPatient(patientDto: PatientDto): MessageResponse {
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
 
         val patient = patientRepository.findByUsername(username)
             ?: throw UsernameNotFoundException("User not found with username: $username")
 
-
         if (patient.role != Role.PATIENT) {
             throw RuntimeException("User is not a patient")
         }
 
-        patient.doctor = patient.doctor
+
+        patient.name = patientDto.name
+        patient.surname = patientDto.surname
+        patient.phone = patientDto.phone
+        patient.address = patientDto.address
+        patient.birthDate = patientDto.birthDate
+        patient.birthPlace = patientDto.birthPlace
+        patient.allergies = patientDto.allergies
+        patient.bloodType = patientDto.bloodType
+
 
         patientRepository.save(patient)
         return MessageResponse("Patient details added successfully")
