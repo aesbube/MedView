@@ -19,5 +19,6 @@ interface DoctorService {
     fun scheduleAppointment(patientId: Long, occupyAppointmentDto: OccupyAppointmentDto): MessageResponse
     fun searchPatientsByName(patientSearchDto: PatientSearchDto): List<PatientDto>
     fun searchPatientsByNameClaim(patientSearchDto: PatientSearchDto): List<PatientDto>
-//    fun claimPatient(patientId: Long): MessageResponse
+    fun getAllAppointmentsOfPatient(patientId: Long): List<AppointmentDto>
+    fun getAllFreeAppointmentsBySpecialistUsername(username: String): List<AppointmentDto>
 }

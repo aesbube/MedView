@@ -1,5 +1,6 @@
 package app.medview.web
 
+import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.OccupyAppointmentDto
 import app.medview.domain.dto.PatientSearchDto
@@ -8,6 +9,8 @@ import app.medview.domain.dto.PrescriptionRequestDto
 import app.medview.domain.dto.users.DoctorDto
 import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.dto.users.PatientRequestDto
+import app.medview.domain.dto.users.SpecialistDto
+import app.medview.service.impl.users.SpecialistServiceImpl
 import app.medview.service.users.DoctorService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -20,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/doctors")
-class DoctorController(private val doctorService: DoctorService) {
+class DoctorController(private val doctorService: DoctorService, private val specialistService: SpecialistServiceImpl) {
     @GetMapping("/all")
     fun getAllDoctors(): ResponseEntity<List<DoctorDto>> {
         val doctors = doctorService.getAllDoctors()
@@ -95,9 +98,20 @@ class DoctorController(private val doctorService: DoctorService) {
         return ResponseEntity.ok(patients)
     }
 
-//    @PostMapping("/me/patients/claim-patient/{patientId}")
-//    fun claimPatient(@PathVariable("patientId") patientId: Long): ResponseEntity<MessageResponse> {
-//        val response = doctorService.claimPatient(patientId)
-//        return ResponseEntity.ok(response)
-//    }
+    @GetMapping("/patients/{patientId}/appointments-all")
+    fun getAllAppointmentsOfPatient(@PathVariable("patientId") patientId: Long): ResponseEntity<List<AppointmentDto>> {
+        return ResponseEntity.ok(doctorService.getAllAppointmentsOfPatient(patientId))
+    }
+
+    @GetMapping("/appointments/{username}")
+    fun getFreeAppointmentsBySpecialistUsername(@PathVariable("username") username: String): ResponseEntity<List<AppointmentDto>> {
+        val appointments = doctorService.getAllFreeAppointmentsBySpecialistUsername(username)
+        return ResponseEntity.ok(appointments)
+    }
+
+    @GetMapping("/specialists")
+    fun getAllSpecialists(): ResponseEntity<List<SpecialistDto>> {
+        val specialists = specialistService.getAllSpecialists()
+        return ResponseEntity.ok(specialists)
+    }
 }

@@ -9,7 +9,7 @@ import app.medview.domain.dto.users.SpecialistDto
 import app.medview.domain.users.Specialist
 
 interface SpecialistService {
-    fun getAllSpecialists(): List<Specialist>
+    fun getAllSpecialists(): List<SpecialistDto>
     fun getSpecialistsByUsername(username: String): List<Specialist>
     fun getSpecialistById(id: Long): Specialist
     fun getSpecialistScheduleById(id: Long): Schedule
@@ -18,5 +18,5 @@ interface SpecialistService {
     fun getAppointments(): List<AppointmentDto>
     fun writeDiagnosis(appointmentId: Long, diagnosisDto: DiagnosisDto): MessageResponse
     fun getOccupiedAppointments(): List<AppointmentDto>
-    fun getSpecialist() : SpecialistDto
+    fun getSpecialist(): SpecialistDto
 }

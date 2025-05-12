@@ -44,6 +44,13 @@ class AppointmentServiceImpl(
             }
     }
 
+    override fun getFreeAppointmentsByScheduleId(scheduleId: Long): List<AppointmentDto> {
+        return appointmentRepository.findByStatusAndScheduleId(AppointmentStatus.FREE, scheduleId)
+            .map {
+                appointmentEntityToDtoConverter.convert(it)
+            }
+    }
+
     override fun occupyAppointment(
         appointmentId: Long,
         patientId: Long,

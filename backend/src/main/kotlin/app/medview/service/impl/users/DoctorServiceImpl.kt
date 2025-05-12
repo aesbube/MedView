@@ -1,5 +1,6 @@
 package app.medview.service.impl.users
 
+import app.medview.domain.converter.AppointmentEntityToDtoConverter
 import app.medview.domain.converter.DoctorEntityToDtoConverter
 import app.medview.domain.converter.PrescriptionEntityToDtoConverter
 import app.medview.domain.dto.*
@@ -9,6 +10,8 @@ import app.medview.domain.dto.users.PatientRequestDto
 import app.medview.exceptions.IllegalDoctorPatientOperation
 import app.medview.repository.DoctorRepository
 import app.medview.repository.PatientRepository
+import app.medview.repository.ScheduleRepository
+import app.medview.repository.SpecialistRepository
 import app.medview.service.PrescriptionService
 import app.medview.service.impl.AppointmentServiceImpl
 import app.medview.service.users.DoctorService
@@ -20,12 +23,15 @@ import org.springframework.stereotype.Service
 @Service
 class DoctorServiceImpl(
     private val doctorRepository: DoctorRepository,
+    private val specialistRepository: SpecialistRepository,
     private val patientService: PatientService,
     private val prescriptionService: PrescriptionService,
     private val doctorConverter: DoctorEntityToDtoConverter,
     private val prescriptionConverter: PrescriptionEntityToDtoConverter,
     private val patientRepository: PatientRepository,
-    private val appointmentService: AppointmentServiceImpl
+    private val appointmentService: AppointmentServiceImpl,
+    private val appointmentConverter: AppointmentEntityToDtoConverter,
+    private val scheduleRepository: ScheduleRepository,
 ) :
     DoctorService {
     val logger = org.slf4j.LoggerFactory.getLogger(DoctorServiceImpl::class.java)
@@ -186,6 +192,19 @@ class DoctorServiceImpl(
             patientSearchDto.name
         )
         return patients.map { patientService.getPatientById(it.id) }
+    }
+
+    override fun getAllAppointmentsOfPatient(patientId: Long): List<AppointmentDto> {
+        val appointments = appointmentService.getAppointmentsByPatientId(patientId)
+        return appointments.map { appointmentConverter.convert(it) }
+    }
+
+    override fun getAllFreeAppointmentsBySpecialistUsername(username: String): List<AppointmentDto> {
+        val specialist = specialistRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("Specialist not found with username: $username")
+
+        val schedule = scheduleRepository.findBySpecialistId(specialist.id)
+        return appointmentService.getFreeAppointmentsByScheduleId(schedule.id)
     }
 
 //    override fun claimPatient(patientId: Long): MessageResponse {

@@ -4,6 +4,7 @@ import app.medview.domain.AppointmentStatus
 import java.time.LocalDate
 
 data class AppointmentDto(
+    val id: Long,
     val scheduleId: Long?,
     val patientName: String?,
     val assigneeName: String?,

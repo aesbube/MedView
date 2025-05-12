@@ -22,7 +22,7 @@ class SpecialistController(
     private val specialistService: SpecialistService,
 ) {
     @GetMapping
-    fun getAllSpecialists(): ResponseEntity<List<Specialist>> {
+    fun getAllSpecialists(): ResponseEntity<List<SpecialistDto>> {
         val specialists = specialistService.getAllSpecialists()
         return ResponseEntity.ok(specialists)
     }

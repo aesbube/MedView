@@ -32,8 +32,8 @@ class SpecialistServiceImpl(
     private val specialistEntityToDtoConverter: SpecialistEntityToDtoConverter,
 ) : SpecialistService {
     val logger = org.slf4j.LoggerFactory.getLogger(SpecialistServiceImpl::class.java)
-    override fun getAllSpecialists(): List<Specialist> {
-        return specialistRepository.findAll()
+    override fun getAllSpecialists(): List<SpecialistDto> {
+        return specialistRepository.findAll().map { specialistEntityToDtoConverter.convert(it) }
     }
 
     override fun getSpecialistsByUsername(username: String): List<Specialist> {
