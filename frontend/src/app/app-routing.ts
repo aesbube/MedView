@@ -19,9 +19,7 @@ import { ClaimPatientComponent } from './features/doctor/components/claim-patien
 import { DoctorDetailsComponent } from './features/doctor/components/doctor-details/doctor-details.component';
 import { PatientDetailsComponent } from './shared/components/patient-details/patient-details.component';
 import { PrescriptionComponent } from './features/doctor/components/prescription/prescription.component';
-import {UsersAdminComponent} from './features/admin/components/users-admin/users-admin.component';
-import {RegisterAdminComponent} from './features/admin/components/register-admin/register-admin.component';
-import {PatientPanelComponent} from './features/doctor/components/patient-panel/patient-panel.component';
+import { PharmacistScanComponent } from './features/pharmacist/components/pharmacist-scan/pharmacist-scan.component';
 
 export const routes: Routes = [
   { path: '', component: Home2Component },
@@ -36,6 +34,7 @@ export const routes: Routes = [
 
   { path: 'appointment/:id', component: AppointmentComponent },
   { path: 'specialist/:id', component: SpecialistComponent },
+  { path: 'scan', component: PharmacistScanComponent },
   {
     path: 'dashboard',
     canActivate: [RoleGuard],
@@ -52,21 +51,12 @@ export const routes: Routes = [
     canActivate: [RoleGuard],
     data: { "expectedRole": ["ROLE_DOCTOR"] },
     children: [
-      { path: 'info-d', component: DoctorDetailsComponent },
+      { path: 'info', component: DoctorDetailsComponent },
       { path: 'patients', component: DoctorPatientsComponent },
-      { path: 'patients/:id', component: PatientPanelComponent },
-      { path: 'patients/:id/appointments', component: AppointmentComponent },
-      { path: 'patients/:id/prescription', component: PrescriptionComponent },
+      { path: 'patients/:id', component: PatientDetailsComponent },
+      { path: 'patients/:id/appointment', component: AppointmentComponent },
+      { path: 'patients/:id/prescripion', component: PrescriptionComponent },
       { path: 'claim-patient', component: ClaimPatientComponent }
-    ]
-  },
-  {
-    path: 'dashboard',
-    canActivate: [RoleGuard],
-    data: { "expectedRole": ["ROLE_ADMIN"] },
-    children: [
-      { path: 'users', component: UsersAdminComponent },
-      { path: 'register', component: RegisterAdminComponent },
     ]
   }
 ];

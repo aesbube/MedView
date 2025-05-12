@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository
 interface SpecialistRepository : JpaRepository<Specialist, Long> {
     fun findByUsername(username: String): Specialist?
     fun findByUsernameContainingIgnoreCase(username: String): List<Specialist>
+    fun findByNameContainingIgnoreCaseOrSurnameContainingIgnoreCase(name: String, surname: String): List<Specialist>
     fun existsByUsername(username: String): Boolean
 }

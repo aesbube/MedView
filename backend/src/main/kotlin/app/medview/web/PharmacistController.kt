@@ -45,8 +45,8 @@ class PharmacistController(private val pharmacistService: PharmacistService) {
     @PostMapping("/prescription")
     fun redeemPrescription(
         @RequestBody prescriptionScanDto: PrescriptionScanDto
-    ) : ResponseEntity<PrescriptionDto> {
+    ): ResponseEntity<PrescriptionDto> {
         val prescription = pharmacistService.validatePrescription(prescriptionScanDto)
-        return ResponseEntity(prescription,HttpStatus.OK)
+        return ResponseEntity(prescription, HttpStatus.OK)
     }
 }

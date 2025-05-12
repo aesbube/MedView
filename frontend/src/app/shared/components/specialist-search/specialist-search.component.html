@@ -9,7 +9,7 @@
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
     @for (specialist of filteredSpecialists$ | async; track $index) {
     <mat-option [value]="specialist.username" [routerLink]="['/specialist', specialist.username]">
-      {{specialist.username}} ({{specialist.specialty}})
+      {{specialist.name}} {{specialist.surname}} ({{specialist.specialty}})
     </mat-option>
     }
   </mat-autocomplete>

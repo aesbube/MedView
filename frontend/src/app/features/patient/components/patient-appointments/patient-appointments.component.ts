@@ -3,7 +3,7 @@ import { AppointmentDetailsComponent } from "../../../../shared/components/appoi
 import { PatientService } from '../../patient.service';
 import { Appointment } from '../../../../models/appointment.model';
 import { Subscription } from 'rxjs';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @Component({
@@ -16,28 +16,45 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 })
 export class PatientAppointmentsComponent {
 
-  appointments : Appointment[] = [{} as Appointment, {} as Appointment,{} as Appointment,]
+  appointments: Appointment[] = []
   numOfAppointments = 0
   fetched = false
   subscription: Subscription | undefined;
 
+  today = this.getDate()
 
-  constructor (private patientService: PatientService) {}
+  constructor(private patientService: PatientService) { }
 
-  ngOnInit(){
+  ngOnInit() {
+    console.log(this.today);
+
     this.subscription = this.patientService.getAppointments().subscribe({
-          next: (data: Appointment[]) => {
-            this.appointments = data;
-            this.numOfAppointments = this.appointments.length
-            this.fetched = true;
-          },
-          error: (error) => {
-            console.error('Error fetching patient data:', error);
-          },
-          complete: () => {
-            console.log('Patient data fetching complete.');
-          }
-        });
+      next: (data: Appointment[]) => {
+        this.appointments = data;
+        this.numOfAppointments = this.appointments.length
+        this.fetched = true;
+      },
+      error: (error) => {
+        console.error('Error fetching patient data:', error);
+      },
+      complete: () => {
+        console.log('Patient data fetching complete.');
+      }
+    });
   }
+
+  getDate() {
+    var d = new Date(Date.now()),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
 }

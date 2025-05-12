@@ -1,5 +1,21 @@
 :host{
   display: flex;
+  align-items: center;
+  width: 100vw;
+  height: calc(100vh - 56px);
+}
+
+.camera-wrapper{
+  flex: 1 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.prescription-wrapper{
+  flex: 1 1;
+  display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -7,5 +23,4 @@
 
 zxing-scanner{
   width: 500px;
-
 }

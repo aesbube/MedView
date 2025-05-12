@@ -45,12 +45,12 @@ class AuthServiceImpl(
 
         val userDetails = authentication.principal as UserDetails
         val role = userDetails.authorities.firstOrNull()?.authority ?: "PATIENT"
+        val user = userRepository.findByUsername(loginRequest.username)!!
 
         logger.info(SecurityContextHolder.getContext().authentication.name)
         logger.info("Generating JWT token for user: ${loginRequest.username}")
-        val jwt = jwtTokenProvider.generateToken(authentication)
+        val jwt = jwtTokenProvider.generateToken(authentication,user.id)
         logger.info("JWT token generated for user: ${loginRequest.username} and the token is $jwt")
-        val user = userRepository.findByUsername(loginRequest.username)!!
         logger.info("User details retrieved for user: ${loginRequest.username}")
         return JwtResponse(
             token = jwt,

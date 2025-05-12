@@ -30,9 +30,9 @@ export class PatientDashboardComponent {
   }
 
   constructor(private router: Router) {}
-  
+
   ngOnInit(){
-    this.router.navigate(['/dashboard/info'])
+    // this.router.navigate(['/dashboard/info'])
   }
 
 }

@@ -4,6 +4,7 @@ import app.medview.config.JwtConfig
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
+import jakarta.persistence.Id
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
@@ -17,16 +18,16 @@ class JwtTokenProvider(private val jwtConfig: JwtConfig) {
         Keys.hmacShaKeyFor(jwtConfig.secret.toByteArray())
     }
 
-    fun generateToken(authentication: Authentication): String {
+    fun generateToken(authentication: Authentication, userId: Long): String {
         val userDetails = authentication.principal as UserDetails
         val now = Date()
         val expiryDate = Date(now.time + jwtConfig.expirationMs)
 
         val role = userDetails.authorities.firstOrNull()?.authority ?: "PATIENT"
-
         return Jwts.builder()
             .setSubject(userDetails.username)
             .claim("role", role)
+            .claim("id", userId)
             .setIssuedAt(now)
             .setExpiration(expiryDate)
             .signWith(key, SignatureAlgorithm.HS256)
