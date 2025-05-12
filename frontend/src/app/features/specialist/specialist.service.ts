@@ -5,6 +5,8 @@ import {Appointment} from '../../models/appointment.model';
 import {FreeAppointment} from '../../models/free-appointment.model';
 import {Specialist} from '../../models/specialist.model';
 import {environment} from '../../../environments/environment';
+import {WriteDiagnosis} from '../../models/write-diagnosis.model';
+import {Diagnosis} from '../../models/diagnosis.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +30,20 @@ export class SpecialistService {
 
   getOccupiedAppointments(): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(`${this.baseUrl}/occupied-appointments`);
+  }
+
+  getAppointmentDetails(id: string): Observable<Appointment> {
+    return this.http.get<Appointment>(`${this.baseUrl}/appointments/${id}`);
+  }
+
+  writeDiagnosis(appointmentId: string, diagnosis: WriteDiagnosis): Observable<string> {
+    return this.http.post(`${this.baseUrl}/appointments/${appointmentId}/diagnosis`, diagnosis, {
+      responseType: 'text' as const
+    });
+  }
+
+  getDiagnosis(appointmentId: string): Observable<Diagnosis> {
+    return this.http.get<Diagnosis>(`${this.baseUrl}/appointments/${appointmentId}/diagnosis`);
   }
 
   getSpecialistDetails(): Observable<Specialist> {

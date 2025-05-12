@@ -9,6 +9,8 @@ import {Doctor} from '../../models/doctor.model';
 import {Appointment} from '../../models/appointment.model';
 import {Specialist} from '../../models/specialist.model';
 import {OccupyAppointment} from '../../models/occupy-appointment.model';
+import {WriteDiagnosis} from '../../models/write-diagnosis.model';
+import {Diagnosis} from '../../models/diagnosis.model';
 
 @Injectable({
   providedIn: 'root'
@@ -84,6 +86,14 @@ export class DoctorService {
 
   cancelPrescription(patientId: number, prescriptionId: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/patients/${patientId}/prescriptions/${prescriptionId}`);
+  }
+
+  getAppointmentDetails(id: string): Observable<Appointment> {
+    return this.http.get<Appointment>(`${this.baseUrl}/appointments-details/${id}`);
+  }
+
+  getDiagnosis(appointmentId: string): Observable<Diagnosis> {
+    return this.http.get<Diagnosis>(`${this.baseUrl}/appointments/${appointmentId}/diagnosis`);
   }
 
 }

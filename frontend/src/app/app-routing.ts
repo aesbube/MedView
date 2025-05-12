@@ -22,6 +22,12 @@ import {RegisterAdminComponent} from './features/admin/components/register-admin
 import {PatientPanelComponent} from './features/doctor/components/patient-panel/patient-panel.component';
 import {WritePrescriptionComponent} from './features/doctor/components/write-prescription/write-prescription.component';
 import {PharmacistScanComponent} from './features/pharmacist/components/pharmacist-scan/pharmacist-scan.component';
+import {
+  AppointmentDiagnosisComponent
+} from './features/specialist/components/appointment-diagnosis/appointment-diagnosis.component';
+import {
+  AppointmentDetailsComponent
+} from './features/doctor/components/appointment-details/appointment-details.component';
 
 export const routes: Routes = [
   { path: '', component: Home2Component },
@@ -44,6 +50,7 @@ export const routes: Routes = [
     children: [
       { path: 'info', component: SpecialistDetailsComponent },
       { path: 'appointments', component: AppointmentOccupiedComponent },
+      { path: 'appointments/:id', component: AppointmentDiagnosisComponent },
       { path: 'free-appointments', component: AppointmentFreeComponent }
     ]
   },
@@ -56,6 +63,7 @@ export const routes: Routes = [
       { path: 'patients', component: DoctorPatientsComponent },
       { path: 'patients/:id', component: PatientPanelComponent },
       { path: 'patients/:id/appointments', component: AppointmentComponent },
+      { path: 'patients/:id/:appointmentId', component: AppointmentDetailsComponent },
       { path: 'patients/:id/prescription', component: WritePrescriptionComponent },
       { path: 'claim-patient', component: ClaimPatientComponent }
     ]

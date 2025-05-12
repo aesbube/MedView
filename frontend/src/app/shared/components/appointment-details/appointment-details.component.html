@@ -11,5 +11,17 @@
       <div>Time: {{ appointment.time }}</div>
       <div>Location: {{ appointment.location }}</div>
     </mat-card-content>
+    <mat-card-actions align="end">
+      <a
+        [routerLink]="[appointment.id]"
+        routerLinkActive="active">
+        <button
+          mat-raised-button
+          color="primary"
+        >
+          View Details
+        </button>
+      </a>
+    </mat-card-actions>
   </mat-card>
 </div>
