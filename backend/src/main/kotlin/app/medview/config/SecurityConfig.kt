@@ -34,7 +34,7 @@ class SecurityConfig(
             .headers { headers ->
                 headers.frameOptions { it.disable() }
             }
-            .cors { val configurationSource = corsConfigurationSource() }
+            .cors { cors -> cors.configurationSource(corsConfigurationSource()) }
             .authorizeHttpRequests { authz ->
                 authz
                     .requestMatchers("/auth/**", "/h2/**", "/doctors/all", "/specialists/search").permitAll()

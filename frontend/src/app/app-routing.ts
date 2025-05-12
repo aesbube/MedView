@@ -35,6 +35,7 @@ export const routes: Routes = [
 
   { path: 'appointment/:id', component: AppointmentComponent },
   { path: 'specialist/:id', component: SpecialistComponent },
+  { path: 'scan', component: PharmacistScanComponent },
   {
     path: 'dashboard',
     canActivate: [RoleGuard],

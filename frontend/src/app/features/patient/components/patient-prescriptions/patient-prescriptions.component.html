@@ -1,1 +1,17 @@
-<p>patient-prescriptions works!</p>
+@if(!fetched){
+  <mat-spinner></mat-spinner>
+}
+@else {
+  @if(numOfPrescriptions==0){
+    <h3>You do not have any upcoming appointments</h3>
+  }
+  @else {
+    @for(prescription of prescriptions; track prescription){
+      @if (prescription.status == prescriptionStatus.ACTIVE) {
+        <div class="prescription-wrapper">
+          <app-prescription-details [prescription]="prescription"></app-prescription-details>
+        </div>
+      }
+    }
+  }
+}

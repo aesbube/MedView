@@ -8,18 +8,18 @@ import { Prescription } from '../../models/prescription.model';
   providedIn: 'root'
 })
 
-export class PatientService {
+export class PharmacistService {
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
   getPrescription(prescriptionId: string, patientId: number) {
-    return this.http.get<Prescription>(`${this.apiUrl}/prescription?prescriptionId=${prescriptionId}&patientId=${patientId}`);
+    return this.http.get<Prescription>(`${this.apiUrl}/pharmacists/prescription?prescriptionId=${prescriptionId}&patientId=${patientId}`);
   }
 
-  redeemPrescription(prescriptionId: string, patientId: number): Observable<Prescription> {
+  validatePrescription(prescriptionId: string, patientId: number): Observable<Prescription> {
     return this.http.post<Prescription>(
-      `${this.apiUrl}/prescription`,
+      `${this.apiUrl}/pharmacists/prescription`,
       {
         prescriptionId: prescriptionId,
         patientId: patientId

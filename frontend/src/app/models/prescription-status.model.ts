@@ -1,6 +1,6 @@
-export enum PrescriptionStatusModel {
-  ACTIVE,
-  REDEEMED,
-  EXPIRED,
-  CANCELED
+export enum PrescriptionStatus {
+  ACTIVE = "ACTIVE",
+  REDEEMED = "REDEEMED",
+  EXPIRED = "EXPIRED",
+  CANCELED = "CANCELED"
 }

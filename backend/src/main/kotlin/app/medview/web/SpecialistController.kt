@@ -31,9 +31,9 @@ class SpecialistController(
     fun getSpecialistsByUsername(
         @RequestParam(
             "name", required = true
-        ) username: String
+        ) name: String
     ): ResponseEntity<List<Specialist>> {
-        val specialists = specialistService.getSpecialistsByUsername(username)
+        val specialists = specialistService.getSpecialistsByNameOrSurname(name)
         return ResponseEntity.ok(specialists)
     }
 

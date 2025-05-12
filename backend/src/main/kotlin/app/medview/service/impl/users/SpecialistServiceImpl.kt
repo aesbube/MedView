@@ -40,6 +40,10 @@ class SpecialistServiceImpl(
         return specialistRepository.findByUsernameContainingIgnoreCase(username)
     }
 
+    override fun getSpecialistsByNameOrSurname(name: String): List<Specialist> {
+        return specialistRepository.findByNameContainingIgnoreCaseOrSurnameContainingIgnoreCase(name,name)
+    }
+
     override fun getSpecialistById(id: Long): Specialist {
         return specialistRepository.findById(id).orElseThrow {
             throw IllegalArgumentException("Specialist not found with id: $id")
