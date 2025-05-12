@@ -1,4 +1,5 @@
 export interface Appointment {
+  id: number;
   scheduleId: number;
   patientName: string | null;
   assigneeName: string | null;

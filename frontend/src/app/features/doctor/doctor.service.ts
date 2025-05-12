@@ -6,6 +6,9 @@ import {Prescription} from '../../models/prescription.model';
 import {WritePrescription} from '../../models/write-prescription';
 import {environment} from '../../../environments/environment';
 import {Doctor} from '../../models/doctor.model';
+import {Appointment} from '../../models/appointment.model';
+import {Specialist} from '../../models/specialist.model';
+import {OccupyAppointment} from '../../models/occupy-appointment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +42,26 @@ export class DoctorService {
     });
   }
 
-  getPatientDetails(patientId: number): Observable<Patient> {
+  getPatientDetails(patientId: string): Observable<Patient> {
     return this.http.get<Patient>(`${this.baseUrl}/patients/${patientId}`);
+  }
+
+  getPatientAppointments(patientId: string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.baseUrl}/patients/${patientId}/appointments-all`);
+  }
+
+  getFreeAppointments(username: string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.baseUrl}/appointments/${username}`);
+  }
+
+  scheduleAppointment(patientId: string, occupyAppointment: OccupyAppointment): Observable<string> {
+    return this.http.post(`${this.baseUrl}/patients/${patientId}/appointments`, occupyAppointment, {
+      responseType: 'text' as const
+    });
+  }
+
+  getAllSpecialists(): Observable<Specialist[]> {
+    return this.http.get<Specialist[]>(`${this.baseUrl}/specialists`);
   }
 
   getDoctorDetails(): Observable<Doctor> {

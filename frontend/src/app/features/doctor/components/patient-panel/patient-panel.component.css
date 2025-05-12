@@ -1,0 +1,16 @@
+.back-button {
+  position: fixed;
+  top: 70px;
+  left: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: self-start;
+  max-width: 1000px;
+  padding: 20px;
+  margin: 20px auto 0;
+}

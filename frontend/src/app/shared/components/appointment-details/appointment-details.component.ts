@@ -15,4 +15,5 @@ import {MatCard, MatCardContent, MatCardHeader, MatCardModule} from '@angular/ma
 })
 export class AppointmentDetailsComponent {
   @Input() appointment!: Appointment
+  @Input() isDoctor: boolean = false;
 }
