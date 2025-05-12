@@ -3,9 +3,12 @@ package app.medview.service.impl.users
 import app.medview.domain.Diagnosis
 import app.medview.domain.Role
 import app.medview.domain.Schedule
+import app.medview.domain.converter.AppointmentEntityToDtoConverter
+import app.medview.domain.converter.DiagnosisEntityToDtoConverter
 import app.medview.domain.converter.SpecialistEntityToDtoConverter
 import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.DiagnosisDto
+import app.medview.domain.dto.WriteDiagnosisDto
 import app.medview.domain.dto.FreeAppointmentDto
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.users.SpecialistDto
@@ -30,6 +33,8 @@ class SpecialistServiceImpl(
     private val diagnosisRepository: DiagnosisRepository,
     private val appointmentService: AppointmentService,
     private val specialistEntityToDtoConverter: SpecialistEntityToDtoConverter,
+    private val appointmentEntityToDtoConverter: AppointmentEntityToDtoConverter,
+    private val diagnosisEntityToDtoConverter: DiagnosisEntityToDtoConverter,
 ) : SpecialistService {
     val logger = org.slf4j.LoggerFactory.getLogger(SpecialistServiceImpl::class.java)
     override fun getAllSpecialists(): List<SpecialistDto> {
@@ -41,7 +46,7 @@ class SpecialistServiceImpl(
     }
 
     override fun getSpecialistsByNameOrSurname(name: String): List<Specialist> {
-        return specialistRepository.findByNameContainingIgnoreCaseOrSurnameContainingIgnoreCase(name,name)
+        return specialistRepository.findByNameContainingIgnoreCaseOrSurnameContainingIgnoreCase(name, name)
     }
 
     override fun getSpecialistById(id: Long): Specialist {
@@ -117,7 +122,7 @@ class SpecialistServiceImpl(
 
     override fun writeDiagnosis(
         appointmentId: Long,
-        diagnosisDto: DiagnosisDto
+        writeDiagnosisDto: WriteDiagnosisDto
     ): MessageResponse {
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
@@ -137,9 +142,9 @@ class SpecialistServiceImpl(
         }
 
         val diagnosis = Diagnosis(
-            name = diagnosisDto.name,
-            description = diagnosisDto.description,
-            treatment = diagnosisDto.treatment,
+            name = writeDiagnosisDto.name,
+            description = writeDiagnosisDto.description,
+            treatment = writeDiagnosisDto.treatment,
             patient = patient,
             specialist = specialist,
             appointment = appointment
@@ -166,5 +171,18 @@ class SpecialistServiceImpl(
             ?: throw RuntimeException("Specialist not found with username: $username")
 
         return specialistEntityToDtoConverter.convert(specialist)
+    }
+
+    override fun getAppointmentById(appointmentId: Long): AppointmentDto {
+        val appointment = appointmentRepository.findById(appointmentId).orElseThrow {
+            throw RuntimeException("Appointment not found with id: $appointmentId")
+        }
+        return appointmentEntityToDtoConverter.convert(appointment)
+    }
+
+    override fun getDiagnosisByAppointmentId(appointmentId: Long): DiagnosisDto {
+        val diagnosis = diagnosisRepository.findDiagnosisByAppointmentId(appointmentId)
+            ?: throw RuntimeException("Diagnosis not found for appointment with id: $appointmentId")
+        return diagnosisEntityToDtoConverter.convert(diagnosis)
     }
 }

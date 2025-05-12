@@ -1,6 +1,7 @@
 package app.medview.web
 
 import app.medview.domain.dto.AppointmentDto
+import app.medview.domain.dto.DiagnosisDto
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.OccupyAppointmentDto
 import app.medview.domain.dto.PatientSearchDto
@@ -113,5 +114,19 @@ class DoctorController(private val doctorService: DoctorService, private val spe
     fun getAllSpecialists(): ResponseEntity<List<SpecialistDto>> {
         val specialists = specialistService.getAllSpecialists()
         return ResponseEntity.ok(specialists)
+    }
+
+    @GetMapping("appointments-details/{appointmentId}")
+    fun getAppointmentById(@PathVariable("appointmentId") appointmentId: Long): ResponseEntity<AppointmentDto> {
+        return ResponseEntity.ok(specialistService.getAppointmentById(appointmentId))
+    }
+
+    @GetMapping("appointments/{appointmentId}/diagnosis")
+    fun getDiagnosisByAppointmentId(@PathVariable("appointmentId") appointmentId: Long): ResponseEntity<Any> {
+        try {
+            return ResponseEntity.ok(specialistService.getDiagnosisByAppointmentId(appointmentId))
+        } catch (e: Exception) {
+            return ResponseEntity.status(404).body("Diagnosis not found for appointment ID: $appointmentId")
+        }
     }
 }
