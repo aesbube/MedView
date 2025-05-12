@@ -1,12 +1,16 @@
 <div class="prescription-item">
   <mat-card appearance="outlined">
     <mat-card-header>
-      <mat-card-title
-        >Appointment of patient
-        {{ prescription.patientNameAndSurname }}</mat-card-title
-      >
+      @if (!isDoctor) {
+        <mat-card-title
+        >Prescription of patient
+          {{ prescription.patientNameAndSurname }}
+        </mat-card-title
+        >
+      }
       <mat-card-subtitle
-        >Doctor: {{ prescription.doctorNameAndSurname }}</mat-card-subtitle
+      >Doctor: {{ prescription.doctorNameAndSurname }}
+      </mat-card-subtitle
       >
     </mat-card-header>
     <mat-card-content>

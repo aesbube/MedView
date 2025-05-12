@@ -14,5 +14,6 @@ import { MatCard, MatCardContent, MatCardHeader, MatCardModule } from '@angular/
   styleUrl: './prescription-details.component.css'
 })
 export class PrescriptionDetailsComponent {
-  @Input() prescription!: Prescription; 
+  @Input() prescription!: Prescription;
+  @Input() isDoctor: boolean = false;
 }

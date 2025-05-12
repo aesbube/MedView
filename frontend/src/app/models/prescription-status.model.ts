@@ -1,4 +1,4 @@
-export enum PrescriptionStatus {
+export enum PrescriptionStatusModel {
   ACTIVE,
   REDEEMED,
   EXPIRED,

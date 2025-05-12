@@ -7,6 +7,7 @@ import {PatientDetailsComponent} from '../../../../shared/components/patient-det
 import {MatIconButton} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {PatientAppointmentsComponent} from '../patient-appointments/patient-appointments.component';
+import {PatientPrescriptionsComponent} from '../patient-prescriptions/patient-prescriptions.component';
 
 @Component({
   selector: 'app-patient-panel',
@@ -15,7 +16,8 @@ import {PatientAppointmentsComponent} from '../patient-appointments/patient-appo
     RouterLink,
     MatIconModule,
     MatIconButton,
-    PatientAppointmentsComponent
+    PatientAppointmentsComponent,
+    PatientPrescriptionsComponent
   ],
   templateUrl: './patient-panel.component.html',
   styleUrl: './patient-panel.component.css'

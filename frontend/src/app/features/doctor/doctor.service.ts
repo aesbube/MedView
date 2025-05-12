@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Patient} from '../../models/patient.model';
 import {Prescription} from '../../models/prescription.model';
-import {WritePrescription} from '../../models/write-prescription';
+import {WritePrescriptionModel} from '../../models/write-prescription.model';
 import {environment} from '../../../environments/environment';
 import {Doctor} from '../../models/doctor.model';
 import {Appointment} from '../../models/appointment.model';
@@ -74,12 +74,12 @@ export class DoctorService {
     });
   }
 
-  getPatientPrescriptions(patientId: number): Observable<Prescription[]> {
+  getPatientPrescriptions(patientId: string): Observable<Prescription[]> {
     return this.http.get<any[]>(`${this.baseUrl}/patients/${patientId}/prescriptions`);
   }
 
-  writePrescription(patientId: number, prescription: WritePrescription): Observable<WritePrescription> {
-    return this.http.post<WritePrescription>(`${this.baseUrl}/patients/${patientId}/prescriptions/new`, prescription);
+  writePrescription(patientId: number, prescription: WritePrescriptionModel): Observable<WritePrescriptionModel> {
+    return this.http.post<WritePrescriptionModel>(`${this.baseUrl}/patients/${patientId}/prescriptions/new`, prescription);
   }
 
   cancelPrescription(patientId: number, prescriptionId: number): Observable<any> {

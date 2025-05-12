@@ -42,8 +42,6 @@ export class AppointmentComponent implements OnInit {
 
   value: Date | null = null;
   time: string = '';
-  minDate: Date = new Date(new Date().setHours(0, 0, 0, 0));
-  maxDate: Date = new Date(new Date().setFullYear(this.minDate.getFullYear() + 1));
 
   availableAppointments: Appointment[] = [];
   selectedAppointment: Appointment | null = null;

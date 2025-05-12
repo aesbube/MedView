@@ -1,4 +1,4 @@
-import { PrescriptionStatus } from "./prescription-status";
+import { PrescriptionStatusModel } from "./prescription-status.model";
 
 export interface Prescription {
   id: Number,
@@ -8,6 +8,6 @@ export interface Prescription {
   doctorNameAndSurname: String,
   medicine: String,
   frequency: String,
-  status: PrescriptionStatus,
+  status: PrescriptionStatusModel,
   expirationDate: Date,
 }

@@ -1,4 +1,4 @@
-export interface WritePrescription {
+export interface WritePrescriptionModel {
   medicine: String,
   frequency: String,
 }
