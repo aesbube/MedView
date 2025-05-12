@@ -21,4 +21,5 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
 export class AppointmentDetailsComponent {
   @Input() appointment!: Appointment
   @Input() isDoctor: boolean = false;
+  @Input() isPatient: boolean = false;
 }

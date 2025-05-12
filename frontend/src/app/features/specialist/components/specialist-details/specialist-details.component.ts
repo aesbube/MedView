@@ -1,14 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { SpecialistService } from '../../specialist.service';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButton, MatIconButton } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import {Component, inject, OnInit} from '@angular/core';
+import {SpecialistService} from '../../specialist.service';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {RouterLink} from '@angular/router';
+import {MatIconModule} from '@angular/material/icon';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @Component({
   selector: 'app-specialist-details',
@@ -34,12 +34,14 @@ export class SpecialistDetailsComponent implements OnInit {
   fb = inject(FormBuilder);
   form!: FormGroup;
   today: Date = new Date();
+  specialistDate: string | null = null;
 
   ngOnInit(): void {
     this.service.getSpecialistDetails().subscribe((specialist) => {
+      this.specialistDate = specialist.birthDate.toString();
       this.form = this.fb.group({
-        username: [{ value: specialist.username, disabled: true }],
-        email: [{ value: specialist.email, disabled: true }],
+        username: [{value: specialist.username, disabled: true}],
+        email: [{value: specialist.email, disabled: true}],
         phone: [specialist.phone],
         name: [specialist.name],
         surname: [specialist.surname],
@@ -69,6 +71,9 @@ export class SpecialistDetailsComponent implements OnInit {
 
   private formatDate(date: Date): string {
     if (!date) return '';
+    if (this.specialistDate && this.specialistDate === date.toString()) {
+      return this.specialistDate;
+    }
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');

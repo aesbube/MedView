@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {DatePipe} from '@angular/common';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {Diagnosis} from '../../../models/diagnosis.model';
@@ -7,7 +6,6 @@ import {Diagnosis} from '../../../models/diagnosis.model';
 @Component({
   selector: 'app-diagnosis-card',
   imports: [
-    DatePipe,
     MatCard,
     MatCardContent,
     MatCardTitle,

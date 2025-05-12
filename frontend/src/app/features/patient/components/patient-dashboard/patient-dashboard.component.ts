@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { SideMenuComponent } from "../side-menu/side-menu.component";
-import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PatientInfoComponent } from '../patient-info/patient-info.component';
 import { PatientAppointmentsComponent } from "../patient-appointments/patient-appointments.component";
@@ -22,17 +21,9 @@ import { PatientHistoryComponent } from '../patient-history/patient-history.comp
   styleUrl: './patient-dashboard.component.css'
 })
 export class PatientDashboardComponent {
-
   currentTab = "Basic Info"
 
   updatePatientTab(lastClicked:string){
     this.currentTab = lastClicked
   }
-
-  constructor(private router: Router) {}
-
-  ngOnInit(){
-    // this.router.navigate(['/dashboard/info'])
-  }
-
 }

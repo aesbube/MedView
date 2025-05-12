@@ -32,9 +32,11 @@ export class DoctorDetailsComponent implements OnInit {
   fb = inject(FormBuilder);
   form!: FormGroup;
   today: Date = new Date();
+  doctorDate: string | null = null;
 
   ngOnInit(): void {
     this.service.getDoctorDetails().subscribe((doctor) => {
+      this.doctorDate = doctor.birthDate.toString();
       this.form = this.fb.group({
         username: [{value: doctor.username, disabled: true}],
         email: [{value: doctor.email, disabled: true}],
@@ -68,6 +70,9 @@ export class DoctorDetailsComponent implements OnInit {
 
   private formatDate(date: Date): string {
     if (!date) return '';
+    if (this.doctorDate && this.doctorDate === date.toString()) {
+      return this.doctorDate;
+    }
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
