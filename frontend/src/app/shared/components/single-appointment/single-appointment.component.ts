@@ -23,12 +23,13 @@ export class SingleAppointmentComponent {
 
   ngOnInit() {
     this.appointmentId = this.route.snapshot.params['id'];
-    console.log('Helelo');
 
     this.getAppointment().subscribe({
       next: (appointment) => {
         this.appointment = appointment;
         this.fetched = true;
+        console.log(appointment);
+
       },
       error: (error) => {
         console.error('Error loading appointment:', error);

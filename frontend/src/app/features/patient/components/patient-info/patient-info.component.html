@@ -1,54 +1,112 @@
-@if (!fetched) {
-  <div class="patient-wrapper">
-    <mat-spinner></mat-spinner>
+<div class="mv-patient-info">
+  <h2>Basic Patient Information</h2>
+  @if (!fetched) {
+  <mat-spinner></mat-spinner>
+  } @else {
+  <div class="mv-row">
+    <label>Full Name</label>
+    <p>{{ patient.name }} {{ patient.surname }}</p>
   </div>
-}
-@else {<div class="patient-wrapper">
-  <h2>Basic patient information</h2>
-  <div class="info">
-    <div class="info-item">
-      <label for="name">Name</label>
-      <input type="text" name="name" disabled [value]="patient.username">
-    </div>
-    <div class="info-item">
-      <label for="surname">Surname</label>
-      <input type="text" name="surname" disabled [value]="patient.username">
-    </div>
-    <div class="info-item">
-      <label for="dob">Birth Date</label>
-      <input type="text" name="dob" disabled [value]="patient.username">
-    </div>
-    <div class="info-item">
-      <label for="ssn">SSN</label>
-      <input type="text" name="ssn" disabled [value]="patient.username">
-    </div>
-    <div class="info-item">
-      <label for="gender">Gender</label>
-      <input type="text" name="gender" disabled [value]="patient.username">
-    </div>
-    <div class="info-item">
-      <label for="gp">General Physician</label>
-      <input type="text" name="gp" disabled [value]="patient.doctor.username">
-    </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Birth Date</label>
+    <p>{{ patient.birthDate }}</p>
   </div>
-  <h2>Vital Information</h2>
-  <div class="info">
-    <div class="info-item">
-      <label for="gp">Blood Type</label>
-      <input type="text" name="gp" disabled [value]="patient.username">
-    </div>
-    <div class="info-item">
-      <label for="gp">Alergies</label>
-      <input type="text" name="gp" disabled [value]="patient.username">
-    </div>
-    <div class="info-item">
-      <label for="gp">Smokes</label>
-      <input type="text" name="gp" disabled [value]="patient.username">
-    </div>
-    <div class="info-item">
-      <label for="gp">Drinks</label>
-      <input type="text" name="gp" disabled [value]="patient.username">
-    </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Birth Place</label>
+    <p>{{ patient.birthPlace }}</p>
   </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Address</label>
+    <p>{{ patient.address }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>General Practicioner</label>
+    <p>{{ patient.doctor.name }} {{ patient.doctor.surname }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Contact (e-mail)</label>
+    @if (!edit) {
+    <p>{{ patient.email }}</p>
+    } @else {
+    <form>
+      <mat-form-field class="mv-edit-field">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          [formControl]="emailFormControl"
+          placeholder="Ex. pat@example.com"
+        />
+        @if (emailFormControl.hasError('email') &&
+        !emailFormControl.hasError('required')) {
+        <mat-error>Please enter a valid email address</mat-error>
+        } @if (emailFormControl.hasError('required')) {
+        <mat-error>Email is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+    </form>
+    }
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Contact (phone)</label>
+    @if (!edit) {
+    <p>{{ patient.phone }}</p>
+    } @else {
+    <form>
+      <mat-form-field class="mv-edit-field">
+        <mat-label>Phone</mat-label>
+        <input
+          type="tel"
+          matInput
+          [formControl]="phoneFormControl"
+          placeholder="070 123 456"
+        />
+        @if (phoneFormControl.hasError('required')) {
+        <mat-error>Phone number is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+    </form>
+    }
+  </div>
+  }
+
+  <h2>Vital Patient Information</h2>
+  @if (!fetched) {
+  <mat-spinner></mat-spinner>
+  } @else {
+  <div class="mv-row">
+    <label>Blood Type</label>
+    <p>{{ patient.bloodType }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Allergies</label>
+    <p>{{ patient.allergies }}</p>
+  </div>
+
+  <div class="mv-row mv-edit-buttons">
+    @if (!edit) {
+    <button mat-flat-button class="mv-button-edit" (click)="edit = true">
+      Edit
+    </button>
+    } @else {
+    <button mat-flat-button class="mv-button-edit" (click)="edit = false">
+      Cancel
+    </button>
+    <button
+      mat-flat-button
+      class="mv-button-edit"
+      (click)="updatePatientInfo()"
+    >
+      Save
+    </button>
+    }
+  </div>
+  }
 </div>
-}

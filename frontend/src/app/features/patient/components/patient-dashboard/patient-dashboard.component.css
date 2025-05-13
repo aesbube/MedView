@@ -1,26 +1,4 @@
-:host{
-  display: flex;
-  justify-content: center;
-}
-
-.mv-patient-dashboard {
-  margin-top: 80px;
-  margin-bottom: 70px;
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  border-radius: 30px;
-  border: 1px solid black;
-}
-.mv-patient-dashboard app-side-menu {
-  border-radius: 30px;
-}
 
 
-.mv-patient-wrapper{
-  width: 1200px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding: 50px;
-}
+
+

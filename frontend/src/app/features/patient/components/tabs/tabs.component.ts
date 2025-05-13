@@ -9,17 +9,17 @@ interface Options {
 }
 
 @Component({
-  selector: 'app-side-menu',
+  selector: 'app-tabs',
   imports: [
     MatSidenavModule,
     MatListModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  templateUrl: './side-menu.component.html',
-  styleUrl: './side-menu.component.css'
+  templateUrl: './tabs.component.html',
+  styleUrl: './tabs.component.css'
 })
-export class SideMenuComponent {
+export class TabsComponent {
   lastClicked = "Basic Info"
   @Output() currentTab = new EventEmitter<string>()
 

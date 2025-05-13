@@ -25,6 +25,7 @@ import {PharmacistScanComponent} from './features/pharmacist/components/pharmaci
 import { Login2Component } from './features/auth/login2/login2.component';
 import { Register2Component } from './features/auth/register2/register2.component';
 import { SingleAppointmentComponent } from './shared/components/single-appointment/single-appointment.component';
+import { QrCodeComponent } from './shared/components/qr-code/qr-code.component';
 
 export const routes: Routes = [
   { path: '', component: Home2Component },
@@ -40,6 +41,7 @@ export const routes: Routes = [
   { path: 'appointment/:id', component: SingleAppointmentComponent },
   { path: 'specialist/:id', component: SpecialistComponent },
   { path: 'scan', component: PharmacistScanComponent },
+  { path: 'qr/:qtText', component: QrCodeComponent },
   {
     path: 'dashboard',
     canActivate: [RoleGuard],

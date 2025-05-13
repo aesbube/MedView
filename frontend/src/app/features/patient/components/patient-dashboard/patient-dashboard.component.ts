@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { SideMenuComponent } from "../side-menu/side-menu.component";
 import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PatientInfoComponent } from '../patient-info/patient-info.component';
 import { PatientAppointmentsComponent } from "../patient-appointments/patient-appointments.component";
 import { PatientPrescriptionsComponent } from "../patient-prescriptions/patient-prescriptions.component";
 import { PatientHistoryComponent } from '../patient-history/patient-history.component';
+import { TabsComponent } from '../tabs/tabs.component';
 
 @Component({
   selector: 'app-patient-dashboard',
   standalone: true,
   imports: [
     CommonModule,
-    SideMenuComponent,
+    TabsComponent,
     PatientInfoComponent,
     PatientAppointmentsComponent,
     PatientPrescriptionsComponent,

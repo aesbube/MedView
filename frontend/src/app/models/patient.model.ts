@@ -3,15 +3,15 @@ import {Doctor} from './doctor.model';
 
 export interface Patient {
   id: number,
-  username: String,
-  email: String,
+  username: string,
+  email: string,
   doctor: Doctor,
-  name: String,
-  surname: String,
-  phone: String,
-  address: String,
+  name: string,
+  surname: string,
+  phone: string,
+  address: string,
   birthDate: Date,
-  birthPlace: String,
-  allergies: String,
+  birthPlace: string,
+  allergies: string,
   bloodType: BloodType,
 }

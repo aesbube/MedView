@@ -4,14 +4,14 @@
 </div>
 
 <div class="nav-right">
-  <button mat-button routerLink="">Home</button>
+  <button class="mv-button" mat-button routerLink="">Home</button>
 
   @if(!authService.isLoggedIn()){
-    <button mat-flat-button routerLink="/login">Login</button>
-    <button mat-flat-button routerLink="/register">Register</button>
+    <button class="mv-button" mat-flat-button routerLink="/login">Login</button>
+    <button class="mv-button" mat-flat-button routerLink="/register">Register</button>
   }
   @else {
-    <button mat-button routerLink="/dashboard"> Dashboard</button>
-    <button mat-button (click)="authService.logout()"> Logout</button>
+    <button class="mv-button" mat-button routerLink="/dashboard"> Dashboard</button>
+    <button class="mv-button" mat-button (click)="authService.logout()"> Logout</button>
   }
 </div>
