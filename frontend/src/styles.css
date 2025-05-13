@@ -1,9 +1,259 @@
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  body {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-  }
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  padding-bottom: 50px;
+}
+
+.mv-nav {
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+  border-bottom: 2px solid #074b7b;
+  height: 80px;
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+
+.nav-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+}
+
+.nav-left a {
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #074b7b;
+}
+
+.nav-logo {
+  height: 56px;
+}
+
+.nav-logo img {
+  height: 56px;
+}
+
+.nav-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 18px;
+}
+
+.mv-search {
+  width: 350px;
+}
+
+.mv-search label {
+  font-size: 22px !important;
+}
+.mv-search {
+  font-size: 24px !important;
+}
+
+.mv-auth {
+  width: 100vw;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #cfe9fc;
+}
+
+.mv-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  background-color: white;
+  border: #074b7b 2px solid;
+  border-radius: 20px;
+  padding: 35px;
+}
+
+.mv-form h2 {
+  color: #074b7b;
+  text-align: center;
+}
+.mv-login-status {
+  color: red;
+}
+.mv-panel {
+  width: 1200px;
+  border-radius: 20px;
+  border: #074b7b 2px solid;
+  padding: 50px;
+  justify-self: center;
+  margin-top: 50px;
+}
+
+.mv-panel h2 {
+  text-align: center;
+  color: #074b7b;
+  margin-bottom: 24px;
+}
+
+.mv-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+  font-size: 22px;
+  width: 100%;
+}
+
+.mv-appointment {
+  height: 456px;
+}
+
+.mv-panel mat-spinner {
+  justify-self: center;
+  align-self: center;
+}
+.mv-calendar {
+  width: 500px;
+  background-color: #cfe9fc;
+  border-radius: 20px;
+  border: #074b7b 1px solid;
+}
+.mv-timeslot-picker {
+  margin-top: 24px;
+}
+.mv-date-picker {
+  display: flex;
+  justify-content: space-between;
+}
+.mv-timeslots {
+  width: 500px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mv-all-timeslots {
+  width: 100%;
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+h3 {
+  color: #074b7b;
+}
+.mv-timeslot {
+  width: 80px;
+  height: 50px;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+}
+
+.free {
+  background-color: #9fe2bf;
+}
+
+.occupied {
+  background-color: #f08080;
+}
+
+.mv-home {
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: row;
+}
+
+.mv-button {
+  font-size: 24px !important;
+  padding: 25px !important;
+}
+
+.mv-patient-dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.mv-patient-wrapper {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.mv-tabs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mv-tab {
+  list-style: none;
+}
+
+.mv-tab.clicked > button {
+  border-bottom: #00458f 5px solid;
+}
+
+.mv-tab button {
+  width: 250px;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border: none;
+  font-size: 22px;
+  border-bottom: #cce5ff 5px solid;
+}
+
+.mv-tab button:hover {
+  background-color: #cce5ff;
+  cursor: pointer;
+}
+
+.mv-button-edit{
+  float: right;
+  font-size: 24px !important;
+  padding: 24px !important;
+}
+
+.mv-edit-buttons{
+  display: flex;
+  justify-content: end;
+  gap: 25px;
+}
+
+.mv-edit-field{
+  width: 350px;
+}
+
+.mv-multi-appointment{
+  width: 100%;
+  border-radius: 20px;
+  border: #00458f 1px solid;
+  padding: 20px;
+}
+
+table,tr,th,td{
+  background-color: white !important;
+  font-size: 18px !important;
+}
+
+.mv-qr{
+  display: block;
+  justify-self: center;
+}

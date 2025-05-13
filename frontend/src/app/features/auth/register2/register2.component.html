@@ -1,0 +1,34 @@
+<div class="mv-auth">
+  <form [formGroup]="myForm" class="mv-form" (ngSubmit)="onSubmit()">
+    <h2>Register</h2>
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input type="text" matInput [formControl]="usernameFormControl" />
+      @if (usernameFormControl.hasError('required')) {
+      <mat-error>Username is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input type="text" matInput [formControl]="emailFormControl" />
+      @if (usernameFormControl.hasError('required')) {
+      <mat-error>Email is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput [formControl]="passwordFormControl" />
+      @if (usernameFormControl.hasError('required')) {
+      <mat-error>Password is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+    @if (successMessage) {
+    <div class="mv-login-status">
+      {{ successMessage }}
+    </div>
+    }
+    <button mat-flat-button [disabled]="!myForm.valid">Register</button>
+  </form>
+</div>

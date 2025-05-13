@@ -104,6 +104,12 @@ class DoctorController(private val doctorService: DoctorService, private val spe
         return ResponseEntity.ok(appointments)
     }
 
+    @GetMapping("/appointments/all/{username}")
+    fun getAllAppointmentsBySpecialistUsername(@PathVariable("username") username: String): ResponseEntity<List<AppointmentDto>> {
+        val appointments = doctorService.getAllAppointmentsBySpecialistUsername(username)
+        return ResponseEntity.ok(appointments)
+    }
+
     @GetMapping("/specialists")
     fun getAllSpecialists(): ResponseEntity<List<SpecialistDto>> {
         val specialists = specialistService.getAllSpecialists()

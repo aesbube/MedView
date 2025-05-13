@@ -20,4 +20,5 @@ interface DoctorService {
     fun searchPatientsByNameClaim(patientSearchDto: PatientSearchDto): List<PatientDto>
     fun getAllAppointmentsOfPatient(patientId: Long): List<AppointmentDto>
     fun getAllFreeAppointmentsBySpecialistUsername(username: String): List<AppointmentDto>
+    fun getAllAppointmentsBySpecialistUsername(username: String): List<AppointmentDto>
 }

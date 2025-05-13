@@ -2,14 +2,23 @@
   <mat-spinner></mat-spinner>
 }
 @else {
-  @if(numOfAppointments==0){
-    <h3>You do not have any upcoming appointments</h3>
+   <table mat-table [dataSource]="appointments" class="mat-elevation-z8 demo-table">
+  @for (column of columns; track column) {
+    <ng-container [matColumnDef]="column.columnDef">
+      <th mat-header-cell *matHeaderCellDef>
+        {{column.header}}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        @if (column.header=='Details') {
+          <button mat-flat-button [routerLink]="['/appointment/',column.cell(row)]">See More</button>
+        }@else {
+          {{column.cell(row)}}
+        }
+      </td>
+    </ng-container>
   }
-  @else {
-    @for(appointment of appointments; track appointment){
-      @if (appointment.date >= today) {
-        <app-appointment-details [appointment]="appointment" [isPatient]="true"></app-appointment-details>
-      }
-    }
-  }
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
 }

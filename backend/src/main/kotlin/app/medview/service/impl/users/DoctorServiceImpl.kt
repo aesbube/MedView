@@ -12,8 +12,8 @@ import app.medview.repository.DoctorRepository
 import app.medview.repository.PatientRepository
 import app.medview.repository.ScheduleRepository
 import app.medview.repository.SpecialistRepository
-import app.medview.service.AppointmentService
 import app.medview.service.PrescriptionService
+import app.medview.service.impl.AppointmentServiceImpl
 import app.medview.service.users.DoctorService
 import app.medview.service.users.PatientService
 import org.springframework.security.core.context.SecurityContextHolder
@@ -29,7 +29,7 @@ class DoctorServiceImpl(
     private val doctorConverter: DoctorEntityToDtoConverter,
     private val prescriptionConverter: PrescriptionEntityToDtoConverter,
     private val patientRepository: PatientRepository,
-    private val appointmentService: AppointmentService,
+    private val appointmentService: AppointmentServiceImpl,
     private val appointmentConverter: AppointmentEntityToDtoConverter,
     private val scheduleRepository: ScheduleRepository,
 ) :

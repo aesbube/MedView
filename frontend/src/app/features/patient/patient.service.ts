@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {Patient} from '../../models/patient.model';
-import {Observable} from 'rxjs';
-import {Appointment} from '../../models/appointment.model';
-import {Prescription} from '../../models/prescription.model';
+import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Patient } from '../../models/patient.model';
+import { Observable } from 'rxjs';
+import { Appointment } from '../../models/appointment.model';
+import { Prescription } from '../../models/prescription.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +29,11 @@ export class PatientService {
     return this.http.get<Prescription[]>(`${this.apiUrl}/me/prescriptions`);
   }
 
-  updatePatientDetails(patient: Patient): Observable<string> {
-    return this.http.post(`${this.apiUrl}/update`, patient, {
-      responseType: 'text' as const
+  updatePatient(username: string, email: string, phone: string) {
+    return this.http.post<Patient>(`${this.apiUrl}/patients/update`, {
+      username: username,
+      email: email,
+      phone: phone,
     });
   }
-
-
 }

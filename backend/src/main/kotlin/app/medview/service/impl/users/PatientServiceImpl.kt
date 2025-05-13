@@ -8,7 +8,6 @@ import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.users.PatientDto
-import app.medview.exceptions.PatientNotFoundException
 import app.medview.repository.AppointmentRepository
 import app.medview.repository.PatientRepository
 import app.medview.service.PrescriptionService
@@ -51,6 +50,7 @@ class PatientServiceImpl(
 
         val patient = patientRepository.findByUsername(username)
             ?: throw UsernameNotFoundException("User not found with username: $username")
+
 
         if (patient.role != Role.PATIENT) {
             throw RuntimeException("User is not a patient")

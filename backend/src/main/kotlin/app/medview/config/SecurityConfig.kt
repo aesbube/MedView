@@ -43,7 +43,9 @@ class SecurityConfig(
                         "/doctors/all",
                         "/specialists/search",
                         "/specialists/{id}",
-                        "/specialists/appointments/ref/**"
+                        "/specialists/appointments/ref/**",
+                        "/appointments/**",
+                        "/doctors/appointments/all/{username}"
                     )
                     .permitAll()
                     .requestMatchers("/pharmacists/**").hasAnyRole("PHARMACIST", "ADMIN")

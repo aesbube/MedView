@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/patients")
 class PatientController(private val patientService: PatientService) {
     @PostMapping("/update")
-    fun addDetailsToPatient(@RequestBody patientDto: PatientDto): ResponseEntity<String> {
-        val response = patientService.addDetailsToPatient(patientDto)
-        return ResponseEntity.ok(response.message)
+    fun addDetailsToPatient(@RequestBody patientRequestDto: PatientRequestDto): ResponseEntity<PatientDto> {
+        val updatedPatient = patientService.addDetailsToPatient(patientRequestDto)
+        return ResponseEntity.ok(updatedPatient)
     }
 
     @GetMapping("/me")

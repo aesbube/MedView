@@ -6,16 +6,16 @@
 
 <div class="prescription-wrapper">
   @if (!fetched) {
-  <mat-spinner></mat-spinner>
+    <mat-spinner></mat-spinner>
   }
   @else {
-  @if(prescription){
-  <app-prescription-details [prescription]="prescription"
-    (validate)="validatePrescription($event)"></app-prescription-details>
-  }
-  @else {
-  <p>Invalid Prescription</p>
-  }
+    @if(prescription){
+    <app-prescription-details [prescription]="prescription"
+      (validate)="validatePrescription($event)"></app-prescription-details>
+    }
+    @else {
+    <p>Invalid Prescription</p>
+    }
   }
   <button mat-flat-button (click)="clearResult()">Clear prescription</button>
 </div>

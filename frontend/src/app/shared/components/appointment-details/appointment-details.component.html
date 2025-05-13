@@ -2,7 +2,7 @@
   <mat-card appearance="outlined">
     <mat-card-header>
       @if (!isDoctor) {
-        <mat-card-title>Appointment of patient {{ appointment.patientName }}</mat-card-title>
+        <mat-card-title>Appointment of patient {{ appointment.patient?.name }}</mat-card-title>
       }
       <mat-card-subtitle>Referral number: {{ appointment.refNumber }}</mat-card-subtitle>
     </mat-card-header>

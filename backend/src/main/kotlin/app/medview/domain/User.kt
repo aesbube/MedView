@@ -17,7 +17,7 @@ open class User(
     open val password: String = "",
 
     @Column(nullable = false)
-    open val email: String = "",
+    open var email: String = "",
 
     @Enumerated(EnumType.STRING)
     open val role: Role = Role.PATIENT,

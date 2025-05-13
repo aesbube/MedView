@@ -10,4 +10,5 @@ export interface Prescription {
   frequency: String,
   status: PrescriptionStatusModel,
   expirationDate: Date,
+  showQR: boolean | false;
 }

@@ -3,7 +3,6 @@ package app.medview.web
 import app.medview.domain.Schedule
 import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.DiagnosisDto
-import app.medview.domain.dto.WriteDiagnosisDto
 import app.medview.domain.dto.FreeAppointmentDto
 import app.medview.domain.dto.users.SpecialistDto
 import app.medview.domain.users.Specialist
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/specialists")
 class SpecialistController(
     private val specialistService: SpecialistService,
+    private val specialistConverter: SpecialistEntityToDtoConverter
 ) {
     @GetMapping
     fun getAllSpecialists(): ResponseEntity<List<SpecialistDto>> {
@@ -29,9 +29,15 @@ class SpecialistController(
     }
 
     @GetMapping("/{username}")
-    fun getSpecialistById(@PathVariable username: String): ResponseEntity<SpecialistDto> {
+    fun getSpecialistByUsername(@PathVariable username: String): ResponseEntity<SpecialistDto> {
         val specialist = specialistService.getSpecialistByUsername(username)
         return ResponseEntity.ok(specialist)
+    }
+
+    @GetMapping("/{specialistId}")
+    fun getSpecialistById(@PathVariable ("specialistId") specialistId: Long): ResponseEntity<SpecialistDto> {
+        val specialist = specialistService.getSpecialistById(specialistId)
+        return ResponseEntity.ok(specialistConverter.convert(specialist))
     }
 
     @GetMapping("/search")
@@ -83,9 +89,9 @@ class SpecialistController(
     @PostMapping("/appointments/{appointmentId}/diagnosis")
     fun writeDiagnosis(
         @PathVariable(value = "appointmentId") appointmentId: Long,
-        @RequestBody writeDiagnosisDto: WriteDiagnosisDto
+        @RequestBody diagnosisDto: DiagnosisDto
     ): ResponseEntity<String> {
-        val response = specialistService.writeDiagnosis(appointmentId, writeDiagnosisDto)
+        val response = specialistService.writeDiagnosis(appointmentId, diagnosisDto)
         return ResponseEntity.ok(response.message)
     }
 
