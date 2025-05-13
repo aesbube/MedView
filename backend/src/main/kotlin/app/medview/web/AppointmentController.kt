@@ -1,7 +1,9 @@
 package app.medview.web
 
 import app.medview.domain.Appointment
+import app.medview.domain.dto.AppointmentDto
 import app.medview.service.AppointmentService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -19,6 +21,12 @@ class AppointmentController(private val appointmentService: AppointmentService) 
         } else {
             ResponseEntity.notFound().build()
         }
+    }
+
+    @GetMapping("/{appointmentId}")
+    fun getAppointmentsById(@PathVariable ("appointmentId") appointmentId: Long): ResponseEntity<AppointmentDto> {
+        val appointment = appointmentService.getAppointmentById(appointmentId)
+        return ResponseEntity(appointment, HttpStatus.OK)
     }
 
 //    @GetMapping("/schedule/{scheduleId}")

@@ -13,10 +13,8 @@ import { Router } from '@angular/router';
     CommonModule,
     MatCardModule,
     AppointmentSearchComponent,
-    MapSearchComponent,
     SpecialistSearchComponent,
     EquipmentSearchComponent,
-    NgSwitch
 ],
   templateUrl: './home-card.component.html',
   styleUrl: './home-card.component.css',

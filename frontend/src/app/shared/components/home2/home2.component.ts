@@ -6,19 +6,11 @@ import { HomeCardComponent } from "../home-card/home-card.component";
   imports: [HomeCardComponent],
   templateUrl: './home2.component.html',
   styleUrl: './home2.component.css',
-  host: {
-    '[style.--custom-flex]': 'getFlexSize()',
-  },
 })
 export class Home2Component {
 
-  flex = 1
   flexUp1 = false
   flexUp2 = false
-
-  getFlexSize(){
-    return this.flex
-  }
 
   setFlex(customFlex : number): void{
     if(customFlex == 0){
@@ -31,7 +23,6 @@ export class Home2Component {
     else if (customFlex == 2){
       this.flexUp2 = true
     }
-    console.log(this.flex)
   }
 
 }

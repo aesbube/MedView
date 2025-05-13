@@ -1,5 +1,5 @@
 :host{
-  width: calc(100vw - 250px);
+  width: 1200px;
   display: flex;
   justify-content: center;
 }
@@ -12,7 +12,7 @@ mat-spinner{
   justify-self: center;
   align-self: center;
 }
-
+/*
 .patient-wrapper{
   margin-top: 64px;
   width: 900px;
@@ -22,7 +22,7 @@ mat-spinner{
   justify-content: center;
   flex-direction: column;
   padding: 50px;
-}
+} */
 
 .info{
   display: flex;

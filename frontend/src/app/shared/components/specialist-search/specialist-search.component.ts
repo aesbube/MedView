@@ -30,6 +30,7 @@ import { SearchesService } from '../searches.service';
   styleUrl: './specialist-search.component.css'
 })
 export class SpecialistSearchComponent {
+  @Output() focused = new EventEmitter<boolean>();
 
   private searchesService = inject(SearchesService)
   searchControl1 = new FormControl('');
@@ -62,7 +63,6 @@ export class SpecialistSearchComponent {
       this.router.navigate(['/specialist', selectedUsername]);
     }
 
-    @Output() focused = new EventEmitter<boolean>();
 
     onFocus(): void {
       this.focused.emit(true);

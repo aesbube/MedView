@@ -2,15 +2,18 @@ package app.medview.service.impl.users
 
 import app.medview.domain.Role
 import app.medview.domain.converter.AppointmentEntityToDtoConverter
+import app.medview.domain.converter.DiagnosisEntityToDtoConverter
 import app.medview.domain.converter.PatientEntityToDtoConverter
 import app.medview.domain.converter.PrescriptionEntityToDtoConverter
 import app.medview.domain.dto.AppointmentDto
+import app.medview.domain.dto.DiagnosisDto
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.dto.users.PatientRequestDto
 import app.medview.exceptions.PatientNotFoundException
 import app.medview.repository.AppointmentRepository
+import app.medview.repository.DiagnosisRepository
 import app.medview.repository.PatientRepository
 import app.medview.service.PrescriptionService
 import app.medview.service.users.PatientService
@@ -26,6 +29,8 @@ class PatientServiceImpl(
     private val prescriptionConverter: PrescriptionEntityToDtoConverter,
     private val appointmentRepository: AppointmentRepository,
     private val appointmentEntityToDtoConverter: AppointmentEntityToDtoConverter,
+    private val diagnosisRepository: DiagnosisRepository,
+    private val diagnosisConverter: DiagnosisEntityToDtoConverter
 ) : PatientService {
 
     val logger = org.slf4j.LoggerFactory.getLogger(PatientServiceImpl::class.java)
@@ -110,6 +115,16 @@ class PatientServiceImpl(
         val appointments = appointmentRepository.findByPatientId(patient.id)
 
         return appointments.map { appointmentEntityToDtoConverter.convert(it) }
+    }
+
+    override fun getAllDiagnosis(): List<DiagnosisDto> {
+        logger.info(SecurityContextHolder.getContext().authentication.name)
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
+        val patient = patientRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("User not found with username: $username")
+
+        return diagnosisRepository.findDiagnosisByPatientId(patient.id).map { diagnosisConverter.convert(it) }
     }
 
 }

@@ -2,6 +2,7 @@ package app.medview.web
 
 import app.medview.domain.Prescription
 import app.medview.domain.dto.AppointmentDto
+import app.medview.domain.dto.DiagnosisDto
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.dto.users.PatientRequestDto
@@ -47,6 +48,12 @@ class PatientController(private val patientService: PatientService) {
     fun getAllAppointments(): ResponseEntity<List<AppointmentDto>> {
         val appointments = patientService.getAllAppointmentsOfPatient()
         return ResponseEntity.ok(appointments)
+    }
+
+    @GetMapping("/diagnosis")
+    fun getAllDiagnosis(): ResponseEntity<List<DiagnosisDto>> {
+        val diagnosis = patientService.getAllDiagnosis()
+        return ResponseEntity.ok(diagnosis)
     }
 
 }
