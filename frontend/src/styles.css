@@ -51,14 +51,121 @@ body {
   gap: 18px;
 }
 
-.mv-search{
+.mv-search {
   width: 350px;
-
 }
 
-.mv-search label{
+.mv-search label {
   font-size: 22px !important;
 }
-.mv-search{
+.mv-search {
   font-size: 24px !important;
+}
+
+.mv-auth {
+  width: 100vw;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #cfe9fc;
+}
+
+.mv-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  background-color: white;
+  border: #074b7b 2px solid;
+  border-radius: 20px;
+  padding: 35px;
+}
+
+.mv-form h2 {
+  color: #074b7b;
+  text-align: center;
+}
+.mv-login-status {
+  color: red;
+}
+.mv-panel{
+  width: 1200px;
+  border-radius: 20px;
+  border: #074b7b 2px solid;
+  padding: 50px;
+  justify-self: center;
+  margin-top: 50px;
+}
+
+.mv-panel h2{
+  text-align: center;
+  color: #074b7b;
+  margin-bottom: 24px;
+
+}
+
+.mv-row{
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+  font-size: 22px;
+}
+
+.mv-appointment{
+  height: 456px;
+}
+
+.mv-panel mat-spinner{
+  justify-self: center;
+  align-self: center;
+}
+.mv-calendar{
+  width: 500px;
+  background-color: #cfe9fc;
+  border-radius: 20px;
+  border: #074b7b 1px solid;
+}
+.mv-timeslot-picker{
+  margin-top: 24px;
+}
+.mv-date-picker{
+  display: flex;
+  justify-content: space-between;
+}
+.mv-timeslots{
+  width: 500px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mv-all-timeslots{
+  width: 100%;
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+.mv-timeslots h3{
+  color: #074b7b;
+}
+.mv-timeslot{
+  width: 80px;
+  height: 50px;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+}
+
+.free{
+  background-color: #9FE2BF;
+}
+
+.occupied{
+  background-color: #F08080;
 }

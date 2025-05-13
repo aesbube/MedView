@@ -59,8 +59,8 @@ export class SpecialistSearchComponent {
     }
 
     onOptionSelected(event: any) {
-      const selectedUsername = event.option.value;
-      this.router.navigate(['/specialist', selectedUsername]);
+      const selectedOption : Specialist = event.option.value;
+      this.router.navigate(['/specialist', selectedOption.id]);
     }
 
 

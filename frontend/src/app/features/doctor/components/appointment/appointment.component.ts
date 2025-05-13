@@ -147,7 +147,7 @@ export class AppointmentComponent implements OnInit {
 
     const occupyAppointment: OccupyAppointment = {
       appointmentId: this.selectedAppointment.id,
-      scheduleId: this.selectedAppointment.scheduleId,
+      scheduleId: this.selectedAppointment.schedule.id,
       refNumber: this.selectedAppointment.refNumber
     };
 

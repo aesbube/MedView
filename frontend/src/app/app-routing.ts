@@ -22,6 +22,9 @@ import {RegisterAdminComponent} from './features/admin/components/register-admin
 import {PatientPanelComponent} from './features/doctor/components/patient-panel/patient-panel.component';
 import {WritePrescriptionComponent} from './features/doctor/components/write-prescription/write-prescription.component';
 import {PharmacistScanComponent} from './features/pharmacist/components/pharmacist-scan/pharmacist-scan.component';
+import { Login2Component } from './features/auth/login2/login2.component';
+import { Register2Component } from './features/auth/register2/register2.component';
+import { SingleAppointmentComponent } from './shared/components/single-appointment/single-appointment.component';
 
 export const routes: Routes = [
   { path: '', component: Home2Component },
@@ -31,10 +34,10 @@ export const routes: Routes = [
     canActivate: [RoleGuard],
     data: { "expectedRole": ["ROLE_PATIENT", "ROLE_DOCTOR", "ROLE_SPECIALIST", "ROLE_PHARMACIST", "ROLE_ADMIN"] }
   },
-  { path: 'login', component: LoginComponent, canActivate: [AuthRedirectGuard] },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: Login2Component, canActivate: [AuthRedirectGuard] },
+  { path: 'register', component: Register2Component },
 
-  { path: 'appointment/:id', component: AppointmentComponent },
+  { path: 'appointment/:id', component: SingleAppointmentComponent },
   { path: 'specialist/:id', component: SpecialistComponent },
   { path: 'scan', component: PharmacistScanComponent },
   {
