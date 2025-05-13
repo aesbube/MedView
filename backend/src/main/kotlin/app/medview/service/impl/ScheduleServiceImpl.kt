@@ -24,7 +24,7 @@ class ScheduleServiceImpl(
     }
 
     override fun createSchedule(scheduleDto: ScheduleDto): MessageResponse {
-        val specialist = specialistService.getSpecialistById(scheduleDto.specialistId)
+        val specialist = specialistService.getSpecialistById(scheduleDto.specialist.id)
         val schedule = Schedule(specialist = specialist)
 
         scheduleRepository.save(schedule)
@@ -35,7 +35,7 @@ class ScheduleServiceImpl(
         val existingSchedule = scheduleRepository.findById(id).orElseThrow {
             throw IllegalArgumentException("Schedule with id $id not found")
         }
-        val specialist = specialistService.getSpecialistById(scheduleDto.specialistId)
+        val specialist = specialistService.getSpecialistById(scheduleDto.specialist.id)
         existingSchedule.apply {
             this.specialist = specialist
         }

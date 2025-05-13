@@ -37,7 +37,7 @@ class SecurityConfig(
             .cors { cors -> cors.configurationSource(corsConfigurationSource()) }
             .authorizeHttpRequests { authz ->
                 authz
-                    .requestMatchers("/auth/**", "/h2/**", "/doctors/all", "/specialists/search").permitAll()
+                    .requestMatchers("/auth/**", "/h2/**", "/doctors/all", "/specialists/search", "/appointments/**", "specialists/{specilistId}", "/doctors/appointments/all/{username}").permitAll()
                     .requestMatchers("/users/me").hasAnyRole("ADMIN", "SPECIALIST", "PHARMACIST", "DOCTOR", "PATIENT")
                     .requestMatchers("/users/pharmacist", "/pharmacists/**").hasAnyRole("PHARMACIST", "ADMIN")
                     .requestMatchers("/users/doctor", "/doctors/**", "/patients").hasAnyRole("DOCTOR", "ADMIN")

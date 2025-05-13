@@ -1,6 +1,7 @@
 package app.medview.web
 
 import app.medview.domain.Schedule
+import app.medview.domain.converter.SpecialistEntityToDtoConverter
 import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.DiagnosisDto
 import app.medview.domain.dto.FreeAppointmentDto
@@ -20,11 +21,18 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/specialists")
 class SpecialistController(
     private val specialistService: SpecialistService,
+    private val specialistConverter: SpecialistEntityToDtoConverter
 ) {
     @GetMapping
     fun getAllSpecialists(): ResponseEntity<List<SpecialistDto>> {
         val specialists = specialistService.getAllSpecialists()
         return ResponseEntity.ok(specialists)
+    }
+
+    @GetMapping("/{specialistId}")
+    fun getSpecialistById(@PathVariable ("specialistId") specialistId: Long): ResponseEntity<SpecialistDto> {
+        val specialist = specialistService.getSpecialistById(specialistId)
+        return ResponseEntity.ok(specialistConverter.convert(specialist))
     }
 
     @GetMapping("/search")
