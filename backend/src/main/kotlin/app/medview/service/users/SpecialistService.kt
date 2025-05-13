@@ -11,9 +11,8 @@ import app.medview.domain.users.Specialist
 
 interface SpecialistService {
     fun getAllSpecialists(): List<SpecialistDto>
-    fun getSpecialistsByUsername(username: String): List<Specialist>
     fun getSpecialistsByNameOrSurname(name: String): List<Specialist>
-    fun getSpecialistById(id: Long): Specialist
+    fun getSpecialistByUsername(username: String): SpecialistDto
     fun getSpecialistScheduleById(id: Long): Schedule
     fun addDetailsToSpecialist(specialistDto: SpecialistDto): MessageResponse
     fun setFreeAppointments(appointments: List<FreeAppointmentDto>): MessageResponse
@@ -23,4 +22,5 @@ interface SpecialistService {
     fun getSpecialist(): SpecialistDto
     fun getAppointmentById(appointmentId: Long): AppointmentDto
     fun getDiagnosisByAppointmentId(appointmentId: Long): DiagnosisDto
+    fun getAppointmentByRefNumber(refNumber: String): AppointmentDto
 }

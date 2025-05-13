@@ -1,11 +1,18 @@
 import { CommonModule, NgSwitch } from '@angular/common';
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { AppointmentSearchComponent } from '../appointment-search/appointment-search.component';
 import { MapSearchComponent } from "../map-search/map-search.component";
 import { SpecialistSearchComponent } from '../specialist-search/specialist-search.component';
-import { EquipmentSearchComponent } from '../equipment-search/equipment-search.component';
-import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home-card',
@@ -15,7 +22,6 @@ import { Router } from '@angular/router';
     AppointmentSearchComponent,
     MapSearchComponent,
     SpecialistSearchComponent,
-    EquipmentSearchComponent,
     NgSwitch
 ],
   templateUrl: './home-card.component.html',
@@ -25,7 +31,7 @@ import { Router } from '@angular/router';
     '[style.--custom-flex]': 'getFlexSize()',
   },
 })
-export class HomeCardComponent {
+export class HomeCardComponent implements OnInit{
   @Input() uniqueAction = ''
   imageUrl = '';
   isHovered = false;
@@ -34,17 +40,11 @@ export class HomeCardComponent {
 
 
   ngOnInit(): void {
-    if (this.uniqueAction == "map") {
-      this.imageUrl = "/temp_map.png"
-    }
     if (this.uniqueAction == "app") {
       this.imageUrl = "/appointment.jpg"
     }
     if (this.uniqueAction == "spec") {
       this.imageUrl = "/specialist.jpg"
-    }
-    if (this.uniqueAction == "eq") {
-      this.imageUrl = "/equipment.jpg"
     }
   }
 
@@ -78,9 +78,7 @@ export class HomeCardComponent {
       else
         this.customFlex.emit(2)
     }
-
   }
-
 
   @HostBinding('class.no-grayscale')
   get noGrayscale(): boolean {

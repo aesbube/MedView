@@ -9,7 +9,6 @@ import {Doctor} from '../../models/doctor.model';
 import {Appointment} from '../../models/appointment.model';
 import {Specialist} from '../../models/specialist.model';
 import {OccupyAppointment} from '../../models/occupy-appointment.model';
-import {WriteDiagnosis} from '../../models/write-diagnosis.model';
 import {Diagnosis} from '../../models/diagnosis.model';
 
 @Injectable({
@@ -17,13 +16,8 @@ import {Diagnosis} from '../../models/diagnosis.model';
 })
 export class DoctorService {
   private baseUrl = `${environment.apiUrl}/doctors`;
-  private patientsUrl = `${environment.apiUrl}/patients`;
 
   constructor(private http: HttpClient) {
-  }
-
-  getMyPatients(): Observable<Patient[]> {
-    return this.http.get<Patient[]>(`${this.baseUrl}/patients`);
   }
 
   searchPatients(patient: string): Observable<Patient[]> {
@@ -32,10 +26,6 @@ export class DoctorService {
 
   searchPatientsClaim(patient: string): Observable<Patient[]> {
     return this.http.post<Patient[]>(`${this.baseUrl}/search-patients-claim`, {name: patient});
-  }
-
-  getAllPatients(): Observable<Patient[]> {
-    return this.http.get<Patient[]>(`${this.patientsUrl}`);
   }
 
   claimPatient(patientUsername: string): Observable<string> {
@@ -82,10 +72,6 @@ export class DoctorService {
 
   writePrescription(patientId: number, prescription: WritePrescriptionModel): Observable<WritePrescriptionModel> {
     return this.http.post<WritePrescriptionModel>(`${this.baseUrl}/patients/${patientId}/prescriptions/new`, prescription);
-  }
-
-  cancelPrescription(patientId: number, prescriptionId: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/patients/${patientId}/prescriptions/${prescriptionId}`);
   }
 
   getAppointmentDetails(id: string): Observable<Appointment> {

@@ -36,6 +36,10 @@ export class SpecialistService {
     return this.http.get<Appointment>(`${this.baseUrl}/appointments/${id}`);
   }
 
+  getAppointmentByReference(reference: string): Observable<Appointment> {
+    return this.http.get<Appointment>(`${this.baseUrl}/appointments/ref/${reference}`);
+  }
+
   writeDiagnosis(appointmentId: string, diagnosis: WriteDiagnosis): Observable<string> {
     return this.http.post(`${this.baseUrl}/appointments/${appointmentId}/diagnosis`, diagnosis, {
       responseType: 'text' as const

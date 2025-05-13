@@ -6,10 +6,8 @@
 @if (patient$) {
   <div class="container">
     <app-patient-details [patient]="patient$"></app-patient-details>
-    <div class="container-app">
       <app-patient-appointments [patientId]="patient$.id.toString()"></app-patient-appointments>
       <app-patient-prescriptions [patientId]="patient$.id.toString()"></app-patient-prescriptions>
-    </div>
   </div>
 }
 

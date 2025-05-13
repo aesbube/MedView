@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import {Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,12 +29,11 @@ import { SearchesService } from '../searches.service';
   templateUrl: './specialist-search.component.html',
   styleUrl: './specialist-search.component.css'
 })
-export class SpecialistSearchComponent {
+export class SpecialistSearchComponent implements OnInit{
 
   private searchesService = inject(SearchesService)
   searchControl1 = new FormControl('');
-  specialists: Specialist[] = [];
-  filteredSpecialists$: Observable<Specialist[]> | undefined;
+  filteredSpecialists$?: Observable<Specialist[]>;
   constructor(private router: Router) {}
 
 
@@ -46,7 +45,7 @@ export class SpecialistSearchComponent {
           if (!term || term.length < 2) {
             return of([]);
           }
-          return this.searchesService.findDoctorOrEquipment(term).pipe(
+          return this.searchesService.findSpecialist(term).pipe(
             map(spec => spec ? spec : []),
             catchError(err => {
               console.error('Error searching for doctors:', err);

@@ -2,7 +2,6 @@ package app.medview.domain.converter
 
 import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.users.Patient
-import app.medview.exceptions.NullDoctorException
 import org.springframework.stereotype.Component
 
 @Component

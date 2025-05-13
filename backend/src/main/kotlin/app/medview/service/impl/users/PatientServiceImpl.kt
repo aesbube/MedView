@@ -8,7 +8,6 @@ import app.medview.domain.dto.AppointmentDto
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.users.PatientDto
-import app.medview.domain.dto.users.PatientRequestDto
 import app.medview.exceptions.PatientNotFoundException
 import app.medview.repository.AppointmentRepository
 import app.medview.repository.PatientRepository
@@ -29,12 +28,6 @@ class PatientServiceImpl(
 ) : PatientService {
 
     val logger = org.slf4j.LoggerFactory.getLogger(PatientServiceImpl::class.java)
-
-
-    override fun getAllPatients(): List<PatientDto> {
-        return patientRepository.findAll().map { patientConverter.convert(it) }
-    }
-
     override fun getPatientById(id: Long): PatientDto {
         return patientConverter.convert(patientRepository.findById(id).orElseThrow {
             throw RuntimeException("Patient not found with id: $id")
@@ -49,13 +42,6 @@ class PatientServiceImpl(
         return patientConverter.convert(
             patientRepository.findByUsername(username)
                 ?: throw UsernameNotFoundException("User not found with username: $username")
-        )
-    }
-
-    override fun getPatientByEmail(email: String): PatientDto {
-        return patientConverter.convert(
-            patientRepository.findByEmail(email)
-                ?: throw PatientNotFoundException("email: $email")
         )
     }
 

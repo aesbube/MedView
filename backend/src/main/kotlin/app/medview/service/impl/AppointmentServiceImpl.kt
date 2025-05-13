@@ -10,6 +10,7 @@ import app.medview.repository.AppointmentRepository
 import app.medview.repository.PatientRepository
 import app.medview.repository.ScheduleRepository
 import app.medview.service.AppointmentService
+import app.medview.util.RandomIdGenerator
 import org.springframework.stereotype.Service
 
 @Service
@@ -66,7 +67,7 @@ class AppointmentServiceImpl(
             this.schedule = schedule
             this.patient = patient
             this.status = AppointmentStatus.OCCUPIED
-            this.refNumber = occupyAppointmentDto.refNumber
+            this.refNumber = RandomIdGenerator.generateRefNumber()
             this.assignee = doctor
         }
 

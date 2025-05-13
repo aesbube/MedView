@@ -28,7 +28,6 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class AppointmentSearchComponent implements AfterViewInit{
 
-
   searchControl2 = new FormControl('');
 
   @HostBinding('class.no-grayscale') isInputFocused: boolean = false;

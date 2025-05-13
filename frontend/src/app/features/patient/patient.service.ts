@@ -12,25 +12,25 @@ import {Prescription} from '../../models/prescription.model';
 
 export class PatientService {
 
-  private apiUrl = environment.apiUrl;
+  private apiUrl = `${environment.apiUrl}/patients`;
 
   constructor(private http: HttpClient) {
   }
 
   getPatient(): Observable<Patient> {
-    return this.http.get<Patient>(`${this.apiUrl}/patients/me`);
+    return this.http.get<Patient>(`${this.apiUrl}/me`);
   }
 
   getAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(`${this.apiUrl}/patients/appointments`);
+    return this.http.get<Appointment[]>(`${this.apiUrl}/appointments`);
   }
 
   getPrescriptions(): Observable<Prescription[]> {
-    return this.http.get<Prescription[]>(`${this.apiUrl}/patients/me/prescriptions`);
+    return this.http.get<Prescription[]>(`${this.apiUrl}/me/prescriptions`);
   }
 
   updatePatientDetails(patient: Patient): Observable<string> {
-    return this.http.post(`${this.apiUrl}/patients/update`, patient, {
+    return this.http.post(`${this.apiUrl}/update`, patient, {
       responseType: 'text' as const
     });
   }

@@ -9,8 +9,8 @@ class AppointmentEntityToDtoConverter {
     fun convert(appointment: Appointment) = AppointmentDto(
         id = appointment.id,
         scheduleId = appointment.schedule!!.id,
-        patientName = appointment.patient?.username,
-        assigneeName = appointment.assignee?.username,
+        patientName = appointment.patient?.name + " " + appointment.patient?.surname,
+        assigneeName = appointment.assignee?.name + " " + appointment.assignee?.surname,
         date = appointment.date,
         time = appointment.time,
         location = appointment.location,

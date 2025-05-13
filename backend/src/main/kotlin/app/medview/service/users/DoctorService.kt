@@ -6,7 +6,6 @@ import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.dto.users.PatientRequestDto
 
 interface DoctorService {
-    fun getAllDoctors(): List<DoctorDto>
     fun getDoctorById(id: Long): DoctorDto
     fun addDetailsToDoctor(doctorDto: DoctorDto): MessageResponse
     fun addPatientToDoctor(patientRequestDto: PatientRequestDto): MessageResponse

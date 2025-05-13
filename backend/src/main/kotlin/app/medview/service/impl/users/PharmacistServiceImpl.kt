@@ -57,15 +57,6 @@ class PharmacistServiceImpl(
         return MessageResponse("Pharmacist details added successfully")
     }
 
-    override fun getCurrentPharmacist(): PharmacistDto {
-        logger.info(SecurityContextHolder.getContext().authentication.name)
-        val authentication = SecurityContextHolder.getContext().authentication
-        val username = authentication.name
-
-        return pharmacistConverter.convert(pharmacistRepository.findByUsername(username)
-            ?: throw UsernameNotFoundException("User not found with username: $username"))
-    }
-
     override fun getPrescription(prescriptionScanDto: PrescriptionScanDto): PrescriptionDto {
         val patientId = prescriptionScanDto.patientId
         val prescriptionId = prescriptionScanDto.prescriptionId

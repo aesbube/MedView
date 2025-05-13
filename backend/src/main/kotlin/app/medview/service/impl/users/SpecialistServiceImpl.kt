@@ -20,6 +20,7 @@ import app.medview.repository.ScheduleRepository
 import app.medview.repository.SpecialistRepository
 import app.medview.service.AppointmentService
 import app.medview.service.users.SpecialistService
+import jakarta.transaction.Transactional
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import kotlin.collections.forEach
@@ -41,18 +42,15 @@ class SpecialistServiceImpl(
         return specialistRepository.findAll().map { specialistEntityToDtoConverter.convert(it) }
     }
 
-    override fun getSpecialistsByUsername(username: String): List<Specialist> {
-        return specialistRepository.findByUsernameContainingIgnoreCase(username)
-    }
-
     override fun getSpecialistsByNameOrSurname(name: String): List<Specialist> {
         return specialistRepository.findByNameContainingIgnoreCaseOrSurnameContainingIgnoreCase(name, name)
     }
 
-    override fun getSpecialistById(id: Long): Specialist {
-        return specialistRepository.findById(id).orElseThrow {
-            throw IllegalArgumentException("Specialist not found with id: $id")
-        }
+    override fun getSpecialistByUsername(username: String): SpecialistDto {
+        val specialist =
+            specialistRepository.findByUsername(username)
+                ?: throw RuntimeException("Specialist not found with username: $username")
+        return specialistEntityToDtoConverter.convert(specialist)
     }
 
     override fun getSpecialistScheduleById(id: Long): Schedule {
@@ -84,6 +82,7 @@ class SpecialistServiceImpl(
         return MessageResponse("Specialist details added successfully")
     }
 
+    @Transactional
     override fun setFreeAppointments(appointments: List<FreeAppointmentDto>): MessageResponse {
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
@@ -100,6 +99,7 @@ class SpecialistServiceImpl(
             val key = appointment.date to appointment.time
             if (key !in incomingSet) {
                 logger.info("Deleting obsolete appointment: ${appointment.date} ${appointment.time}")
+                diagnosisRepository.deleteDiagnosisByAppointmentId(appointment.id)
                 appointmentService.deleteAppointment(appointment.id)
             }
         }
@@ -171,6 +171,12 @@ class SpecialistServiceImpl(
             ?: throw RuntimeException("Specialist not found with username: $username")
 
         return specialistEntityToDtoConverter.convert(specialist)
+    }
+
+    override fun getAppointmentByRefNumber(refNumber: String): AppointmentDto {
+        val appointment = appointmentRepository.findByRefNumber(refNumber)
+            ?: throw RuntimeException("Appointment not found with refNumber: $refNumber")
+        return appointmentEntityToDtoConverter.convert(appointment)
     }
 
     override fun getAppointmentById(appointmentId: Long): AppointmentDto {

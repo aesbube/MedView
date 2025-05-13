@@ -32,6 +32,7 @@ export class AppointmentDiagnosisComponent implements OnInit {
   diagnosis$?: Diagnosis | undefined
   route = inject(ActivatedRoute);
   @Input() isDoctor: boolean = false;
+  @Input() isGuest: boolean = false;
   goBackUrl: string = '/dashboard/patients/' + this.route.snapshot.params['id'];
 
   ngOnInit(): void {
@@ -54,6 +55,18 @@ export class AppointmentDiagnosisComponent implements OnInit {
         console.log('Appointment:', appointment);
         console.log('Diagnosis:', diagnosis);
       });
+    } else if (this.isGuest) {
+      this.route.paramMap.pipe(
+        switchMap(params => {
+          const id = params.get('reference')!;
+          return forkJoin({
+            appointment: this.service.getAppointmentByReference(id)
+          });
+        })
+      ).subscribe(({appointment}) => {
+        this.appointment$ = appointment;
+        console.log('Appointment:', appointment);
+      });
     } else {
       this.route.paramMap.pipe(
         switchMap(params => {
@@ -62,7 +75,7 @@ export class AppointmentDiagnosisComponent implements OnInit {
             appointment: this.service.getAppointmentDetails(id),
             diagnosis: this.service.getDiagnosis(id).pipe(
               catchError(error => {
-                if (error.status === 401) {
+                if (error.status === 404) {
                   console.warn('Diagnosis not found.');
                   return of(undefined);
                 }

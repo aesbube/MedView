@@ -37,12 +37,19 @@ class SecurityConfig(
             .cors { cors -> cors.configurationSource(corsConfigurationSource()) }
             .authorizeHttpRequests { authz ->
                 authz
-                    .requestMatchers("/auth/**", "/h2/**", "/doctors/all", "/specialists/search").permitAll()
-                    .requestMatchers("/users/me").hasAnyRole("ADMIN", "SPECIALIST", "PHARMACIST", "DOCTOR", "PATIENT")
-                    .requestMatchers("/users/pharmacist", "/pharmacists/**").hasAnyRole("PHARMACIST", "ADMIN")
-                    .requestMatchers("/users/doctor", "/doctors/**", "/patients").hasAnyRole("DOCTOR", "ADMIN")
-                    .requestMatchers("/users/patient", "/patients/**").hasAnyRole("PATIENT", "ADMIN")
-                    .requestMatchers("/users/specialist", "/specialists/**", "/schedules").hasAnyRole("SPECIALIST", "ADMIN")
+                    .requestMatchers(
+                        "/auth/**",
+                        "/h2/**",
+                        "/doctors/all",
+                        "/specialists/search",
+                        "/specialists/{id}",
+                        "/specialists/appointments/ref/**"
+                    )
+                    .permitAll()
+                    .requestMatchers("/pharmacists/**").hasAnyRole("PHARMACIST", "ADMIN")
+                    .requestMatchers("/doctors/**", "/patients").hasAnyRole("DOCTOR", "ADMIN")
+                    .requestMatchers("/patients/**").hasAnyRole("PATIENT", "ADMIN")
+                    .requestMatchers("/specialists/**").hasAnyRole("SPECIALIST", "ADMIN")
                     .requestMatchers("/users/**").hasRole("ADMIN")
                     .anyRequest().hasRole("ADMIN")
             }

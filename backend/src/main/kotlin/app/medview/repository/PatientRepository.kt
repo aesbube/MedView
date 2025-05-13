@@ -8,17 +8,16 @@ import org.springframework.stereotype.Repository
 @Repository
 interface PatientRepository : JpaRepository<Patient, Long> {
     fun findByUsername(username: String): Patient?
-    fun findByEmail(email: String): Patient?
-    fun existsByUsername(username: String): Boolean
-    fun findByDoctor(doctor: Doctor): List<Patient>
     fun findByDoctorId(doctorId: Long): List<Patient>
-    fun searchByNameContainingIgnoreCaseOrUsernameContainingIgnoreCase(
+    fun searchByNameContainingIgnoreCaseOrSurnameContainingIgnoreCaseOrUsernameContainingIgnoreCaseAndDoctorIsNull(
         name: String,
+        surname: String,
         username: String,
     ): List<Patient>
 
-    fun searchByNameContainingIgnoreCaseOrUsernameContainingIgnoreCaseAndDoctorId(
+    fun searchByNameContainingIgnoreCaseOrSurnameContainingIgnoreCaseOrUsernameContainingIgnoreCaseAndDoctorId(
         name: String,
+        surname: String,
         username: String,
         doctorId: Long
     ): List<Patient>

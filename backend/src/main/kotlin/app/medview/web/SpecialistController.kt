@@ -28,6 +28,12 @@ class SpecialistController(
         return ResponseEntity.ok(specialists)
     }
 
+    @GetMapping("/{username}")
+    fun getSpecialistById(@PathVariable username: String): ResponseEntity<SpecialistDto> {
+        val specialist = specialistService.getSpecialistByUsername(username)
+        return ResponseEntity.ok(specialist)
+    }
+
     @GetMapping("/search")
     fun getSpecialistsByUsername(
         @RequestParam(
@@ -97,5 +103,11 @@ class SpecialistController(
         } catch (e: Exception) {
             return ResponseEntity.status(404).body("Diagnosis not found for appointment ID: $appointmentId")
         }
+    }
+
+    @GetMapping("/appointments/ref/{ref-number}")
+    fun getAppointmentByRefNumber(@PathVariable("ref-number") refNumber: String): ResponseEntity<AppointmentDto> {
+        val appointment = specialistService.getAppointmentByRefNumber(refNumber)
+        return ResponseEntity.ok(appointment)
     }
 }

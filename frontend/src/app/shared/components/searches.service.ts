@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { Specialist } from '../../models/specialist.model';
-import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {environment} from '../../../environments/environment';
+import {Specialist} from '../../models/specialist.model';
+import {HttpClient} from '@angular/common/http';
+import {map, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +13,10 @@ export class SearchesService {
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+  }
 
-  findDoctorOrEquipment(keyword: String) : Observable<Specialist[]>{
+  findSpecialist(keyword: String): Observable<Specialist[]> {
     return this.http.get<Specialist[]>(`${this.apiUrl}/specialists/search?name=${keyword}`)
       .pipe(
         map((doctors: Specialist[]) => {
@@ -26,6 +27,10 @@ export class SearchesService {
           }
         })
       );
+  }
+
+  findSpecialistByUsername(username: String): Observable<Specialist> {
+    return this.http.get<Specialist>(`${this.apiUrl}/specialists/${username}`)
   }
 
 }

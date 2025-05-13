@@ -13,6 +13,12 @@
         <h3 style="text-align: center">No diagnosis found for this appointment</h3>
       }
     }
+  } @else if (isGuest) {
+    @if (appointment$) {
+      <app-appointment-card [appointment]="appointment$"></app-appointment-card>
+    } @else {
+      <h3 style="text-align: center">No appointment found</h3>
+    }
   } @else {
     @if (appointment$) {
       <app-appointment-card [appointment]="appointment$"></app-appointment-card>

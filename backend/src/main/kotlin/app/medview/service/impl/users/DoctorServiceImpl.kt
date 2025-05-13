@@ -12,8 +12,8 @@ import app.medview.repository.DoctorRepository
 import app.medview.repository.PatientRepository
 import app.medview.repository.ScheduleRepository
 import app.medview.repository.SpecialistRepository
+import app.medview.service.AppointmentService
 import app.medview.service.PrescriptionService
-import app.medview.service.impl.AppointmentServiceImpl
 import app.medview.service.users.DoctorService
 import app.medview.service.users.PatientService
 import org.springframework.security.core.context.SecurityContextHolder
@@ -29,16 +29,12 @@ class DoctorServiceImpl(
     private val doctorConverter: DoctorEntityToDtoConverter,
     private val prescriptionConverter: PrescriptionEntityToDtoConverter,
     private val patientRepository: PatientRepository,
-    private val appointmentService: AppointmentServiceImpl,
+    private val appointmentService: AppointmentService,
     private val appointmentConverter: AppointmentEntityToDtoConverter,
     private val scheduleRepository: ScheduleRepository,
 ) :
     DoctorService {
     val logger = org.slf4j.LoggerFactory.getLogger(DoctorServiceImpl::class.java)
-    override fun getAllDoctors(): List<DoctorDto> {
-        return doctorRepository.findAll().map { doctorConverter.convert(it) }
-    }
-
     override fun getDoctorById(id: Long): DoctorDto {
         return doctorConverter.convert(doctorRepository.findById(id).orElseThrow {
             throw RuntimeException("Doctor not found with id: $id")
@@ -177,21 +173,29 @@ class DoctorServiceImpl(
         val username = authentication.name
         val doctor = doctorRepository.findByUsername(username)
             ?: throw UsernameNotFoundException("User not found with username: $username")
-        val patients = patientRepository.searchByNameContainingIgnoreCaseOrUsernameContainingIgnoreCaseAndDoctorId(
-            patientSearchDto.name!!,
-            patientSearchDto.name,
-            doctor.id
-        )
+        val patients =
+            patientRepository.searchByNameContainingIgnoreCaseOrSurnameContainingIgnoreCaseOrUsernameContainingIgnoreCaseAndDoctorId(
+                patientSearchDto.name!!,
+                patientSearchDto.name,
+                patientSearchDto.name,
+                doctor.id
+            )
         return patients.map { patientService.getPatientById(it.id) }
 
     }
 
     override fun searchPatientsByNameClaim(patientSearchDto: PatientSearchDto): List<PatientDto> {
-        val patients = patientRepository.searchByNameContainingIgnoreCaseOrUsernameContainingIgnoreCase(
-            patientSearchDto.name!!,
-            patientSearchDto.name
-        )
-        return patients.map { patientService.getPatientById(it.id) }
+        val patients =
+            patientRepository.searchByNameContainingIgnoreCaseOrSurnameContainingIgnoreCaseOrUsernameContainingIgnoreCaseAndDoctorIsNull(
+                patientSearchDto.name!!,
+                patientSearchDto.name,
+                patientSearchDto.name,
+            )
+        val finalPatients = mutableListOf<PatientDto>()
+        for (patient in patients) {
+            if (patient.doctor == null) finalPatients.add(patientService.getPatientById(patient.id))
+        }
+        return finalPatients.toList()
     }
 
     override fun getAllAppointmentsOfPatient(patientId: Long): List<AppointmentDto> {
@@ -206,23 +210,4 @@ class DoctorServiceImpl(
         val schedule = scheduleRepository.findBySpecialistId(specialist.id)
         return appointmentService.getFreeAppointmentsByScheduleId(schedule.id)
     }
-
-//    override fun claimPatient(patientId: Long): MessageResponse {
-//        logger.info(SecurityContextHolder.getContext().authentication.name)
-//        val authentication = SecurityContextHolder.getContext().authentication
-//        val username = authentication.name
-//        val doctor = doctorRepository.findByUsername(username)
-//            ?: throw UsernameNotFoundException("User not found with username: $username")
-//
-//        val patient = patientRepository.findById(patientId).orElseThrow {
-//            throw UsernameNotFoundException("User not found with id: $patientId")
-//        }
-//
-//        patient.doctor = doctor
-//
-//        patientRepository.save(patient)
-//        return MessageResponse("Patient claimed successfully")
-//    }
-
-
 }

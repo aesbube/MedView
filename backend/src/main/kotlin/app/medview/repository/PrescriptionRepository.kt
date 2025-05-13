@@ -9,5 +9,4 @@ import java.util.*
 
 interface PrescriptionRepository : JpaRepository<Prescription, String> {
     fun findByPatientId(patientId: Long): List<Prescription>
-    fun findByDoctorId(doctorId: Long): List<Prescription>
 }

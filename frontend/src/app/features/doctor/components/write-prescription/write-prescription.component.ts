@@ -31,10 +31,12 @@ export class WritePrescriptionComponent implements OnInit {
   isSubmitting = false;
 
   ngOnInit(): void {
+    console.log('Patient ID:', this.patientId);
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
         this.patientId = +id;
+        console.log('Patient ID:', this.patientId);
       }
     });
 

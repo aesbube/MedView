@@ -25,12 +25,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/doctors")
 class DoctorController(private val doctorService: DoctorService, private val specialistService: SpecialistServiceImpl) {
-    @GetMapping("/all")
-    fun getAllDoctors(): ResponseEntity<List<DoctorDto>> {
-        val doctors = doctorService.getAllDoctors()
-        return ResponseEntity.ok(doctors)
-    }
-
     @PostMapping("/update")
     fun addDetailsToDoctor(@RequestBody doctorDto: DoctorDto): ResponseEntity<String> {
         val response = doctorService.addDetailsToDoctor(doctorDto)
@@ -123,10 +117,10 @@ class DoctorController(private val doctorService: DoctorService, private val spe
 
     @GetMapping("appointments/{appointmentId}/diagnosis")
     fun getDiagnosisByAppointmentId(@PathVariable("appointmentId") appointmentId: Long): ResponseEntity<Any> {
-        try {
-            return ResponseEntity.ok(specialistService.getDiagnosisByAppointmentId(appointmentId))
+        return try {
+            ResponseEntity.ok(specialistService.getDiagnosisByAppointmentId(appointmentId))
         } catch (e: Exception) {
-            return ResponseEntity.status(404).body("Diagnosis not found for appointment ID: $appointmentId")
+            ResponseEntity.status(404).body("Diagnosis not found for appointment ID: $appointmentId")
         }
     }
 }
