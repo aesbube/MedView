@@ -15,7 +15,7 @@ interface PatientService {
     fun getPatientById(id: Long): PatientDto
     fun getCurrentPatient(): PatientDto
     fun getPatientByEmail(email: String): PatientDto?
-    fun addDetailsToPatient(patientRequestDto: PatientRequestDto): MessageResponse
+    fun addDetailsToPatient(patientRequestDto: PatientRequestDto): PatientDto
     fun getPatientsByDoctor(doctorId: Long): List<PatientDto>
     fun getPrescriptionsOfPatient(): List<PrescriptionDto>
     fun getAppointmentOfPatient(refNumber: String): AppointmentDto

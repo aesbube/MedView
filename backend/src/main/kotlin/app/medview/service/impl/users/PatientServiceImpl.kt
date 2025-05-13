@@ -60,7 +60,7 @@ class PatientServiceImpl(
             ?: throw PatientNotFoundException("email: $email"))
     }
 
-    override fun addDetailsToPatient(patientRequestDto: PatientRequestDto): MessageResponse {
+    override fun addDetailsToPatient(patientRequestDto: PatientRequestDto): PatientDto {
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
 
@@ -72,10 +72,11 @@ class PatientServiceImpl(
             throw RuntimeException("User is not a patient")
         }
 
-        patient.doctor = patient.doctor
+        patient.email = patientRequestDto.email
+        patient.phone = patientRequestDto.phone
 
         patientRepository.save(patient)
-        return MessageResponse("Patient details added successfully")
+        return patientConverter.convert(patient)
     }
 
     override fun getPatientsByDoctor(doctorId: Long): List<PatientDto> {
