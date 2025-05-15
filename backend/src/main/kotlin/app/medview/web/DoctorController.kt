@@ -65,7 +65,7 @@ class DoctorController(private val doctorService: DoctorService, private val spe
         return ResponseEntity(doctorService.writePrescription(patientId, prescription), HttpStatus.CREATED)
     }
 
-    @GetMapping("/patients/{patientId}/prescriptions/{prescriptionId}")
+    @PostMapping("/patients/{patientId}/prescriptions/{prescriptionId}")
     fun cancelPrescription(
         @PathVariable("patientId") patientId: Long,
         @PathVariable("prescriptionId") prescriptionId: String,
@@ -101,6 +101,12 @@ class DoctorController(private val doctorService: DoctorService, private val spe
     @GetMapping("/appointments/{username}")
     fun getFreeAppointmentsBySpecialistUsername(@PathVariable("username") username: String): ResponseEntity<List<AppointmentDto>> {
         val appointments = doctorService.getAllFreeAppointmentsBySpecialistUsername(username)
+        return ResponseEntity.ok(appointments)
+    }
+
+    @GetMapping("/appointments/all/{username}")
+    fun getAllAppointmentsBySpecialistUsername(@PathVariable("username") username: String): ResponseEntity<List<AppointmentDto>> {
+        val appointments = doctorService.getAllAppointmentsBySpecialistUsername(username)
         return ResponseEntity.ok(appointments)
     }
 

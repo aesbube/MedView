@@ -2,7 +2,6 @@ import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/c
 import {Prescription} from '../../../models/prescription.model';
 import {MatCard, MatCardContent, MatCardHeader, MatCardModule} from '@angular/material/card';
 import {AuthService} from '../../../core/services/auth.service';
-import {QrCodeComponent} from '../qr-code/qr-code.component';
 import {MatButtonModule} from '@angular/material/button';
 import {PrescriptionStatusModel} from '../../../models/prescription-status.model';
 
@@ -13,7 +12,6 @@ import {PrescriptionStatusModel} from '../../../models/prescription-status.model
     MatCardContent,
     MatCardHeader,
     MatCardModule,
-    QrCodeComponent,
     MatButtonModule
   ],
   templateUrl: './prescription-details.component.html',

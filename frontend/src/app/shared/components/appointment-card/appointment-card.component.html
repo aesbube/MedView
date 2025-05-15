@@ -6,10 +6,10 @@
         <div class="appointment-info-grid">
           <div class="info-row">
             <div class="info-item">
-              <strong>Patient:</strong> {{ appointment.patientName || 'N/A' }}
+              <strong>Patient:</strong> {{ appointment.patient?.name || "N/A" }}
             </div>
             <div class="info-item">
-              <strong>Assignee:</strong> {{ appointment.assigneeName || 'N/A' }}
+              <strong>Assignee:</strong> {{ appointment.assignee?.name || "N/A" }}
             </div>
           </div>
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component
 @Component
 class SpecialistEntityToDtoConverter {
     fun convert(specialist: Specialist) = SpecialistDto(
+        id = specialist.id,
         username = specialist.username,
         email = specialist.email,
         name = specialist.name,

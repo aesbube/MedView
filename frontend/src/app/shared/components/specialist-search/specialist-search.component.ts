@@ -29,7 +29,8 @@ import { SearchesService } from '../searches.service';
   templateUrl: './specialist-search.component.html',
   styleUrl: './specialist-search.component.css'
 })
-export class SpecialistSearchComponent implements OnInit{
+export class SpecialistSearchComponent {
+  @Output() focused = new EventEmitter<boolean>();
 
   private searchesService = inject(SearchesService)
   searchControl1 = new FormControl('');
@@ -57,11 +58,10 @@ export class SpecialistSearchComponent implements OnInit{
     }
 
     onOptionSelected(event: any) {
-      const selectedUsername = event.option.value;
-      this.router.navigate(['/specialist', selectedUsername]);
+      const selectedOption : Specialist = event.option.value;
+      this.router.navigate(['/specialist', selectedOption.username]);
     }
 
-    @Output() focused = new EventEmitter<boolean>();
 
     onFocus(): void {
       this.focused.emit(true);

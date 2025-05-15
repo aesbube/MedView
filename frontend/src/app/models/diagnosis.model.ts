@@ -3,5 +3,4 @@ export interface Diagnosis {
   name: String,
   description: String,
   treatment: String,
-  patientNameAndSurname: String
 }

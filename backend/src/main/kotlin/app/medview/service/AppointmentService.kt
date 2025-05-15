@@ -7,6 +7,7 @@ import app.medview.domain.users.Doctor
 
 interface AppointmentService {
     fun getAllAppointments(): List<Appointment>
+    fun getAppointmentById(appointmentId: Long): AppointmentDto?
     fun getAppointmentsByPatientId(patientId: Long): List<Appointment>
     fun getAppointmentsBySpecialistId(specialistId: Long): List<Appointment>
     fun getAppointmentsByScheduleId(scheduleId: Long): List<AppointmentDto>

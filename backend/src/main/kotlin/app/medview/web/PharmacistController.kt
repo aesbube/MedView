@@ -20,17 +20,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/pharmacists")
 class PharmacistController(private val pharmacistService: PharmacistService) {
-    @GetMapping
-    fun getAllDoctors(): ResponseEntity<List<PharmacistDto>> {
-        val pharmacists = pharmacistService.getAllPharmacists()
-        return ResponseEntity.ok(pharmacists)
-    }
-
-    @PostMapping("/update")
-    fun addDetailsToDoctor(@RequestBody pharmacistUpdateRequestDto: PharmacistUpdateRequestDto): ResponseEntity<String> {
-        val response = pharmacistService.addDetailsToPharmacist(pharmacistUpdateRequestDto)
-        return ResponseEntity.ok(response.message)
-    }
 
     @GetMapping("/prescription")
     fun getPrescription(

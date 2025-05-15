@@ -6,6 +6,7 @@ import { SpecialistDashboardComponent } from '../../../features/specialist/compo
 import { PharmacistDashboardComponent } from '../../../features/pharmacist/components/pharmacist-dashboard/pharmacist-dashboard.component';
 import { AuthService } from '../../../core/services/auth.service';
 import {Role} from '../../../models/roles.model';
+import { PharmacistScanComponent } from "../../../features/pharmacist/components/pharmacist-scan/pharmacist-scan.component";
 
 @Component({
   selector: 'app-dashboard-container',
@@ -15,7 +16,8 @@ import {Role} from '../../../models/roles.model';
     SpecialistDashboardComponent,
     PharmacistDashboardComponent,
     AdminDashboardComponent,
-  ],
+    PharmacistScanComponent
+],
   templateUrl: './dashboard-container.component.html',
   styleUrl: './dashboard-container.component.css'
 })

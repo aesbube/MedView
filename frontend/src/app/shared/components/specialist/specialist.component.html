@@ -1,61 +1,64 @@
-<div class="back-button">
-  <button mat-icon-button [routerLink]="['/']">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-</div>
-<div class="specialist-container">
-  <mat-card>
-    @if (specialist) {
-      <mat-card-title>Specialist Details</mat-card-title>
-      <mat-card-content>
-        <div class="specialist-info-grid">
-          <div class="info-row">
-            <div class="info-item">
-              <strong>Name:</strong> {{ specialist.name }} {{ specialist.surname }}
-            </div>
-            <div class="info-item">
-              <strong>Username:</strong> {{ specialist.username }}
-            </div>
-          </div>
+<div class="mv-panel ">
+  <h2>Specialist Details</h2>
+  @if (!fetchedSpecialist) {
+  <mat-spinner></mat-spinner>
+  } @else {
+  <div class="mv-row">
+    <label>Full Name</label>
+    <p>{{ specialist?.name }} {{ specialist?.surname }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Specialty</label>
+    <p>{{ specialist?.specialty }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Years of experience</label>
+    <p>{{ specialist?.yearsOfExperience }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Contact (e-mail)</label>
+    <p>{{ specialist?.email }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Contact (phone)</label>
+    <p>{{ specialist?.phone }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  } @if (!fetchedAppointments) {
+  <mat-spinner></mat-spinner>
+  } @else {
+  <div class="mv-timeslot-picker">
+    <h2>Available timeslots</h2>
+    <div class="mv-date-picker">
+      <mat-calendar
+        class="mv-calendar"
+        [(selected)]="selected"
+      ></mat-calendar>
+      <div class="mv-timeslots">
+        <h3>Selected day: {{ formatDateDMY(selected()) }}</h3>
+        @if (selected()) {
+        <div class="mv-all-timeslots">
+          @for (appointment of appointments; track appointment) {
 
-          <div class="info-row">
-            <div class="info-item">
-              <strong>Email:</strong> {{ specialist.email }}
-            </div>
-            <div class="info-item">
-              <strong>Phone:</strong> {{ specialist.phone }}
-            </div>
-          </div>
-
-          <div class="info-row">
-            <div class="info-item">
-              <strong>Address:</strong> {{ specialist.address }}
-            </div>
-            <div class="info-item">
-              <strong>Birth Date:</strong> {{ specialist.birthDate | date }}
-            </div>
-          </div>
-
-          <div class="info-row">
-            <div class="info-item">
-              <strong>Specialty:</strong> {{ specialist.specialty }}
-            </div>
-            <div class="info-item">
-              <strong>License number:</strong> {{ specialist.licenseNumber }}
-            </div>
-          </div>
-
-          <div class="info-row full-width">
-            <div class="info-item">
-              <strong>Years of experience:</strong> {{ specialist.yearsOfExperience }}
-            </div>
-          </div>
+            @if (appointment.date == formatDateYMD(selected())) {
+              @if (appointment.status=="FREE") {
+                <div class="mv-timeslot free">{{ appointment.time}}</div>
+              }
+              @else {
+                <div class="mv-timeslot occupied">{{ appointment.time}}</div>
+              }
+            }
+          }
         </div>
-      </mat-card-content>
-    } @else {
-      <div class="spinner-container">
-        <mat-spinner [diameter]="60"></mat-spinner>
+
+        }
       </div>
-    }
-  </mat-card>
+    </div>
+  </div>
+
+  }
 </div>

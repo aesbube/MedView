@@ -1,26 +1,63 @@
 import { Component } from '@angular/core';
-import { AppointmentDetailsComponent } from "../../../../shared/components/appointment-details/appointment-details.component";
 import { PatientService } from '../../patient.service';
 import { Appointment } from '../../../../models/appointment.model';
 import { Subscription } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import {MatTableModule} from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-patient-appointments',
   imports: [
-    AppointmentDetailsComponent,
-    MatProgressSpinnerModule],
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    RouterLink
+],
   templateUrl: './patient-appointments.component.html',
   styleUrl: './patient-appointments.component.css'
 })
 export class PatientAppointmentsComponent {
 
+  columns = [
+    {
+      columnDef: 'position',
+      header: 'Date/Time',
+      cell: (appointment: Appointment) => `${appointment.date} at ${appointment.time}`,
+    },
+    {
+      columnDef: 'name',
+      header: 'Name',
+      cell: (appointment: Appointment) => `${appointment.patient?.name} ${appointment.patient?.surname}`,
+    },
+    {
+      columnDef: 'specialist',
+      header: 'Specialist',
+      cell: (appointment: Appointment) => `${appointment.schedule.specialist.name} ${appointment.schedule.specialist.surname}`,
+    },
+    {
+      columnDef: 'doctor',
+      header: 'Doctor',
+      cell: (appointment: Appointment) => `${appointment.assignee?.name} ${appointment.assignee?.surname}`,
+    },
+    {
+      columnDef: 'location',
+      header: 'Location',
+      cell: (appointment: Appointment) => `${appointment.location}`,
+    },
+    {
+      columnDef: 'details',
+      header: 'Details',
+      cell: (appointment: Appointment) => `${appointment.refNumber}`,
+    },
+  ];
+
+  displayedColumns = this.columns.map(c => c.columnDef);
+
   appointments: Appointment[] = []
-  numOfAppointments = 0
   fetched = false
   subscription: Subscription | undefined;
-
   today = this.getDate()
 
   constructor(private patientService: PatientService) { }
@@ -31,7 +68,6 @@ export class PatientAppointmentsComponent {
     this.subscription = this.patientService.getAppointments().subscribe({
       next: (data: Appointment[]) => {
         this.appointments = data;
-        this.numOfAppointments = this.appointments.length
         this.fetched = true;
       },
       error: (error) => {

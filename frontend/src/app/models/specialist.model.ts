@@ -1,4 +1,5 @@
 export interface Specialist {
+  id: number,
   username: String,
   email: String,
   name: String,

@@ -2,14 +2,17 @@ package app.medview.service.impl.users
 
 import app.medview.domain.Role
 import app.medview.domain.converter.AppointmentEntityToDtoConverter
+import app.medview.domain.converter.DiagnosisEntityToDtoConverter
 import app.medview.domain.converter.PatientEntityToDtoConverter
 import app.medview.domain.converter.PrescriptionEntityToDtoConverter
 import app.medview.domain.dto.AppointmentDto
+import app.medview.domain.dto.DiagnosisDto
 import app.medview.domain.dto.MessageResponse
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.users.PatientDto
 import app.medview.exceptions.PatientNotFoundException
 import app.medview.repository.AppointmentRepository
+import app.medview.repository.DiagnosisRepository
 import app.medview.repository.PatientRepository
 import app.medview.service.PrescriptionService
 import app.medview.service.users.PatientService
@@ -25,6 +28,8 @@ class PatientServiceImpl(
     private val prescriptionConverter: PrescriptionEntityToDtoConverter,
     private val appointmentRepository: AppointmentRepository,
     private val appointmentEntityToDtoConverter: AppointmentEntityToDtoConverter,
+    private val diagnosisRepository: DiagnosisRepository,
+    private val diagnosisConverter: DiagnosisEntityToDtoConverter
 ) : PatientService {
 
     val logger = org.slf4j.LoggerFactory.getLogger(PatientServiceImpl::class.java)
@@ -45,12 +50,13 @@ class PatientServiceImpl(
         )
     }
 
-    override fun addDetailsToPatient(patientDto: PatientDto): MessageResponse {
+    override fun addDetailsToPatient(patientDto: PatientDto): PatientDto {
         val auth = SecurityContextHolder.getContext().authentication
         val username = auth.name
 
         val patient = patientRepository.findByUsername(username)
             ?: throw UsernameNotFoundException("User not found with username: $username")
+
 
         if (patient.role != Role.PATIENT) {
             throw RuntimeException("User is not a patient")
@@ -60,6 +66,7 @@ class PatientServiceImpl(
         patient.name = patientDto.name
         patient.surname = patientDto.surname
         patient.phone = patientDto.phone
+        patient.email = patientDto.email
         patient.address = patientDto.address
         patient.birthDate = patientDto.birthDate
         patient.birthPlace = patientDto.birthPlace
@@ -68,7 +75,7 @@ class PatientServiceImpl(
 
 
         patientRepository.save(patient)
-        return MessageResponse("Patient details added successfully")
+        return patientConverter.convert(patient)
     }
 
     override fun getPatientsByDoctor(doctorId: Long): List<PatientDto> {
@@ -109,5 +116,6 @@ class PatientServiceImpl(
 
         return appointments.map { appointmentEntityToDtoConverter.convert(it) }
     }
+
 
 }

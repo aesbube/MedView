@@ -12,16 +12,21 @@ import app.medview.repository.ScheduleRepository
 import app.medview.service.AppointmentService
 import app.medview.util.RandomIdGenerator
 import org.springframework.stereotype.Service
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class AppointmentServiceImpl(
     private val appointmentRepository: AppointmentRepository,
     private val patientRepository: PatientRepository,
     private val scheduleRepository: ScheduleRepository,
-    private val appointmentEntityToDtoConverter: AppointmentEntityToDtoConverter
+    private val appointmenConverter: AppointmentEntityToDtoConverter
 ) : AppointmentService {
     override fun getAllAppointments(): List<Appointment> {
         return appointmentRepository.findAll()
+    }
+
+    override fun getAppointmentById(appointmentId: Long): AppointmentDto? {
+        return appointmentRepository.findById(appointmentId).map { appointmenConverter.convert(it) }.getOrNull()
     }
 
     override fun getAppointmentsByPatientId(patientId: Long): List<Appointment> {
@@ -34,21 +39,21 @@ class AppointmentServiceImpl(
 
     override fun getAppointmentsByScheduleId(scheduleId: Long): List<AppointmentDto> {
         return appointmentRepository.findByScheduleId(scheduleId).map {
-            appointmentEntityToDtoConverter.convert(it)
+            appointmenConverter.convert(it)
         }
     }
 
     override fun getOccupiedAppointmentsByScheduleId(scheduleId: Long): List<AppointmentDto> {
         return appointmentRepository.findByStatusAndScheduleId(AppointmentStatus.OCCUPIED, scheduleId)
             .map {
-                appointmentEntityToDtoConverter.convert(it)
+                appointmenConverter.convert(it)
             }
     }
 
     override fun getFreeAppointmentsByScheduleId(scheduleId: Long): List<AppointmentDto> {
         return appointmentRepository.findByStatusAndScheduleId(AppointmentStatus.FREE, scheduleId)
             .map {
-                appointmentEntityToDtoConverter.convert(it)
+                appointmenConverter.convert(it)
             }
     }
 

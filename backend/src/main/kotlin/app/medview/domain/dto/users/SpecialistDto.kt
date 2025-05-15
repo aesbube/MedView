@@ -3,6 +3,7 @@ package app.medview.domain.dto.users
 import java.time.LocalDate
 
 data class SpecialistDto(
+    val id: Long,
     val username: String,
     val email: String,
     val name: String?,

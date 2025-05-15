@@ -2,6 +2,7 @@ package app.medview.web
 
 import app.medview.domain.Prescription
 import app.medview.domain.dto.AppointmentDto
+import app.medview.domain.dto.DiagnosisDto
 import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.dto.users.PatientRequestDto
@@ -16,9 +17,9 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/patients")
 class PatientController(private val patientService: PatientService) {
     @PostMapping("/update")
-    fun addDetailsToPatient(@RequestBody patientDto: PatientDto): ResponseEntity<String> {
-        val response = patientService.addDetailsToPatient(patientDto)
-        return ResponseEntity.ok(response.message)
+    fun addDetailsToPatient(@RequestBody patientDto: PatientDto): ResponseEntity<PatientDto> {
+        val updatedPatient = patientService.addDetailsToPatient(patientDto)
+        return ResponseEntity.ok(updatedPatient)
     }
 
     @GetMapping("/me")

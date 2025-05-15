@@ -210,4 +210,12 @@ class DoctorServiceImpl(
         val schedule = scheduleRepository.findBySpecialistId(specialist.id)
         return appointmentService.getFreeAppointmentsByScheduleId(schedule.id)
     }
+
+    override fun getAllAppointmentsBySpecialistUsername(username: String): List<AppointmentDto> {
+        val specialist = specialistRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("Specialist not found with username: $username")
+        val schedule = scheduleRepository.findBySpecialistId(specialist.id)
+        return appointmentService.getAppointmentsByScheduleId(schedule.id)
+    }
+
 }

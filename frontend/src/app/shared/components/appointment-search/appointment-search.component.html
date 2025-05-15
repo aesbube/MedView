@@ -1,6 +1,6 @@
-<mat-form-field id="appointment-form" class="search-form" >
-  <mat-label>Find your appointment details</mat-label>
-  <input #searchInput matInput type="text" [formControl]="searchControl2" (focus)="onFocus()" (blur)="onBlur()" (keyup.enter)="goToAppointment()" >
+<mat-form-field class="mv-search">
+  <mat-label class="mv-input-label">Find your appointment details</mat-label>
+  <input class="mv-input" matInput #searchInput type="text" [formControl]="searchControl2" (focus)="onFocus()" (blur)="onBlur()" (keyup.enter)="goToAppointment()" >
   @if (searchControl2.value) {
     <ng-container matSuffix>
       <button mat-icon-button aria-label="Clear" (click)="searchControl2.setValue('')">

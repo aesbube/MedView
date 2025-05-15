@@ -2,7 +2,6 @@ package app.medview.web
 
 import app.medview.domain.Schedule
 import app.medview.domain.dto.AppointmentDto
-import app.medview.domain.dto.DiagnosisDto
 import app.medview.domain.dto.WriteDiagnosisDto
 import app.medview.domain.dto.FreeAppointmentDto
 import app.medview.domain.dto.users.SpecialistDto
@@ -57,7 +56,7 @@ class SpecialistController(
     }
 
     @GetMapping("/schedule")
-    fun getScheduleBySpecialistId(specialistId: Long): ResponseEntity<Schedule> {
+    fun getScheduleBySpecialistId(@RequestParam specialistId: Long): ResponseEntity<Schedule> {
         val schedule = specialistService.getSpecialistScheduleById(specialistId)
         return ResponseEntity.ok(schedule)
     }
