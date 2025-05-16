@@ -14,7 +14,6 @@ import { PharmacistScanComponent } from "../../../features/pharmacist/components
     PatientDashboardComponent,
     DoctorDashboardComponent,
     SpecialistDashboardComponent,
-    PharmacistDashboardComponent,
     AdminDashboardComponent,
     PharmacistScanComponent
 ],

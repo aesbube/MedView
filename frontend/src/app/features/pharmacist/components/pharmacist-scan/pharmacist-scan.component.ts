@@ -15,7 +15,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButtonModule,
     PrescriptionDetailsComponent,
     MatProgressSpinnerModule,
-    RouterLink
   ],
   templateUrl: './pharmacist-scan.component.html',
   styleUrl: './pharmacist-scan.component.css'
