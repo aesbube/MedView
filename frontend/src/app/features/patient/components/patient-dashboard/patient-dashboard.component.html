@@ -1,0 +1,14 @@
+<div class="mv-panel mv-patient-dashboard">
+  <app-tabs (currentTab)="updatePatientTab($event)"></app-tabs>
+  <div class="mv-patient-wrapper">
+    @if (currentTab == "Basic Info") {
+    <app-patient-info></app-patient-info>
+    } @else if (currentTab == "Appointments") {
+    <app-patient-appointments></app-patient-appointments>
+    } @else if (currentTab == "Prescriptions") {
+    <app-patient-prescriptions></app-patient-prescriptions>
+    } @else if (currentTab == "History") {
+    <app-patient-history></app-patient-history>
+    }
+  </div>
+</div>

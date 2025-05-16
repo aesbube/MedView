@@ -1,0 +1,16 @@
+<mat-form-field class="mv-search">
+  <mat-label>Find a specialist</mat-label>
+  <input class="mv-input" matInput type="text" [formControl]="searchControl1" [matAutocomplete]="auto" (focus)="onFocus()" (blur)="onBlur()">
+  @if (searchControl1.value) {
+  <button matSuffix mat-icon-button aria-label="Clear" (click)="searchControl1.setValue('')">
+    <mat-icon>close</mat-icon>
+  </button>
+  }
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+    @for (specialist of filteredSpecialists$ | async; track $index) {
+    <mat-option [value]="specialist" [routerLink]="['/specialist', specialist.username]">
+      {{specialist.name}} {{specialist.surname}} ({{specialist.specialty}})
+    </mat-option>
+    }
+  </mat-autocomplete>
+</mat-form-field>

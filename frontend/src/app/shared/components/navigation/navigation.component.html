@@ -1,0 +1,17 @@
+<div class="nav-left">
+  <a routerLink="" class="nav-logo"><img src="logo.png" alt="Logo" /></a>
+  <a routerLink="" href="">MedView</a>
+</div>
+
+<div class="nav-right">
+  <button class="mv-button" mat-button routerLink="">Home</button>
+
+  @if(!authService.isLoggedIn()){
+    <button class="mv-button" mat-flat-button routerLink="/login">Login</button>
+    <button class="mv-button" mat-flat-button routerLink="/register">Register</button>
+  }
+  @else {
+    <button class="mv-button" mat-button routerLink="/dashboard"> Dashboard</button>
+    <button class="mv-button" mat-button (click)="authService.logout()"> Logout</button>
+  }
+</div>
