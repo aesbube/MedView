@@ -1,6 +1,6 @@
 <div class="mv-panel mv-appointment">
   <h2>Appointment #{{ appointment?.refNumber }} Details</h2>
-  @if (!fetched) {
+  @if (!fetchedAppointment) {
   <mat-spinner></mat-spinner>
   } @else {
   <div class="mv-row">
@@ -36,6 +36,43 @@
   <div class="mv-row">
     <label>Hospital</label>
     <p>{{ appointment?.location }}</p>
+  </div>
+  }
+  <h2>Diagnosis details for appointment</h2>
+  @if (!fetchedDiagnosis) {
+  <mat-spinner></mat-spinner>
+  } @else {
+  <div class="mv-row">
+    <label>Diagnosis</label>
+    <p>{{ diagnosis?.name }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Description</label>
+    <p>
+      {{ diagnosis?.description }}
+    </p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Treatment</label>
+    <p>
+      {{ diagnosis?.treatment }}
+    </p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mv-row">
+    <label>Simplification</label>
+    @if (diagnosis?.simplification) {
+      <p>{{diagnosis?.simplification}}</p>
+    }
+    @else if(simplifying){
+      <mat-spinner></mat-spinner>
+    }
+    @else {
+      <button mat-flat-button (click)="simplifyDiagnosis()"> Simplify diagnosis</button>
+    }
+
   </div>
   }
 </div>

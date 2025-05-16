@@ -45,7 +45,8 @@ class SecurityConfig(
                         "/specialists/{id}",
                         "/specialists/appointments/ref/**",
                         "/appointments/**",
-                        "/doctors/appointments/all/{username}"
+                        "/doctors/appointments/all/{username}",
+                        "patients/appointment/{ref-number}/**"
                     )
                     .permitAll()
                     .requestMatchers("/pharmacists/**").hasAnyRole("PHARMACIST", "ADMIN")
@@ -87,14 +88,14 @@ class SecurityConfig(
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf("http://localhost:4200")  // Replace with your frontend's origin
+        configuration.allowedOrigins = listOf("http://localhost:4200")
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
         configuration.allowedHeaders = listOf("Authorization", "Content-Type", "Cache-Control")
-        configuration.allowCredentials = true  // Important: Only use in development
+        configuration.allowCredentials = true
         configuration.maxAge = 3600
 
         val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration) // Apply CORS to all paths
+        source.registerCorsConfiguration("/**", configuration)
         return source
     }
 }

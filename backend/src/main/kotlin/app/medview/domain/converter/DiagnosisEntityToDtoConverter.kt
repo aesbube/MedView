@@ -12,5 +12,6 @@ class DiagnosisEntityToDtoConverter {
         description = diagnosis.description,
         treatment = diagnosis.treatment,
         patientNameAndSurname = diagnosis.patient?.name + " " + diagnosis.patient?.surname,
+        simplification = diagnosis.simplification
     )
 }

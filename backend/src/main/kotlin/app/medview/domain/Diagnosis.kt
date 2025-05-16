@@ -17,5 +17,7 @@ data class Diagnosis(
     @ManyToOne
     val specialist: Specialist? = null,
     @OneToOne
-    val appointment: Appointment? = null
+    val appointment: Appointment? = null,
+    @Column(length = 1023)
+    val simplification: String? = ""
 )

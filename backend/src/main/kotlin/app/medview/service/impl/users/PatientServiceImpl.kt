@@ -117,5 +117,12 @@ class PatientServiceImpl(
         return appointments.map { appointmentEntityToDtoConverter.convert(it) }
     }
 
+    override fun getDiagnosisByAppointmentRef(appointmentRef: String): DiagnosisDto? {
+        val appointment = appointmentRepository.findByRefNumber(appointmentRef)
+        if (appointment == null)
+            return null
+        return diagnosisRepository.findDiagnosisByAppointmentId(appointment.id)?.let { diagnosisConverter.convert(it) }
+    }
+
 
 }

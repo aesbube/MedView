@@ -112,11 +112,13 @@ body {
   margin: 12px 0;
   font-size: 22px;
   width: 100%;
+  gap: 50px;
 }
 
-.mv-appointment {
-  height: 456px;
+.mv-row p{
+  text-align: right;
 }
+
 
 .mv-panel mat-spinner {
   justify-self: center;

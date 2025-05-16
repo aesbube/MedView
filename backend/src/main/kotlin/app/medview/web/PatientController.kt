@@ -7,6 +7,7 @@ import app.medview.domain.dto.PrescriptionDto
 import app.medview.domain.dto.users.PatientDto
 import app.medview.domain.dto.users.PatientRequestDto
 import app.medview.domain.users.Patient
+import app.medview.service.OpenAiService
 import app.medview.service.users.PatientService
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/patients")
-class PatientController(private val patientService: PatientService) {
+class PatientController(
+    private val patientService: PatientService,
+    private val openAiService: OpenAiService
+    ) {
     @PostMapping("/update")
     fun addDetailsToPatient(@RequestBody patientDto: PatientDto): ResponseEntity<PatientDto> {
         val updatedPatient = patientService.addDetailsToPatient(patientDto)
@@ -44,4 +48,9 @@ class PatientController(private val patientService: PatientService) {
         return ResponseEntity.ok(appointments)
     }
 
+    @GetMapping("/appointment/{refNumber}/diagnosis/simplify")
+    fun simplifyDiagnosis(@PathVariable refNumber: String): ResponseEntity<DiagnosisDto> {
+        val simplifiedDiagnosis = openAiService.simplify(refNumber)
+        return ResponseEntity(simplifiedDiagnosis, HttpStatus.OK)
+    }
 }

@@ -18,4 +18,5 @@ interface PatientService {
     fun getPrescriptionsOfPatient(): List<PrescriptionDto>
     fun getAppointmentOfPatient(refNumber: String): AppointmentDto
     fun getAllAppointmentsOfPatient(): List<AppointmentDto>
+    fun getDiagnosisByAppointmentRef(appointmentRef: String) : DiagnosisDto?
 }

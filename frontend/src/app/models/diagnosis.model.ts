@@ -1,6 +1,7 @@
 export interface Diagnosis {
-  id: Number,
-  name: String,
-  description: String,
-  treatment: String,
+  id: number,
+  name: string,
+  description: string,
+  treatment: string,
+  simplification: string
 }

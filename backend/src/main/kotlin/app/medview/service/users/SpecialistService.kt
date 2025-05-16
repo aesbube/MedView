@@ -22,5 +22,6 @@ interface SpecialistService {
     fun getSpecialist(): SpecialistDto
     fun getAppointmentById(appointmentId: Long): AppointmentDto
     fun getDiagnosisByAppointmentId(appointmentId: Long): DiagnosisDto
+    fun getDiagnosisByAppointmentRef(appointmentRef: String): DiagnosisDto
     fun getAppointmentByRefNumber(refNumber: String): AppointmentDto
 }

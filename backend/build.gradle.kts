@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
+    kotlin("plugin.serialization") version "1.9.0"
     id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.7"
 }
@@ -33,6 +34,10 @@ dependencies {
 //    runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 kotlin {

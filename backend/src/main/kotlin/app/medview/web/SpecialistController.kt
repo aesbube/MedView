@@ -2,6 +2,7 @@ package app.medview.web
 
 import app.medview.domain.Schedule
 import app.medview.domain.dto.AppointmentDto
+import app.medview.domain.dto.DiagnosisDto
 import app.medview.domain.dto.WriteDiagnosisDto
 import app.medview.domain.dto.FreeAppointmentDto
 import app.medview.domain.dto.users.SpecialistDto
@@ -94,14 +95,10 @@ class SpecialistController(
         return ResponseEntity.ok(appointment)
     }
 
-    @GetMapping("/appointments/{appointmentId}/diagnosis")
-    fun getDiagnosisByAppointmentId(@PathVariable appointmentId: Long): ResponseEntity<Any> {
-        try {
-            val diagnosis = specialistService.getDiagnosisByAppointmentId(appointmentId)
-            return ResponseEntity.ok(diagnosis)
-        } catch (e: Exception) {
-            return ResponseEntity.status(404).body("Diagnosis not found for appointment ID: $appointmentId")
-        }
+    @GetMapping("/appointments/ref/{ref-number}/diagnosis")
+    fun getDiagnosisByAppointmentId(@PathVariable("ref-number") refNumber: String): ResponseEntity<DiagnosisDto> {
+        val diagnosis = specialistService.getDiagnosisByAppointmentRef(refNumber)
+        return ResponseEntity.ok(diagnosis)
     }
 
     @GetMapping("/appointments/ref/{ref-number}")

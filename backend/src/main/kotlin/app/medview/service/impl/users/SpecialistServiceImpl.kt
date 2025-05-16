@@ -191,4 +191,12 @@ class SpecialistServiceImpl(
             ?: throw RuntimeException("Diagnosis not found for appointment with id: $appointmentId")
         return diagnosisEntityToDtoConverter.convert(diagnosis)
     }
+
+    override fun getDiagnosisByAppointmentRef(appointmentRef: String): DiagnosisDto {
+        val appointment = appointmentRepository.findByRefNumber(appointmentRef)
+            ?: throw RuntimeException("Appointment with reference number: $ not found")
+        val diagnosis = diagnosisRepository.findDiagnosisByAppointmentId(appointment.id)
+            ?: throw RuntimeException("Diagnosis not found for appointment with id: $appointmentRef")
+        return diagnosisEntityToDtoConverter.convert(diagnosis)
+    }
 }

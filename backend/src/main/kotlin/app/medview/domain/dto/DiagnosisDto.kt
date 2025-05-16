@@ -5,5 +5,6 @@ class DiagnosisDto(
     val name: String,
     val description: String,
     val treatment: String,
-    val patientNameAndSurname: String
+    val patientNameAndSurname: String,
+    val simplification : String?
 )
