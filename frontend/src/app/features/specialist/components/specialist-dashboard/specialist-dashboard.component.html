@@ -1,34 +1,34 @@
 <div class="dashboard-page">
   <div class="dashboard-welcome">
-    <h1 class="dashboard-welcome__title">Specialist Dashboard</h1>
-    <p class="dashboard-welcome__sub">Manage your appointments and personal details.</p>
+    <h1 class="dashboard-welcome__title">{{ 'specialist.dashboard.title' | t }}</h1>
+    <p class="dashboard-welcome__sub">{{ 'specialist.dashboard.subtitle' | t }}</p>
   </div>
 
   <div>
-    <div class="dashboard-section-label">Navigation</div>
+    <div class="dashboard-section-label">{{ 'specialist.dashboard.section' | t }}</div>
     <div class="dashboard-grid">
       <a class="dashboard-tile" [routerLink]="['/dashboard/info']" routerLinkActive="dashboard-tile--active">
         <div class="dashboard-tile__icon">
           <mat-icon>manage_accounts</mat-icon>
         </div>
-        <h3 class="dashboard-tile__title">My details</h3>
-        <p class="dashboard-tile__desc">View and update your professional profile and contact information.</p>
+        <h3 class="dashboard-tile__title">{{ 'specialist.dashboard.details.title' | t }}</h3>
+        <p class="dashboard-tile__desc">{{ 'specialist.dashboard.details.desc' | t }}</p>
       </a>
 
       <a class="dashboard-tile" [routerLink]="['/dashboard/appointments']" routerLinkActive="dashboard-tile--active">
         <div class="dashboard-tile__icon">
           <mat-icon>event_available</mat-icon>
         </div>
-        <h3 class="dashboard-tile__title">Upcoming appointments</h3>
-        <p class="dashboard-tile__desc">View appointments that have been booked by patients.</p>
+        <h3 class="dashboard-tile__title">{{ 'specialist.dashboard.appointments.title' | t }}</h3>
+        <p class="dashboard-tile__desc">{{ 'specialist.dashboard.appointments.desc' | t }}</p>
       </a>
 
       <a class="dashboard-tile" [routerLink]="['/dashboard/free-appointments']" routerLinkActive="dashboard-tile--active">
         <div class="dashboard-tile__icon">
           <mat-icon>calendar_today</mat-icon>
         </div>
-        <h3 class="dashboard-tile__title">Free slots</h3>
-        <p class="dashboard-tile__desc">Set your available dates and time slots for patient bookings.</p>
+        <h3 class="dashboard-tile__title">{{ 'specialist.dashboard.slots.title' | t }}</h3>
+        <p class="dashboard-tile__desc">{{ 'specialist.dashboard.slots.desc' | t }}</p>
       </a>
     </div>
   </div>

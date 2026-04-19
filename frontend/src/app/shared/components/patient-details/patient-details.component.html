@@ -12,35 +12,35 @@
 
     <div class="app-info-grid">
       <div class="app-info-item">
-        <span class="app-info-label">Email</span>
+        <span class="app-info-label">{{ 'patientDetails.email' | t }}</span>
         <span class="app-info-value">{{ patient.email || '—' }}</span>
       </div>
       <div class="app-info-item">
-        <span class="app-info-label">Phone</span>
+        <span class="app-info-label">{{ 'patientDetails.phone' | t }}</span>
         <span class="app-info-value">{{ patient.phone || '—' }}</span>
       </div>
       <div class="app-info-item">
-        <span class="app-info-label">Address</span>
+        <span class="app-info-label">{{ 'patientDetails.address' | t }}</span>
         <span class="app-info-value">{{ patient.address || '—' }}</span>
       </div>
       <div class="app-info-item">
-        <span class="app-info-label">Birth date</span>
+        <span class="app-info-label">{{ 'patientDetails.birthDate' | t }}</span>
         <span class="app-info-value">{{ (patient.birthDate | date) || '—' }}</span>
       </div>
       <div class="app-info-item">
-        <span class="app-info-label">Birth place</span>
+        <span class="app-info-label">{{ 'patientDetails.birthPlace' | t }}</span>
         <span class="app-info-value">{{ patient.birthPlace || '—' }}</span>
       </div>
       <div class="app-info-item">
-        <span class="app-info-label">Blood type</span>
+        <span class="app-info-label">{{ 'patientDetails.bloodType' | t }}</span>
         <span class="app-info-value">{{ patient.bloodType || '—' }}</span>
       </div>
       <div class="app-info-item app-info-item--full">
-        <span class="app-info-label">Allergies</span>
+        <span class="app-info-label">{{ 'patientDetails.allergies' | t }}</span>
         <span class="app-info-value">{{ patient.allergies || '—' }}</span>
       </div>
       <div class="app-info-item app-info-item--full">
-        <span class="app-info-label">Doctor</span>
+        <span class="app-info-label">{{ 'patientDetails.doctor' | t }}</span>
         <span class="app-info-value">{{ patient.doctor.name }} {{ patient.doctor.surname }}</span>
       </div>
     </div>

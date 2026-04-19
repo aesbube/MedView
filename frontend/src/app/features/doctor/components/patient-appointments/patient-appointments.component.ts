@@ -5,6 +5,7 @@ import {AppointmentDetailsComponent} from '../../../../shared/components/appoint
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
+import {TranslatePipe} from '../../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-patient-appointments',
@@ -13,6 +14,7 @@ import {RouterLink} from '@angular/router';
     MatIconModule,
     MatProgressSpinner,
     RouterLink,
+    TranslatePipe,
   ],
   templateUrl: './patient-appointments.component.html',
   styleUrl: './patient-appointments.component.css'

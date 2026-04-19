@@ -1,15 +1,17 @@
-import {Component, Input} from '@angular/core';
-import {Patient} from '../../../models/patient.model';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {MatIconModule} from '@angular/material/icon';
-import {DatePipe} from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { Patient } from '../../../models/patient.model';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { DatePipe } from '@angular/common';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-patient-details',
   imports: [
     MatProgressSpinner,
     MatIconModule,
-    DatePipe
+    DatePipe,
+    TranslatePipe
   ],
   templateUrl: './patient-details.component.html',
   styleUrl: './patient-details.component.css'

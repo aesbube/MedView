@@ -1,10 +1,10 @@
 <div class="login-wrapper">
-  <h2>Welcome back</h2>
-  <p class="subtitle">Sign in to your MedView account</p>
+  <h2>{{ 'login.title' | t }}</h2>
+  <p class="subtitle">{{ 'login.subtitle' | t }}</p>
 
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="username">Username</label>
+      <label for="username">{{ 'common.username' | t }}</label>
       <input
         type="text"
         id="username"
@@ -16,14 +16,14 @@
       @if (this.myForm.controls['username'].touched && this.myForm.controls['username'].invalid) {
         <div class="error-message">
           @if (this.myForm.controls['username'].errors?.['required']) {
-            <div>Username is required.</div>
+            <div>{{ 'validation.required.username' | t }}</div>
           }
         </div>
       }
     </div>
 
     <div class="form-group">
-      <label for="password">Password</label>
+      <label for="password">{{ 'common.password' | t }}</label>
       <input
         type="password"
         id="password"
@@ -35,7 +35,7 @@
       @if (this.myForm.controls['password'].touched && this.myForm.controls['password'].invalid) {
         <div class="error-message">
           @if (this.myForm.controls['password'].errors?.['required']) {
-            <div>Password is required.</div>
+            <div>{{ 'validation.required.password' | t }}</div>
           }
         </div>
       }
@@ -48,7 +48,7 @@
     }
 
     <button type="submit" [disabled]="!myForm.valid" class="submit-button">
-      Sign In
+      {{ 'login.submit' | t }}
     </button>
   </form>
 </div>

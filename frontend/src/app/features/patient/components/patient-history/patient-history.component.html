@@ -5,8 +5,8 @@
         <mat-icon>history</mat-icon>
       </div>
       <div>
-        <h2 class="app-card__title">Past Appointments</h2>
-        <div class="app-card__subtitle">Appointments that have already occurred</div>
+        <h2 class="app-card__title">{{ 'patient.history.appointments.title' | t }}</h2>
+        <div class="app-card__subtitle">{{ 'patient.history.appointments.subtitle' | t }}</div>
       </div>
     </div>
 
@@ -18,8 +18,8 @@
       @if (numOfAppointments === 0) {
         <div class="app-empty">
           <mat-icon>event_busy</mat-icon>
-          <h3>No past appointments</h3>
-          <p>Your appointment history is empty.</p>
+          <h3>{{ 'patient.history.appointments.empty.title' | t }}</h3>
+          <p>{{ 'patient.history.appointments.empty.desc' | t }}</p>
         </div>
       } @else {
         <div class="app-grid-cards">
@@ -39,8 +39,8 @@
         <mat-icon>receipt_long</mat-icon>
       </div>
       <div>
-        <h2 class="app-card__title">Past Prescriptions</h2>
-        <div class="app-card__subtitle">Expired or used prescriptions</div>
+        <h2 class="app-card__title">{{ 'patient.history.prescriptions.title' | t }}</h2>
+        <div class="app-card__subtitle">{{ 'patient.history.prescriptions.subtitle' | t }}</div>
       </div>
     </div>
 
@@ -52,8 +52,8 @@
       @if (numOfPrescriptions === 0) {
         <div class="app-empty">
           <mat-icon>medication_liquid</mat-icon>
-          <h3>No past prescriptions</h3>
-          <p>Your prescription history is empty.</p>
+          <h3>{{ 'patient.history.prescriptions.empty.title' | t }}</h3>
+          <p>{{ 'patient.history.prescriptions.empty.desc' | t }}</p>
         </div>
       } @else {
         <div class="app-grid-cards">

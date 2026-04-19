@@ -1,26 +1,26 @@
 <div class="dashboard-page">
   <div class="dashboard-welcome">
-    <h1 class="dashboard-welcome__title">Admin Dashboard</h1>
-    <p class="dashboard-welcome__sub">Register new users and manage existing accounts.</p>
+    <h1 class="dashboard-welcome__title">{{ 'admin.dashboard.title' | t }}</h1>
+    <p class="dashboard-welcome__sub">{{ 'admin.dashboard.subtitle' | t }}</p>
   </div>
 
   <div>
-    <div class="dashboard-section-label">Administration</div>
+    <div class="dashboard-section-label">{{ 'admin.dashboard.section' | t }}</div>
     <div class="dashboard-grid">
       <a class="dashboard-tile" [routerLink]="['/dashboard/register']" routerLinkActive="dashboard-tile--active">
         <div class="dashboard-tile__icon">
           <mat-icon>person_add</mat-icon>
         </div>
-        <h3 class="dashboard-tile__title">Register a user</h3>
-        <p class="dashboard-tile__desc">Create a new doctor, specialist, pharmacist, or admin account.</p>
+        <h3 class="dashboard-tile__title">{{ 'admin.dashboard.register.title' | t }}</h3>
+        <p class="dashboard-tile__desc">{{ 'admin.dashboard.register.desc' | t }}</p>
       </a>
 
       <a class="dashboard-tile" [routerLink]="['/dashboard/users']" routerLinkActive="dashboard-tile--active">
         <div class="dashboard-tile__icon">
           <mat-icon>manage_accounts</mat-icon>
         </div>
-        <h3 class="dashboard-tile__title">Manage users</h3>
-        <p class="dashboard-tile__desc">View, search, and delete existing user accounts in the system.</p>
+        <h3 class="dashboard-tile__title">{{ 'admin.dashboard.manage.title' | t }}</h3>
+        <p class="dashboard-tile__desc">{{ 'admin.dashboard.manage.desc' | t }}</p>
       </a>
     </div>
   </div>

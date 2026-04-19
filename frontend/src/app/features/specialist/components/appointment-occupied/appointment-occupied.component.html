@@ -3,7 +3,7 @@
     <button mat-icon-button aria-label="Back">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <span class="app-back-label">Back to dashboard</span>
+    <span class="app-back-label">{{ 'common.back' | t }}</span>
   </a>
 
   <div class="app-card">
@@ -12,8 +12,8 @@
         <mat-icon>event_available</mat-icon>
       </div>
       <div>
-        <h2 class="app-card__title">Upcoming appointments</h2>
-        <div class="app-card__subtitle">Appointments booked by patients</div>
+        <h2 class="app-card__title">{{ 'specialist.occupied.title' | t }}</h2>
+        <div class="app-card__subtitle">{{ 'specialist.occupied.subtitle' | t }}</div>
       </div>
     </div>
   </div>
@@ -28,8 +28,8 @@
     } @else {
       <div class="app-empty">
         <mat-icon>event_busy</mat-icon>
-        <h3>No appointments</h3>
-        <p>There are no scheduled appointments at this time.</p>
+        <h3>{{ 'specialist.occupied.empty.title' | t }}</h3>
+        <p>{{ 'specialist.occupied.empty.desc' | t }}</p>
       </div>
     }
   } @else {

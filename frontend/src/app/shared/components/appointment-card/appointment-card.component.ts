@@ -3,6 +3,7 @@ import {DatePipe, NgClass} from '@angular/common';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {Appointment} from '../../../models/appointment.model';
+import {TranslatePipe} from '../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-appointment-card',
@@ -11,6 +12,7 @@ import {Appointment} from '../../../models/appointment.model';
     NgClass,
     MatProgressSpinner,
     MatIconModule,
+    TranslatePipe,
   ],
   templateUrl: './appointment-card.component.html',
   styleUrl: './appointment-card.component.css'

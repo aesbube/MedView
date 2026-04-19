@@ -7,15 +7,28 @@
   </div>
 
   <div class="nav-right">
-    <a routerLink="" class="nav-link">Home</a>
+    <a routerLink="" class="nav-link">{{ 'nav.home' | t }}</a>
 
     @if (!authService.isLoggedIn()) {
-      <a routerLink="/login" class="nav-link">Login</a>
-      <a routerLink="/register" class="nav-link nav-link--primary">Register</a>
+      <a routerLink="/login" class="nav-link">{{ 'nav.login' | t }}</a>
+      <a routerLink="/register" class="nav-link nav-link--primary">{{ 'nav.register' | t }}</a>
+
+      <div class="lang-toggle">
+        <button
+          type="button"
+          class="lang-btn"
+          [class.active]="ts.currentLang === 'mk'"
+          (click)="setLang('mk')">MK</button>
+        <button
+          type="button"
+          class="lang-btn"
+          [class.active]="ts.currentLang === 'en'"
+          (click)="setLang('en')">EN</button>
+      </div>
     }
 
     @if (authService.isLoggedIn()) {
-      <a routerLink="/dashboard" class="nav-link">Dashboard</a>
+      <a routerLink="/dashboard" class="nav-link">{{ 'nav.dashboard' | t }}</a>
 
       <div class="user-menu">
         <button
@@ -41,9 +54,27 @@
                 }
               </div>
             </div>
-            <button type="button" class="user-dropdown__item" (click)="logout()">
+
+            <div class="user-dropdown__lang">
+              <mat-icon>language</mat-icon>
+              <span>{{ 'nav.language' | t }}</span>
+              <div class="lang-toggle">
+                <button
+                  type="button"
+                  class="lang-btn"
+                  [class.active]="ts.currentLang === 'mk'"
+                  (click)="setLang('mk'); $event.stopPropagation()">MK</button>
+                <button
+                  type="button"
+                  class="lang-btn"
+                  [class.active]="ts.currentLang === 'en'"
+                  (click)="setLang('en'); $event.stopPropagation()">EN</button>
+              </div>
+            </div>
+
+            <button type="button" class="user-dropdown__item user-dropdown__item--danger" (click)="logout()">
               <mat-icon>logout</mat-icon>
-              <span>Logout</span>
+              <span>{{ 'nav.logout' | t }}</span>
             </button>
           </div>
         }

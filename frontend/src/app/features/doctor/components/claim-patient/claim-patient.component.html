@@ -3,7 +3,7 @@
     <button mat-icon-button aria-label="Back">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <span class="app-back-label">Back to dashboard</span>
+    <span class="app-back-label">{{ 'common.back' | t }}</span>
   </a>
 
   <div class="app-card">
@@ -12,8 +12,8 @@
         <mat-icon>person_add</mat-icon>
       </div>
       <div>
-        <h2 class="app-card__title">Claim a patient</h2>
-        <div class="app-card__subtitle">Search unclaimed patients and take them under your care</div>
+        <h2 class="app-card__title">{{ 'doctor.claim.title' | t }}</h2>
+        <div class="app-card__subtitle">{{ 'doctor.claim.subtitle' | t }}</div>
       </div>
     </div>
 
@@ -23,7 +23,7 @@
         #search
         class="app-input search-input"
         type="text"
-        placeholder="Search by name, surname, email or username..."
+        [placeholder]="'doctor.claim.search' | t"
         (input)="onChange(search.value)"
       />
     </div>
@@ -40,8 +40,8 @@
     } @else {
       <div class="app-empty">
         <mat-icon>person_off</mat-icon>
-        <h3>No patients to claim</h3>
-        <p>There are no unclaimed patients matching your search.</p>
+        <h3>{{ 'doctor.claim.empty.title' | t }}</h3>
+        <p>{{ 'doctor.claim.empty.desc' | t }}</p>
       </div>
     }
   } @else {

@@ -3,7 +3,7 @@
     <button mat-icon-button aria-label="Back">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <span class="app-back-label">Back to dashboard</span>
+    <span class="app-back-label">{{ 'common.back' | t }}</span>
   </a>
 
   <div class="app-card">
@@ -12,15 +12,15 @@
         <mat-icon>event_available</mat-icon>
       </div>
       <div>
-        <h2 class="app-card__title">Free appointment slots</h2>
-        <div class="app-card__subtitle">Set dates and times when you're available</div>
+        <h2 class="app-card__title">{{ 'specialist.free.title' | t }}</h2>
+        <div class="app-card__subtitle">{{ 'specialist.free.subtitle' | t }}</div>
       </div>
     </div>
 
     <div class="appointment-layout">
       <div class="appointment-selector">
         <mat-form-field appearance="outline" class="time-selector">
-          <mat-label>Appointment time</mat-label>
+          <mat-label>{{ 'specialist.free.time' | t }}</mat-label>
           <mat-select
             [(value)]="time"
             (selectionChange)="onTimeChange($event.value)"
@@ -53,10 +53,10 @@
         </div>
 
         <mat-form-field appearance="outline" class="location-input">
-          <mat-label>Location</mat-label>
+          <mat-label>{{ 'specialist.free.location' | t }}</mat-label>
           <input
             matInput
-            placeholder="Enter location"
+            [placeholder]="'specialist.free.location.placeholder' | t"
             required="true"
             [(ngModel)]="location"
             [disabled]="!(value && time)"
@@ -65,14 +65,14 @@
 
         <button type="button" class="app-btn" [disabled]="!(value && time && location)" (click)="addAppointment()">
           <mat-icon>add</mat-icon>
-          Add slot
+          {{ 'specialist.free.addSlot' | t }}
         </button>
       </div>
 
       <div class="appointments-list">
-        <h3 class="appointments-list__title">Selected slots</h3>
+        <h3 class="appointments-list__title">{{ 'specialist.free.selectedSlots' | t }}</h3>
         @if (selectedAppointments.length === 0) {
-          <div class="no-appointments">No slots selected yet</div>
+          <div class="no-appointments">{{ 'specialist.free.noSlots' | t }}</div>
         } @else {
           <ul>
             @for (date of selectedAppointments; track $index) {
@@ -95,7 +95,7 @@
           (click)="submitAppointments()"
         >
           <mat-icon>save</mat-icon>
-          Save slots
+          {{ 'specialist.free.saveSlots' | t }}
         </button>
       </div>
     </div>

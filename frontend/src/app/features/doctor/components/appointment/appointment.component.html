@@ -3,7 +3,7 @@
     <button mat-icon-button aria-label="Back" type="button">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <span class="app-back-label">Back to patient</span>
+    <span class="app-back-label">{{ 'doctor.appointment.backToPatient' | t }}</span>
   </a>
 
   <div class="app-card">
@@ -12,20 +12,20 @@
         <mat-icon>event_available</mat-icon>
       </div>
       <div>
-        <h2 class="app-card__title">Schedule appointment</h2>
-        <div class="app-card__subtitle">Pick a specialist, date, and time slot</div>
+        <h2 class="app-card__title">{{ 'doctor.appointment.title' | t }}</h2>
+        <div class="app-card__subtitle">{{ 'doctor.appointment.subtitle' | t }}</div>
       </div>
     </div>
 
     <div class="appt-layout">
       <div class="appt-selector">
         <div class="details-form__field">
-          <label class="details-form__label">Select specialist</label>
+          <label class="details-form__label">{{ 'doctor.appointment.selectSpecialist' | t }}</label>
           <mat-form-field appearance="outline" class="full-width">
             <mat-select
               [(value)]="selectedSpecialist"
               (selectionChange)="onSpecialistChange($event.value)"
-              placeholder="Choose a specialist">
+              [placeholder]="'doctor.appointment.chooseSpecialist' | t">
               @for (specialist of specialists; track specialist.username) {
                 <mat-option [value]="specialist">
                   {{ specialist.name }} {{ specialist.surname }} — {{ specialist.specialty }}
@@ -59,9 +59,9 @@
 
           @if (value) {
             <div class="details-form__field">
-              <label class="details-form__label">Available times</label>
+              <label class="details-form__label">{{ 'doctor.appointment.availableTimes' | t }}</label>
               <mat-form-field appearance="outline" class="full-width">
-                <mat-select [(value)]="time" (selectionChange)="onTimeChange($event.value)" placeholder="Pick a time">
+                <mat-select [(value)]="time" (selectionChange)="onTimeChange($event.value)" [placeholder]="'doctor.appointment.pickTime' | t">
                   @for (timeOption of getAvailableTimesForSelectedDate(); track $index) {
                     <mat-option [value]="timeOption">{{ timeOption }}</mat-option>
                   }
@@ -79,32 +79,32 @@
               <mat-icon>event</mat-icon>
             </div>
             <div>
-              <h3 class="app-card__title">Selected slot</h3>
-              <div class="app-card__subtitle">Review before confirming</div>
+              <h3 class="app-card__title">{{ 'doctor.appointment.selectedSlot' | t }}</h3>
+              <div class="app-card__subtitle">{{ 'doctor.appointment.review' | t }}</div>
             </div>
           </div>
           <div class="app-info-grid">
             <div class="app-info-item">
-              <span class="app-info-label">Date</span>
+              <span class="app-info-label">{{ 'doctor.appointment.date' | t }}</span>
               <span class="app-info-value">{{ selectedAppointment.date }}</span>
             </div>
             <div class="app-info-item">
-              <span class="app-info-label">Time</span>
+              <span class="app-info-label">{{ 'doctor.appointment.time' | t }}</span>
               <span class="app-info-value">{{ selectedAppointment.time }}</span>
             </div>
             <div class="app-info-item">
-              <span class="app-info-label">Location</span>
+              <span class="app-info-label">{{ 'doctor.appointment.location' | t }}</span>
               <span class="app-info-value">{{ selectedAppointment.location }}</span>
             </div>
             <div class="app-info-item">
-              <span class="app-info-label">Reference</span>
+              <span class="app-info-label">{{ 'doctor.appointment.reference' | t }}</span>
               <span class="app-info-value">{{ selectedAppointment.refNumber }}</span>
             </div>
           </div>
           <div class="details-form__actions">
             <button type="button" class="app-btn" (click)="scheduleAppointment()" [disabled]="loading">
               <mat-icon>check</mat-icon>
-              Confirm appointment
+              {{ 'doctor.appointment.confirm' | t }}
             </button>
           </div>
         </div>

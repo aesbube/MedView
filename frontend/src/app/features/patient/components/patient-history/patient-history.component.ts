@@ -12,6 +12,7 @@ import {
 } from '../../../../shared/components/prescription-details/prescription-details.component';
 import { MatIconModule } from '@angular/material/icon';
 import { PrescriptionStatusModel } from '../../../../models/prescription-status.model';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-patient-history',
@@ -20,6 +21,7 @@ import { PrescriptionStatusModel } from '../../../../models/prescription-status.
     AppointmentDetailsComponent,
     PrescriptionDetailsComponent,
     MatIconModule,
+    TranslatePipe,
   ],
   templateUrl: './patient-history.component.html',
   styleUrl: './patient-history.component.css'

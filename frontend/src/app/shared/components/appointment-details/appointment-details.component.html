@@ -7,10 +7,10 @@
       @if (!isDoctor && appointment.patientName) {
         <h3 class="app-card__title">{{ appointment.patientName }}</h3>
       } @else {
-        <h3 class="app-card__title">Appointment</h3>
+        <h3 class="app-card__title">{{ 'appointment.details.title' | t }}</h3>
       }
       @if (appointment.refNumber) {
-        <div class="app-card__subtitle">Ref #{{ appointment.refNumber }}</div>
+        <div class="app-card__subtitle">{{ 'appointment.details.reference' | t }} #{{ appointment.refNumber }}</div>
       }
     </div>
   </div>
@@ -34,7 +34,7 @@
     <div class="appointment-card__actions">
       <a class="app-btn" [routerLink]="[appointment.id]">
         <mat-icon>visibility</mat-icon>
-        View details
+        {{ 'common.viewDetails' | t }}
       </a>
     </div>
   }

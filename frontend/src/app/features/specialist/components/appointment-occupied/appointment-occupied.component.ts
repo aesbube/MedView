@@ -8,6 +8,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIconButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-appointment-occupied',
@@ -16,7 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatProgressSpinner,
     MatIconButton,
     RouterLink,
-    MatIconModule
+    MatIconModule,
+    TranslatePipe
   ],
   templateUrl: './appointment-occupied.component.html',
   styleUrl: './appointment-occupied.component.css'

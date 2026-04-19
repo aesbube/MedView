@@ -5,6 +5,7 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
 import {PrescriptionDetailsComponent} from '../../../../shared/components/prescription-details/prescription-details.component';
+import {TranslatePipe} from '../../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-patient-prescriptions',
@@ -12,7 +13,8 @@ import {PrescriptionDetailsComponent} from '../../../../shared/components/prescr
     MatProgressSpinner,
     MatIconModule,
     RouterLink,
-    PrescriptionDetailsComponent
+    PrescriptionDetailsComponent,
+    TranslatePipe,
   ],
   templateUrl: './patient-prescriptions.component.html',
   styleUrl: './patient-prescriptions.component.css'

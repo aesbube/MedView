@@ -3,7 +3,7 @@
     <button mat-icon-button aria-label="Back">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <span class="app-back-label">Back to dashboard</span>
+    <span class="app-back-label">{{ 'common.back' | t }}</span>
   </a>
 
   <div class="scan-layout">
@@ -14,8 +14,8 @@
           <mat-icon>qr_code_scanner</mat-icon>
         </div>
         <div>
-          <h2 class="app-card__title">Scan prescription</h2>
-          <div class="app-card__subtitle">Point camera at a QR code or barcode</div>
+          <h2 class="app-card__title">{{ 'pharmacist.scan.title' | t }}</h2>
+          <div class="app-card__subtitle">{{ 'pharmacist.scan.subtitle' | t }}</div>
         </div>
       </div>
 
@@ -29,14 +29,14 @@
       @if (qrResultString) {
         <div class="scan-result">
           <mat-icon>check_circle</mat-icon>
-          <span>Code detected</span>
+          <span>{{ 'pharmacist.scan.detected' | t }}</span>
         </div>
       }
 
       <div class="scan-actions">
         <button type="button" class="app-btn app-btn--ghost" (click)="clearResult()">
           <mat-icon>close</mat-icon>
-          Clear result
+          {{ 'pharmacist.scan.clear' | t }}
         </button>
       </div>
     </div>
@@ -46,8 +46,8 @@
       @if (!qrResultString) {
         <div class="app-empty">
           <mat-icon>document_scanner</mat-icon>
-          <h3>Waiting for scan</h3>
-          <p>Scan a QR code or barcode from a patient prescription to load the details here.</p>
+          <h3>{{ 'pharmacist.scan.waiting' | t }}</h3>
+          <p>{{ 'pharmacist.scan.waitingDesc' | t }}</p>
         </div>
       } @else if (!fetched) {
         <div class="spinner-container">
@@ -65,8 +65,8 @@
               <mat-icon>error_outline</mat-icon>
             </div>
             <div>
-              <h2 class="app-card__title">Invalid prescription</h2>
-              <div class="app-card__subtitle">The scanned code did not match any prescription.</div>
+              <h2 class="app-card__title">{{ 'pharmacist.scan.invalid' | t }}</h2>
+              <div class="app-card__subtitle">{{ 'pharmacist.scan.invalidDesc' | t }}</div>
             </div>
           </div>
         </div>

@@ -4,12 +4,12 @@
       <mat-icon>medication</mat-icon>
     </div>
     <div class="section-header-text">
-      <h2 class="app-card__title">Prescriptions</h2>
-      <div class="app-card__subtitle">Prescriptions written for this patient</div>
+      <h2 class="app-card__title">{{ 'doctor.prescriptions.title' | t }}</h2>
+      <div class="app-card__subtitle">{{ 'doctor.prescriptions.subtitle' | t }}</div>
     </div>
     <a class="app-btn section-btn" [routerLink]="['prescription']">
       <mat-icon>add</mat-icon>
-      Add prescription
+      {{ 'doctor.prescriptions.add' | t }}
     </a>
   </div>
 
@@ -23,8 +23,8 @@
     } @else {
       <div class="app-empty">
         <mat-icon>medication_liquid</mat-icon>
-        <h3>No prescriptions yet</h3>
-        <p>No prescriptions have been written for this patient.</p>
+        <h3>{{ 'doctor.prescriptions.empty.title' | t }}</h3>
+        <p>{{ 'doctor.prescriptions.empty.desc' | t }}</p>
       </div>
     }
   } @else {

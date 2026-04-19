@@ -11,7 +11,7 @@
     #searchInput
     type="text"
     class="search-input"
-    placeholder="Enter your appointment reference"
+    [placeholder]="'appointmentSearch.placeholder' | t"
     [formControl]="searchControl2"
     (focus)="onFocus()"
     (blur)="onBlur()"
@@ -34,6 +34,6 @@
     [disabled]="!searchControl2.value"
     (click)="goToAppointment()"
     aria-label="Search">
-    Search
+    {{ 'common.search' | t }}
   </button>
 </div>

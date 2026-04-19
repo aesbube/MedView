@@ -5,11 +5,13 @@ import { ValidationService } from '../../../core/services/validation.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../core/services/toast.service';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { TranslationService } from '../../../core/services/translation.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, TranslatePipe],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   providers: [ValidationService],
@@ -21,6 +23,7 @@ export class RegisterComponent {
   successMessage: string | null = null;
 
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
 
   constructor(
     public validationService: ValidationService,
@@ -48,7 +51,7 @@ export class RegisterComponent {
         next: (response) => {
           console.log('Registration successful!', response);
           this.successMessage = null;
-          this.toast.success('Account created — please sign in');
+          this.toast.success(this.ts.translate('register.toast.success'));
           this.myForm.reset();
           this.myForm.markAsPristine();
           this.myForm.markAsUntouched();
@@ -57,7 +60,7 @@ export class RegisterComponent {
         error: (error) => {
           console.error('Registration failed:', error);
           this.successMessage = 'Registration failed please try again';
-          this.toast.error('Registration failed. Please try again');
+          this.toast.error(this.ts.translate('register.toast.error'));
         },
       });
     } else {

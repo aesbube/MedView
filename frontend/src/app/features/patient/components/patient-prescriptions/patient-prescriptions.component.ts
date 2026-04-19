@@ -6,6 +6,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PrescriptionDetailsComponent } from '../../../../shared/components/prescription-details/prescription-details.component';
 import { MatIconModule } from '@angular/material/icon';
 import { PrescriptionStatusModel } from '../../../../models/prescription-status.model';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { PrescriptionStatusModel } from '../../../../models/prescription-status.
     MatProgressSpinnerModule,
     PrescriptionDetailsComponent,
     MatIconModule,
+    TranslatePipe,
   ],
   templateUrl: './patient-prescriptions.component.html',
   styleUrl: './patient-prescriptions.component.css'

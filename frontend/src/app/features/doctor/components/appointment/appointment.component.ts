@@ -13,6 +13,8 @@ import {Specialist} from '../../../../models/specialist.model';
 import {OccupyAppointment} from '../../../../models/occupy-appointment.model';
 import {DoctorService} from '../../doctor.service';
 import {ToastService} from '../../../../core/services/toast.service';
+import {TranslatePipe} from '../../../../core/pipes/translate.pipe';
+import {TranslationService} from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-appointment',
@@ -28,12 +30,14 @@ import {ToastService} from '../../../../core/services/toast.service';
     MatIconButton,
     MatNativeDateModule,
     MatProgressSpinner,
-    RouterLink
+    RouterLink,
+    TranslatePipe,
   ]
 })
 export class AppointmentComponent implements OnInit {
   service = inject(DoctorService);
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
 
   specialists: Specialist[] = [];
   selectedSpecialist: Specialist | null = null;
@@ -124,12 +128,12 @@ export class AppointmentComponent implements OnInit {
     this.loading = true;
     this.service.scheduleAppointment(this.patientId, occupyAppointment).subscribe({
       next: () => {
-        this.toast.success('Appointment scheduled');
+        this.toast.success(this.ts.translate('doctor.appointment.toast.success'));
         this.loading = false;
         this.resetForm();
       },
       error: () => {
-        this.toast.error('Could not schedule appointment');
+        this.toast.error(this.ts.translate('doctor.appointment.toast.error'));
         this.loading = false;
       }
     });

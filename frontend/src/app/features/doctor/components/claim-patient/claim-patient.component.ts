@@ -9,6 +9,8 @@ import { PatientCardComponent } from '../patient-card/patient-card.component';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { ToastService } from '../../../../core/services/toast.service';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
+import { TranslationService } from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-claim-patient',
@@ -18,7 +20,8 @@ import { ToastService } from '../../../../core/services/toast.service';
     MatIconButton,
     MatProgressSpinner,
     PatientCardComponent,
-    RouterLink
+    RouterLink,
+    TranslatePipe,
   ],
   templateUrl: './claim-patient.component.html',
   styleUrl: './claim-patient.component.css'
@@ -26,6 +29,7 @@ import { ToastService } from '../../../../core/services/toast.service';
 export class ClaimPatientComponent implements OnInit {
   service = inject(DoctorService);
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
   patients$ = new BehaviorSubject<Patient[] | null>(null);
   subject = new Subject<string>();
   private currentQuery = '';
@@ -47,13 +51,13 @@ export class ClaimPatientComponent implements OnInit {
   handleCardClick(patientId: string) {
     this.service.claimPatient(patientId).subscribe({
       next: () => {
-        this.toast.success('Patient claimed successfully');
+        this.toast.success(this.ts.translate('doctor.claim.toast.success'));
         const current = this.patients$.value ?? [];
         this.patients$.next(current.filter(p => p.username.toString() !== patientId));
       },
       error: (error) => {
         console.error('Claim patient failed:', error);
-        this.toast.error('Could not claim patient');
+        this.toast.error(this.ts.translate('doctor.claim.toast.error'));
       }
     });
   }

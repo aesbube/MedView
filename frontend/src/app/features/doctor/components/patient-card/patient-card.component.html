@@ -13,12 +13,12 @@
     @if (isClaim) {
       <button type="button" class="app-btn" (click)="handleCardClick()">
         <mat-icon>how_to_reg</mat-icon>
-        Claim patient
+        {{ 'doctor.claim.button' | t }}
       </button>
     } @else {
       <a class="app-btn" [routerLink]="[patient.id]">
         <mat-icon>visibility</mat-icon>
-        View details
+        {{ 'common.viewDetails' | t }}
       </a>
     }
   </div>

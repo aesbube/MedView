@@ -1,26 +1,26 @@
 <div class="dashboard-page">
   <div class="dashboard-welcome">
-    <h1 class="dashboard-welcome__title">Pharmacist Dashboard</h1>
-    <p class="dashboard-welcome__sub">Verify and dispense prescriptions from here.</p>
+    <h1 class="dashboard-welcome__title">{{ 'pharmacist.dashboard.title' | t }}</h1>
+    <p class="dashboard-welcome__sub">{{ 'pharmacist.dashboard.subtitle' | t }}</p>
   </div>
 
   <div>
-    <div class="dashboard-section-label">Actions</div>
+    <div class="dashboard-section-label">{{ 'pharmacist.dashboard.section' | t }}</div>
     <div class="dashboard-grid">
       <a class="dashboard-tile" [routerLink]="['/dashboard/info-p']" routerLinkActive="dashboard-tile--active">
         <div class="dashboard-tile__icon">
           <mat-icon>manage_accounts</mat-icon>
         </div>
-        <h3 class="dashboard-tile__title">My details</h3>
-        <p class="dashboard-tile__desc">View and update your personal and pharmacy information.</p>
+        <h3 class="dashboard-tile__title">{{ 'pharmacist.dashboard.details.title' | t }}</h3>
+        <p class="dashboard-tile__desc">{{ 'pharmacist.dashboard.details.desc' | t }}</p>
       </a>
 
       <a class="dashboard-tile" routerLink="/scan">
         <div class="dashboard-tile__icon">
           <mat-icon>qr_code_scanner</mat-icon>
         </div>
-        <h3 class="dashboard-tile__title">Scan prescription</h3>
-        <p class="dashboard-tile__desc">Scan a QR code or barcode to look up and validate a patient prescription.</p>
+        <h3 class="dashboard-tile__title">{{ 'pharmacist.dashboard.scan.title' | t }}</h3>
+        <p class="dashboard-tile__desc">{{ 'pharmacist.dashboard.scan.desc' | t }}</p>
       </a>
     </div>
   </div>

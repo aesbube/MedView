@@ -9,6 +9,8 @@ import {QrCodeComponent} from '../qr-code/qr-code.component';
 import {BarcodeComponent} from '../barcode/barcode.component';
 import {MatIconModule} from '@angular/material/icon';
 import {PrescriptionStatusModel} from '../../../models/prescription-status.model';
+import {TranslatePipe} from '../../../core/pipes/translate.pipe';
+import {TranslationService} from '../../../core/services/translation.service';
 
 type CodeMode = 'qr' | 'barcode';
 
@@ -19,7 +21,8 @@ type CodeMode = 'qr' | 'barcode';
     BarcodeComponent,
     MatIconModule,
     NgClass,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './prescription-details.component.html',
   styleUrl: './prescription-details.component.css'
@@ -35,6 +38,7 @@ export class PrescriptionDetailsComponent implements OnInit {
   authService = inject(AuthService);
   private doctorService = inject(DoctorService);
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
   private fb = inject(FormBuilder);
   userRole: String = "ROLE_GUEST";
   uniqueCodeText = "";
@@ -92,11 +96,11 @@ export class PrescriptionDetailsComponent implements OnInit {
         this.editing = false;
         this.submitting = false;
         this.prescriptionUpdated.emit(updated);
-        this.toast.success('Prescription updated');
+        this.toast.success(this.ts.translate('prescription.details.toast.updated'));
       },
       error: () => {
         this.submitting = false;
-        this.toast.error('Could not update prescription');
+        this.toast.error(this.ts.translate('prescription.details.toast.updateError'));
       }
     });
   }
@@ -119,11 +123,11 @@ export class PrescriptionDetailsComponent implements OnInit {
         this.confirmCancel = false;
         this.submitting = false;
         this.prescriptionCanceled.emit(prescriptionId);
-        this.toast.success('Prescription canceled');
+        this.toast.success(this.ts.translate('prescription.details.toast.canceled'));
       },
       error: () => {
         this.submitting = false;
-        this.toast.error('Could not cancel prescription');
+        this.toast.error(this.ts.translate('prescription.details.toast.cancelError'));
       }
     });
   }

@@ -2,18 +2,18 @@
   <div class="card-content">
     <ng-container [ngSwitch]="uniqueAction">
       <ng-container *ngSwitchCase="'app'">
-        <span class="eyebrow">Book visits</span>
-        <h2 class="headline">Find your next appointment</h2>
-        <p class="subtext">Look up appointment references instantly and manage visits in one place.</p>
+        <span class="eyebrow">{{ 'home.book.title' | t }}</span>
+        <h2 class="headline">{{ 'home.book.subtitle' | t }}</h2>
+        <p class="subtext">{{ 'home.book.desc' | t }}</p>
         <div class="card-search">
           <app-appointment-search (focused)="setFocused($event)"></app-appointment-search>
         </div>
       </ng-container>
 
       <ng-container *ngSwitchCase="'spec'">
-        <span class="eyebrow">Discover specialists</span>
-        <h2 class="headline">Care from trusted specialists</h2>
-        <p class="subtext">Search verified specialists by name, specialty, or hospital &mdash; all in seconds.</p>
+        <span class="eyebrow">{{ 'home.specialists.title' | t }}</span>
+        <h2 class="headline">{{ 'home.specialists.subtitle' | t }}</h2>
+        <p class="subtext">{{ 'home.specialists.desc' | t }}</p>
         <div class="card-search">
           <app-specialist-search (focused)="setFocused($event)"></app-specialist-search>
         </div>

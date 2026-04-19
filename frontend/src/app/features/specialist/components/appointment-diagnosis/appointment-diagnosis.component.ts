@@ -13,6 +13,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {DoctorService} from '../../../doctor/doctor.service';
 import {ToastService} from '../../../../core/services/toast.service';
+import {TranslatePipe} from '../../../../core/pipes/translate.pipe';
+import {TranslationService} from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-appointment-diagnosis',
@@ -23,7 +25,8 @@ import {ToastService} from '../../../../core/services/toast.service';
     MatIconModule,
     MatIconButton,
     MatProgressSpinner,
-    RouterLink
+    RouterLink,
+    TranslatePipe
   ],
   templateUrl: './appointment-diagnosis.component.html',
   styleUrl: './appointment-diagnosis.component.css'
@@ -33,6 +36,7 @@ export class AppointmentDiagnosisComponent implements OnInit {
   doctorService = inject(DoctorService)
   private router = inject(Router);
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
   appointment$?: Appointment | undefined
   diagnosis$?: Diagnosis | undefined
   route = inject(ActivatedRoute);
@@ -67,7 +71,7 @@ export class AppointmentDiagnosisComponent implements OnInit {
           return this.service.getAppointmentByReference(reference).pipe(
             catchError(error => {
               console.warn('Appointment not found for reference:', reference, error);
-              this.toast.info(`No appointment found with reference "${reference}"`);
+              this.toast.info(this.ts.translate('appointmentRef.notFound') + ' "' + reference + '"');
               this.router.navigate(['/']);
               return of(undefined);
             })

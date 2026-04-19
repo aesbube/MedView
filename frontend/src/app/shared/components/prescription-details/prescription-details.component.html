@@ -8,7 +8,7 @@
         <h2 class="app-card__title">{{ prescription.patientNameAndSurname }}</h2>
         <div class="app-card__subtitle">Dr. {{ prescription.doctorNameAndSurname }}</div>
       } @else {
-        <h2 class="app-card__title">Prescription</h2>
+        <h2 class="app-card__title">{{ 'prescription.details.title' | t }}</h2>
         <div class="app-card__subtitle">Dr. {{ prescription.doctorNameAndSurname }}</div>
       }
     </div>
@@ -21,15 +21,15 @@
   @if (!editing) {
     <div class="app-info-grid">
       <div class="app-info-item">
-        <span class="app-info-label">Medicine</span>
+        <span class="app-info-label">{{ 'prescription.details.medicine' | t }}</span>
         <span class="app-info-value">{{ prescription.medicine || '—' }}</span>
       </div>
       <div class="app-info-item">
-        <span class="app-info-label">Frequency</span>
+        <span class="app-info-label">{{ 'prescription.details.frequency' | t }}</span>
         <span class="app-info-value">{{ prescription.frequency || '—' }}</span>
       </div>
       <div class="app-info-item">
-        <span class="app-info-label">Expiration date</span>
+        <span class="app-info-label">{{ 'prescription.details.expiration' | t }}</span>
         <span class="app-info-value">{{ prescription.expirationDate || '—' }}</span>
       </div>
     </div>
@@ -37,21 +37,21 @@
     <form [formGroup]="editForm" (ngSubmit)="saveEdit()" class="details-form">
       <div class="details-form__grid">
         <div class="details-form__field">
-          <label class="details-form__label">Medicine</label>
+          <label class="details-form__label">{{ 'prescription.details.medicine' | t }}</label>
           <input class="app-input" formControlName="medicine"/>
         </div>
         <div class="details-form__field">
-          <label class="details-form__label">Frequency</label>
+          <label class="details-form__label">{{ 'prescription.details.frequency' | t }}</label>
           <input class="app-input" formControlName="frequency"/>
         </div>
       </div>
       <div class="details-form__actions edit-actions">
         <button type="button" class="app-btn app-btn--ghost" (click)="cancelEdit()" [disabled]="submitting">
-          Cancel
+          {{ 'common.cancel' | t }}
         </button>
         <button type="submit" class="app-btn" [disabled]="editForm.invalid || submitting">
           <mat-icon>save</mat-icon>
-          Save changes
+          {{ 'prescription.details.save' | t }}
         </button>
       </div>
     </form>
@@ -61,11 +61,11 @@
     <div class="prescription-actions prescription-actions--manage">
       <button type="button" class="app-btn app-btn--ghost" (click)="startEdit()">
         <mat-icon>edit</mat-icon>
-        Edit
+        {{ 'prescription.details.edit' | t }}
       </button>
       <button type="button" class="app-btn app-btn--danger" (click)="askCancel()">
         <mat-icon>cancel</mat-icon>
-        Cancel prescription
+        {{ 'prescription.details.cancel' | t }}
       </button>
     </div>
   }
@@ -75,7 +75,7 @@
       @if (!redeemed) {
         <button type="button" class="app-btn" (click)="redeemed=true">
           <mat-icon>qr_code</mat-icon>
-          Redeem prescription
+          {{ 'prescription.details.redeem' | t }}
         </button>
       } @else {
         <div class="code-panel">
@@ -87,7 +87,7 @@
                     [attr.aria-selected]="codeMode === 'qr'"
                     (click)="setCodeMode('qr')">
               <mat-icon>qr_code</mat-icon>
-              <span>QR code</span>
+              <span>{{ 'prescription.details.qr' | t }}</span>
             </button>
             <button type="button"
                     class="code-toggle__btn"
@@ -96,7 +96,7 @@
                     [attr.aria-selected]="codeMode === 'barcode'"
                     (click)="setCodeMode('barcode')">
               <mat-icon>barcode</mat-icon>
-              <span>Barcode</span>
+              <span>{{ 'prescription.details.barcode' | t }}</span>
             </button>
           </div>
           <div class="code-wrap">
@@ -115,7 +115,7 @@
     <div class="prescription-actions">
       <button type="button" class="app-btn" (click)="emitValidation()">
         <mat-icon>check_circle</mat-icon>
-        Validate prescription
+        {{ 'prescription.details.validate' | t }}
       </button>
     </div>
   }
@@ -127,17 +127,17 @@
       <div class="confirm-dialog__icon">
         <mat-icon>warning</mat-icon>
       </div>
-      <h3 class="confirm-dialog__title">Cancel prescription?</h3>
+      <h3 class="confirm-dialog__title">{{ 'prescription.details.cancelDialog.title' | t }}</h3>
       <p class="confirm-dialog__message">
-        Are you sure you want to cancel this prescription? The patient will no longer be able to redeem it.
+        {{ 'prescription.details.cancelDialog.desc' | t }}
       </p>
       <div class="confirm-dialog__actions">
         <button type="button" class="confirm-btn confirm-btn--ghost" (click)="dismissCancel()" [disabled]="submitting">
-          Keep it
+          {{ 'prescription.details.cancelDialog.keep' | t }}
         </button>
         <button type="button" class="confirm-btn confirm-btn--danger" (click)="confirmCancelPrescription()" [disabled]="submitting">
           <mat-icon>cancel</mat-icon>
-          Cancel prescription
+          {{ 'prescription.details.cancelDialog.confirm' | t }}
         </button>
       </div>
     </div>

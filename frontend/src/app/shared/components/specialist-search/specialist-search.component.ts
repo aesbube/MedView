@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { catchError, debounceTime, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { Specialist } from '../../../models/specialist.model';
 import { SearchesService } from '../searches.service';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-specialist-search',
@@ -13,6 +14,7 @@ import { SearchesService } from '../searches.service';
     FormsModule,
     ReactiveFormsModule,
     AsyncPipe,
+    TranslatePipe,
   ],
   templateUrl: './specialist-search.component.html',
   styleUrl: './specialist-search.component.css'

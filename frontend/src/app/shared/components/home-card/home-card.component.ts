@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { AppointmentSearchComponent } from '../appointment-search/appointment-search.component';
 import { MapSearchComponent } from "../map-search/map-search.component";
 import { SpecialistSearchComponent } from '../specialist-search/specialist-search.component';
-
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-home-card',
@@ -22,7 +22,8 @@ import { SpecialistSearchComponent } from '../specialist-search/specialist-searc
     AppointmentSearchComponent,
     MapSearchComponent,
     SpecialistSearchComponent,
-    NgSwitch
+    NgSwitch,
+    TranslatePipe
 ],
   templateUrl: './home-card.component.html',
   styleUrl: './home-card.component.css',

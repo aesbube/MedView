@@ -5,6 +5,7 @@ import { Appointment } from '../../../../models/appointment.model';
 import { Subscription } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
     AppointmentDetailsComponent,
     MatProgressSpinnerModule,
     MatIconModule,
+    TranslatePipe,
   ],
   templateUrl: './patient-appointments.component.html',
   styleUrl: './patient-appointments.component.css'

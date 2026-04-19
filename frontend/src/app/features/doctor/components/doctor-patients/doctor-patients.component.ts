@@ -8,6 +8,7 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {debounceTime, distinctUntilChanged, Observable, startWith, Subject, switchMap} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
+import {TranslatePipe} from '../../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-doctor-patients',
@@ -17,7 +18,8 @@ import {AsyncPipe} from '@angular/common';
     MatIconButton,
     RouterLink,
     MatProgressSpinner,
-    AsyncPipe
+    AsyncPipe,
+    TranslatePipe,
   ],
   templateUrl: './doctor-patients.component.html',
   styleUrl: './doctor-patients.component.css'

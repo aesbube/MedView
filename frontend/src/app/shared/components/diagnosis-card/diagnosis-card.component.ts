@@ -7,13 +7,16 @@ import { Diagnosis } from '../../../models/diagnosis.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { SpecialistService } from '../../../features/specialist/specialist.service';
 import { ToastService } from '../../../core/services/toast.service';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { TranslationService } from '../../../core/services/translation.service';
 
 @Component({
   selector: 'app-diagnosis-card',
   imports: [
     MatProgressSpinner,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './diagnosis-card.component.html',
   styleUrl: './diagnosis-card.component.css'
@@ -25,6 +28,7 @@ export class DiagnosisCardComponent {
   private specialistService = inject(SpecialistService);
   private route = inject(ActivatedRoute);
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
   private fb = inject(FormBuilder);
 
   editing = false;
@@ -64,11 +68,11 @@ export class DiagnosisCardComponent {
         };
         this.editing = false;
         this.submitting = false;
-        this.toast.success('Diagnosis updated');
+        this.toast.success(this.ts.translate('diagnosis.card.toast.updated'));
       },
       error: () => {
         this.submitting = false;
-        this.toast.error('Could not update diagnosis');
+        this.toast.error(this.ts.translate('diagnosis.card.toast.error'));
       }
     });
   }

@@ -6,6 +6,8 @@ import {MatIconButton} from '@angular/material/button';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {DoctorService} from '../../doctor.service';
 import {ToastService} from '../../../../core/services/toast.service';
+import {TranslatePipe} from '../../../../core/pipes/translate.pipe';
+import {TranslationService} from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-doctor-details',
@@ -18,12 +20,14 @@ import {ToastService} from '../../../../core/services/toast.service';
     MatIconButton,
     RouterLink,
     MatProgressSpinner,
+    TranslatePipe,
   ]
 })
 export class DoctorDetailsComponent implements OnInit {
   service = inject(DoctorService);
   fb = inject(FormBuilder);
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
   form!: FormGroup;
   todayStr: string = new Date().toISOString().split('T')[0];
 
@@ -49,8 +53,8 @@ export class DoctorDetailsComponent implements OnInit {
     if (this.form.valid) {
       const updatedDoctor = this.form.getRawValue();
       this.service.updateDoctorDetails(updatedDoctor).subscribe({
-        next: () => this.toast.success('Doctor details saved'),
-        error: () => this.toast.error('Could not save doctor details')
+        next: () => this.toast.success(this.ts.translate('doctor.details.toast.success')),
+        error: () => this.toast.error(this.ts.translate('doctor.details.toast.error'))
       });
     }
   }

@@ -4,12 +4,12 @@
       <mat-icon>event</mat-icon>
     </div>
     <div class="section-header-text">
-      <h2 class="app-card__title">Appointments</h2>
-      <div class="app-card__subtitle">Scheduled appointments for this patient</div>
+      <h2 class="app-card__title">{{ 'doctor.appointments.title' | t }}</h2>
+      <div class="app-card__subtitle">{{ 'doctor.appointments.subtitle' | t }}</div>
     </div>
     <a class="app-btn section-btn" [routerLink]="['appointments']">
       <mat-icon>add</mat-icon>
-      Schedule new
+      {{ 'doctor.appointments.schedule' | t }}
     </a>
   </div>
 
@@ -23,8 +23,8 @@
     } @else {
       <div class="app-empty">
         <mat-icon>event_busy</mat-icon>
-        <h3>No appointments yet</h3>
-        <p>No appointments have been scheduled for this patient.</p>
+        <h3>{{ 'doctor.appointments.empty.title' | t }}</h3>
+        <p>{{ 'doctor.appointments.empty.desc' | t }}</p>
       </div>
     }
   } @else {

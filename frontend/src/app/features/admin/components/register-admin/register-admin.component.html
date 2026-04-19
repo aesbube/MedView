@@ -3,7 +3,7 @@
     <button mat-icon-button [routerLink]="['/dashboard']" aria-label="Back to dashboard">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <span class="back-label">Back to dashboard</span>
+    <span class="back-label">{{ 'common.back' | t }}</span>
   </div>
 
   <div class="register-wrapper">
@@ -12,15 +12,15 @@
         <mat-icon>person_add</mat-icon>
       </div>
       <div>
-        <h2>Register a user</h2>
-        <p class="subtitle">Create credentials and assign a role.</p>
+        <h2>{{ 'admin.register.title' | t }}</h2>
+        <p class="subtitle">{{ 'admin.register.subtitle' | t }}</p>
       </div>
     </div>
 
     <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
       <div class="form-grid">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">{{ 'common.username' | t }}</label>
           <input
             type="text"
             id="username"
@@ -32,14 +32,14 @@
           @if (this.myForm.controls['username'].touched && this.myForm.controls['username'].invalid) {
             <div class="error-message">
               @if (this.myForm.controls['username'].errors?.['required']) {
-                <div>Username is required.</div>
+                <div>{{ 'validation.required.username' | t }}</div>
               }
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="email">E-mail</label>
+          <label for="email">{{ 'register.label.email' | t }}</label>
           <input
             type="email"
             id="email"
@@ -51,16 +51,16 @@
           @if (this.myForm.controls['email'].touched && this.myForm.controls['email'].invalid) {
             <div class="error-message">
               @if (this.myForm.controls['email'].errors?.['required']) {
-                <div>Email is required.</div>
+                <div>{{ 'validation.required.email' | t }}</div>
               } @else if (this.myForm.controls['email'].errors?.['email']) {
-                <div>Invalid email format.</div>
+                <div>{{ 'validation.invalid.email' | t }}</div>
               }
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">{{ 'common.password' | t }}</label>
           <input
             type="password"
             id="password"
@@ -69,46 +69,46 @@
             autocomplete="new-password"
             [class.error]="validationService.isControlInvalid(myForm, 'password')"
           />
-          <div class="hint">Min 8 chars with upper, lower, number, and symbol.</div>
+          <div class="hint">{{ 'validation.password.min' | t }}</div>
           @if (this.myForm.controls['password'].touched && this.myForm.controls['password'].invalid) {
             <div class="error-message">
               @if (this.myForm.controls['password'].errors?.['required']) {
-                <div>Password is required.</div>
+                <div>{{ 'validation.required.password' | t }}</div>
               } @else if (this.myForm.controls['password'].errors?.['pattern']) {
-                <div>Password must be strong.</div>
+                <div>{{ 'validation.password.strong' | t }}</div>
               }
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label>Role</label>
+          <label>{{ 'admin.register.role' | t }}</label>
           <div class="role-grid">
             <label class="role-option" [class.selected]="myForm.value.role === 'PATIENT'">
               <input type="radio" formControlName="role" value="PATIENT"/>
               <mat-icon>personal_injury</mat-icon>
-              <span>Patient</span>
+              <span>{{ 'role.patient' | t }}</span>
             </label>
             <label class="role-option" [class.selected]="myForm.value.role === 'DOCTOR'">
               <input type="radio" formControlName="role" value="DOCTOR"/>
               <mat-icon>medical_services</mat-icon>
-              <span>Doctor</span>
+              <span>{{ 'role.doctor' | t }}</span>
             </label>
             <label class="role-option" [class.selected]="myForm.value.role === 'SPECIALIST'">
               <input type="radio" formControlName="role" value="SPECIALIST"/>
               <mat-icon>health_and_safety</mat-icon>
-              <span>Specialist</span>
+              <span>{{ 'role.specialist' | t }}</span>
             </label>
             <label class="role-option" [class.selected]="myForm.value.role === 'PHARMACIST'">
               <input type="radio" formControlName="role" value="PHARMACIST"/>
               <mat-icon>local_pharmacy</mat-icon>
-              <span>Pharmacist</span>
+              <span>{{ 'role.pharmacist' | t }}</span>
             </label>
           </div>
           @if (this.myForm.controls['role'].touched && this.myForm.controls['role'].invalid) {
             <div class="error-message">
               @if (this.myForm.controls['role'].errors?.['required']) {
-                <div>Role is required.</div>
+                <div>{{ 'validation.required.role' | t }}</div>
               }
             </div>
           }
@@ -122,10 +122,10 @@
       }
 
       <div class="actions">
-        <button type="button" class="btn-cancel" [routerLink]="['/dashboard']">Cancel</button>
+        <button type="button" class="btn-cancel" [routerLink]="['/dashboard']">{{ 'common.cancel' | t }}</button>
         <button type="submit" [disabled]="!myForm.valid" class="submit-button">
           <mat-icon>check</mat-icon>
-          Register user
+          {{ 'common.registerUser' | t }}
         </button>
       </div>
     </form>

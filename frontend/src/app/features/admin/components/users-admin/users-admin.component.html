@@ -3,33 +3,33 @@
     <button mat-icon-button [routerLink]="['/dashboard']" aria-label="Back to dashboard">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <span class="back-label">Back to dashboard</span>
+    <span class="back-label">{{ 'common.back' | t }}</span>
   </div>
 
   <div class="page-header">
     <div>
-      <h2>Users</h2>
-      <p class="subtitle">Manage registered users</p>
+      <h2>{{ 'admin.users.title' | t }}</h2>
+      <p class="subtitle">{{ 'admin.users.subtitle' | t }}</p>
     </div>
     <button class="new-user-btn" [routerLink]="['/dashboard/register']">
       <mat-icon>person_add</mat-icon>
-      <span>Register user</span>
+      <span>{{ 'common.registerUser' | t }}</span>
     </button>
   </div>
 
   @if (loaded) {
     @if (users.length > 0) {
       <div class="users-card">
-        <div class="users-meta">{{ users.length }} user{{ users.length === 1 ? '' : 's' }}</div>
+        <div class="users-meta">{{ users.length }} {{ 'admin.users.count' | t }}</div>
         <div class="table-wrapper">
           <table class="users-table">
             <thead>
             <tr>
-              <th class="col-id">ID</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th class="col-role">Role</th>
-              <th class="col-actions">Actions</th>
+              <th class="col-id">{{ 'admin.users.col.id' | t }}</th>
+              <th>{{ 'admin.users.col.username' | t }}</th>
+              <th>{{ 'admin.users.col.email' | t }}</th>
+              <th class="col-role">{{ 'admin.users.col.role' | t }}</th>
+              <th class="col-actions">{{ 'admin.users.col.actions' | t }}</th>
             </tr>
             </thead>
             <tbody>
@@ -49,7 +49,7 @@
                   <td class="col-actions">
                     <button class="delete-button" (click)="askDelete(user)">
                       <mat-icon>delete_outline</mat-icon>
-                      <span>Delete</span>
+                      <span>{{ 'common.delete' | t }}</span>
                     </button>
                   </td>
                 </tr>
@@ -63,11 +63,11 @@
         <div class="empty-icon">
           <mat-icon>group_off</mat-icon>
         </div>
-        <h3>No users yet</h3>
-        <p>There are no registered users. Create one to get started.</p>
+        <h3>{{ 'admin.users.empty.title' | t }}</h3>
+        <p>{{ 'admin.users.empty.desc' | t }}</p>
         <button class="new-user-btn" [routerLink]="['/dashboard/register']">
           <mat-icon>person_add</mat-icon>
-          <span>Register user</span>
+          <span>{{ 'common.registerUser' | t }}</span>
         </button>
       </div>
     }
@@ -84,15 +84,15 @@
       <div class="confirm-dialog__icon">
         <mat-icon>warning</mat-icon>
       </div>
-      <h3 class="confirm-dialog__title">Delete user?</h3>
+      <h3 class="confirm-dialog__title">{{ 'admin.users.delete.title' | t }}</h3>
       <p class="confirm-dialog__message">
-        Are you sure you want to delete <strong>{{ pendingDelete.username }}</strong>? This action cannot be undone.
+        {{ 'admin.users.delete.desc.pre' | t }} <strong>{{ pendingDelete.username }}</strong>{{ 'admin.users.delete.desc.post' | t }}
       </p>
       <div class="confirm-dialog__actions">
-        <button type="button" class="confirm-btn confirm-btn--ghost" (click)="cancelDelete()">Cancel</button>
+        <button type="button" class="confirm-btn confirm-btn--ghost" (click)="cancelDelete()">{{ 'common.cancel' | t }}</button>
         <button type="button" class="confirm-btn confirm-btn--danger" (click)="confirmDelete()">
           <mat-icon>delete_outline</mat-icon>
-          <span>Delete</span>
+          <span>{{ 'common.delete' | t }}</span>
         </button>
       </div>
     </div>

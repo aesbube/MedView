@@ -7,6 +7,8 @@ import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { ToastService } from '../../../../core/services/toast.service';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
+import { TranslationService } from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-users-admin',
@@ -15,7 +17,8 @@ import { ToastService } from '../../../../core/services/toast.service';
     MatIconModule,
     MatIconButton,
     RouterLink,
-    MatProgressSpinner
+    MatProgressSpinner,
+    TranslatePipe
   ],
   templateUrl: './users-admin.component.html',
   styleUrl: './users-admin.component.css'
@@ -23,6 +26,7 @@ import { ToastService } from '../../../../core/services/toast.service';
 export class UsersAdminComponent implements OnInit {
   service = inject(AdminService);
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
   users: User[] = [];
   loaded = false;
   pendingDelete: User | null = null;
@@ -34,7 +38,7 @@ export class UsersAdminComponent implements OnInit {
 
   roleLabel(role: any): string {
     const r = this.normalizeRole(role);
-    return r.charAt(0) + r.slice(1).toLowerCase();
+    return this.ts.translate('role.' + r.toLowerCase());
   }
 
   roleClass(role: any): string {
@@ -69,7 +73,7 @@ export class UsersAdminComponent implements OnInit {
       error: (error) => {
         console.error('Error loading users:', error);
         this.loaded = true;
-        this.toast.error('Could not load users');
+        this.toast.error(this.ts.translate('admin.users.toast.loadError'));
       }
     });
   }
@@ -78,11 +82,11 @@ export class UsersAdminComponent implements OnInit {
     this.service.deleteUser(Number(userId)).subscribe({
       next: () => {
         this.users = this.users.filter(u => u.id !== userId);
-        this.toast.success('User deleted');
+        this.toast.success(this.ts.translate('admin.users.toast.deleted'));
       },
       error: (error) => {
         console.error('Error deleting user:', error);
-        this.toast.error('Could not delete user');
+        this.toast.error(this.ts.translate('admin.users.toast.deleteError'));
       }
     });
   }

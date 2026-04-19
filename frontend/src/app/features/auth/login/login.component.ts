@@ -5,10 +5,12 @@ import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../core/services/toast.service';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { TranslationService } from '../../../core/services/translation.service';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, TranslatePipe],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -16,6 +18,7 @@ export class LoginComponent {
   myForm: FormGroup;
   successMessage: string | null = null;
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
 
   constructor(
     public validationService: ValidationService,
@@ -47,12 +50,12 @@ export class LoginComponent {
           else
             this.router.navigate(['']);
           console.log('Login successful!', response);
-          this.toast.success('Welcome back');
+          this.toast.success(this.ts.translate('login.toast.success'));
         },
         error: (error) => {
           this.successMessage = 'Wrong credentials';
           console.error('Login failed:', error);
-          this.toast.error('Wrong username or password');
+          this.toast.error(this.ts.translate('login.toast.error'));
         },
       });
     } else {

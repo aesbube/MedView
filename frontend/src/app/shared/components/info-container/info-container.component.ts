@@ -6,12 +6,14 @@ import {
   SpecialistDetailsComponent
 } from '../../../features/specialist/components/specialist-details/specialist-details.component';
 import {Role} from '../../../models/roles.model';
+import {TranslatePipe} from '../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-info-container',
   imports: [
     DoctorDetailsComponent,
-    SpecialistDetailsComponent
+    SpecialistDetailsComponent,
+    TranslatePipe
   ],
   templateUrl: './info-container.component.html',
   styleUrl: './info-container.component.css'

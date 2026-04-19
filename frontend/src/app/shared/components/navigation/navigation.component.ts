@@ -2,12 +2,15 @@ import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../core/services/auth.service';
+import { TranslationService, AppLang } from '../../../core/services/translation.service';
+import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-navigation',
   imports: [
     RouterLink,
     MatIconModule,
+    TranslatePipe,
   ],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.css',
@@ -15,6 +18,7 @@ import { AuthService } from '../../../core/services/auth.service';
 export class NavigationComponent {
 
   authService = inject(AuthService);
+  ts = inject(TranslationService);
   private hostRef = inject(ElementRef<HTMLElement>);
 
   menuOpen = false;
@@ -26,6 +30,10 @@ export class NavigationComponent {
 
   closeMenu() {
     this.menuOpen = false;
+  }
+
+  setLang(lang: AppLang) {
+    this.ts.setLang(lang);
   }
 
   @HostListener('document:click', ['$event'])
@@ -53,7 +61,7 @@ export class NavigationComponent {
   get roleLabel(): string {
     const raw = (this.authService.getRole() || '').replace(/^ROLE_/, '').toLowerCase();
     if (!raw) return '';
-    return raw.charAt(0).toUpperCase() + raw.slice(1);
+    return this.ts.translate('role.' + raw) || (raw.charAt(0).toUpperCase() + raw.slice(1));
   }
 
   logout() {

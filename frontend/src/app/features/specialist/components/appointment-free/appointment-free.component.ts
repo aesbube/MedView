@@ -14,6 +14,8 @@ import {FreeAppointment} from '../../../../models/free-appointment.model';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {RouterLink} from '@angular/router';
 import {ToastService} from '../../../../core/services/toast.service';
+import {TranslatePipe} from '../../../../core/pipes/translate.pipe';
+import {TranslationService} from '../../../../core/services/translation.service';
 
 
 @Component({
@@ -32,12 +34,14 @@ import {ToastService} from '../../../../core/services/toast.service';
     MatButtonModule,
     MatNativeDateModule,
     MatProgressSpinner,
-    RouterLink
+    RouterLink,
+    TranslatePipe
   ]
 })
 export class AppointmentFreeComponent implements OnInit {
   service = inject(SpecialistService);
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
   @ViewChild(MatCalendar) calendar?: MatCalendar<Date>;
   value: Date | null = null;
   time: string = '';
@@ -126,12 +130,12 @@ export class AppointmentFreeComponent implements OnInit {
 
     this.service.setFreeAppointments(appointments).subscribe({
       next: () => {
-        this.toast.success('Appointment slots saved');
+        this.toast.success(this.ts.translate('specialist.free.toast.success'));
         this.loadOccupiedAppointments();
       },
       error: (err) => {
         console.error('Failed to send appointments:', err);
-        this.toast.error('Could not save appointment slots');
+        this.toast.error(this.ts.translate('specialist.free.toast.error'));
       }
     });
   }

@@ -8,8 +8,8 @@
       </svg>
     </div>
     <div>
-      <div class="menu-title">Patient area</div>
-      <div class="menu-sub">Manage your health</div>
+      <div class="menu-title">{{ 'patient.menu.title' | t }}</div>
+      <div class="menu-sub">{{ 'patient.menu.subtitle' | t }}</div>
     </div>
   </div>
 
@@ -21,7 +21,7 @@
         [class.active]="lastClicked === item.label"
         (click)="select(item.label)">
         <span class="menu-icon" aria-hidden="true" [innerHTML]="item.icon"></span>
-        <span class="menu-label">{{ item.label }}</span>
+        <span class="menu-label">{{ item.translationKey | t }}</span>
       </button>
     }
   </nav>

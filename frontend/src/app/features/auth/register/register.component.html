@@ -1,9 +1,9 @@
 <div class="register-wrapper">
-  <h2>Create your account</h2>
+  <h2>{{ 'register.title' | t }}</h2>
 
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="username">Username</label>
+      <label for="username">{{ 'common.username' | t }}</label>
       <input
         type="text"
         id="username"
@@ -15,14 +15,14 @@
       @if (this.myForm.controls['username'].touched && this.myForm.controls['username'].invalid) {
         <div class="error-message">
           @if (this.myForm.controls['username'].errors?.['required']) {
-            <div>Username is required.</div>
+            <div>{{ 'validation.required.username' | t }}</div>
           }
         </div>
       }
     </div>
 
     <div class="form-group">
-      <label for="email">E-mail</label>
+      <label for="email">{{ 'register.label.email' | t }}</label>
       <input
         type="email"
         id="email"
@@ -34,16 +34,16 @@
       @if (this.myForm.controls['email'].touched && this.myForm.controls['email'].invalid) {
         <div class="error-message">
           @if (this.myForm.controls['email'].errors?.['required']) {
-            <div>Email is required.</div>
+            <div>{{ 'validation.required.email' | t }}</div>
           } @else if (this.myForm.controls['email'].errors?.['email']) {
-            <div>Invalid email format.</div>
+            <div>{{ 'validation.invalid.email' | t }}</div>
           }
         </div>
       }
     </div>
 
     <div class="form-group">
-      <label for="password">Password</label>
+      <label for="password">{{ 'common.password' | t }}</label>
       <input
         type="password"
         id="password"
@@ -55,9 +55,9 @@
       @if (this.myForm.controls['password'].touched && this.myForm.controls['password'].invalid) {
         <div class="error-message">
           @if (this.myForm.controls['password'].errors?.['required']) {
-            <div>Password is required.</div>
+            <div>{{ 'validation.required.password' | t }}</div>
           } @else if (this.myForm.controls['password'].errors?.['pattern']) {
-            <div>Must be 8+ chars with upper, lower, number, and symbol.</div>
+            <div>{{ 'validation.password.strong' | t }}</div>
           }
         </div>
       }
@@ -70,7 +70,7 @@
     }
 
     <button type="submit" [disabled]="!myForm.valid" class="submit-button">
-      Create Account
+      {{ 'register.submit' | t }}
     </button>
   </form>
 </div>

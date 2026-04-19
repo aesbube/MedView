@@ -3,7 +3,7 @@
     <button mat-icon-button aria-label="Back">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <span class="app-back-label">Back to home</span>
+    <span class="app-back-label">{{ 'specialistProfile.back' | t }}</span>
   </a>
 
   @if (specialist) {
@@ -20,31 +20,31 @@
 
       <div class="app-info-grid">
         <div class="app-info-item">
-          <span class="app-info-label">Username</span>
+          <span class="app-info-label">{{ 'specialistProfile.username' | t }}</span>
           <span class="app-info-value">{{ specialist.username }}</span>
         </div>
         <div class="app-info-item">
-          <span class="app-info-label">Email</span>
+          <span class="app-info-label">{{ 'specialistProfile.email' | t }}</span>
           <span class="app-info-value">{{ specialist.email }}</span>
         </div>
         <div class="app-info-item">
-          <span class="app-info-label">Phone</span>
+          <span class="app-info-label">{{ 'specialistProfile.phone' | t }}</span>
           <span class="app-info-value">{{ specialist.phone || '—' }}</span>
         </div>
         <div class="app-info-item">
-          <span class="app-info-label">Address</span>
+          <span class="app-info-label">{{ 'specialistProfile.address' | t }}</span>
           <span class="app-info-value">{{ specialist.address || '—' }}</span>
         </div>
         <div class="app-info-item">
-          <span class="app-info-label">Birth date</span>
+          <span class="app-info-label">{{ 'specialistProfile.birthDate' | t }}</span>
           <span class="app-info-value">{{ (specialist.birthDate | date) || '—' }}</span>
         </div>
         <div class="app-info-item">
-          <span class="app-info-label">License number</span>
+          <span class="app-info-label">{{ 'specialistProfile.licenseNumber' | t }}</span>
           <span class="app-info-value">{{ specialist.licenseNumber || '—' }}</span>
         </div>
         <div class="app-info-item app-info-item--full">
-          <span class="app-info-label">Years of experience</span>
+          <span class="app-info-label">{{ 'specialistProfile.yearsOfExperience' | t }}</span>
           <span class="app-info-value">{{ specialist.yearsOfExperience }}</span>
         </div>
       </div>

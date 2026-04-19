@@ -6,6 +6,8 @@ import {WritePrescriptionModel} from '../../../../models/write-prescription.mode
 import {MatIconModule} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
 import {ToastService} from '../../../../core/services/toast.service';
+import {TranslatePipe} from '../../../../core/pipes/translate.pipe';
+import {TranslationService} from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-write-prescription',
@@ -14,6 +16,7 @@ import {ToastService} from '../../../../core/services/toast.service';
     MatIconModule,
     MatIconButton,
     RouterLink,
+    TranslatePipe,
   ],
   templateUrl: './write-prescription.component.html',
   styleUrl: './write-prescription.component.css'
@@ -23,6 +26,7 @@ export class WritePrescriptionComponent implements OnInit {
   route = inject(ActivatedRoute);
   fb = inject(FormBuilder);
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
 
   form!: FormGroup;
   patientId: number | null = null;
@@ -46,12 +50,12 @@ export class WritePrescriptionComponent implements OnInit {
       const prescription: WritePrescriptionModel = this.form.value;
       this.service.writePrescription(this.patientId, prescription).subscribe({
         next: () => {
-          this.toast.success('Prescription saved');
+          this.toast.success(this.ts.translate('doctor.prescription.toast.success'));
           this.isSubmitting = false;
           this.form.reset();
         },
         error: () => {
-          this.toast.error('Could not save prescription');
+          this.toast.error(this.ts.translate('doctor.prescription.toast.error'));
           this.isSubmitting = false;
         }
       });

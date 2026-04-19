@@ -9,6 +9,5 @@
 } @else if (userRole === Roles.PHARMACIST) {
   <app-pharmacist-dashboard></app-pharmacist-dashboard>
 } @else {
-  <p>Loading user information...</p>
+  <p>{{ 'common.loading' | t }}</p>
 }
-

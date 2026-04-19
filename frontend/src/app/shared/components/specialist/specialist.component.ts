@@ -8,6 +8,7 @@ import {filter, map} from 'rxjs/operators';
 import {switchMap} from 'rxjs';
 import {MatIconButton} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {TranslatePipe} from '../../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-specialist',
@@ -16,7 +17,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatProgressSpinner,
     MatIconModule,
     MatIconButton,
-    RouterLink
+    RouterLink,
+    TranslatePipe
   ],
   templateUrl: './specialist.component.html',
   styleUrl: './specialist.component.css'

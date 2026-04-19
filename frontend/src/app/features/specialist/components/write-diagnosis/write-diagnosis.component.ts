@@ -5,6 +5,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {SpecialistService} from '../../specialist.service';
 import {Location} from '@angular/common';
 import {ToastService} from '../../../../core/services/toast.service';
+import {TranslatePipe} from '../../../../core/pipes/translate.pipe';
+import {TranslationService} from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-write-diagnosis',
@@ -12,6 +14,7 @@ import {ToastService} from '../../../../core/services/toast.service';
   imports: [
     ReactiveFormsModule,
     MatIconModule,
+    TranslatePipe,
   ],
   templateUrl: './write-diagnosis.component.html',
   styleUrl: './write-diagnosis.component.css'
@@ -22,6 +25,7 @@ export class WriteDiagnosisComponent implements OnInit {
   fb = inject(FormBuilder);
   private location = inject(Location);
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
 
   form!: FormGroup;
   patientId: string | null = null;
@@ -54,13 +58,13 @@ export class WriteDiagnosisComponent implements OnInit {
 
       this.service.writeDiagnosis(this.patientId.toString(), diagnosis).subscribe({
         next: () => {
-          this.toast.success('Diagnosis saved');
+          this.toast.success(this.ts.translate('specialist.diagnosis.toast.success'));
           this.isSubmitting = false;
           window.location.reload();
         },
         error: (err) => {
           console.error('Failed to write diagnosis', err);
-          this.toast.error('Could not save diagnosis');
+          this.toast.error(this.ts.translate('specialist.diagnosis.toast.error'));
           this.isSubmitting = false;
         }
       });

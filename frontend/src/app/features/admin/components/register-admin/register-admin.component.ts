@@ -6,6 +6,8 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { MatIconButton } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
+import { TranslationService } from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-register-admin',
@@ -14,7 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatIconModule,
     MatIconButton,
-    RouterLink
+    RouterLink,
+    TranslatePipe
   ],
   templateUrl: './register-admin.component.html',
   styleUrl: './register-admin.component.css'
@@ -25,6 +28,7 @@ export class RegisterAdminComponent {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/;
   successMessage: string | null = null;
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
 
   constructor(
     public validationService: ValidationService,
@@ -53,7 +57,7 @@ export class RegisterAdminComponent {
         next: (response) => {
           console.log('Registration successful!', response);
           this.successMessage = null;
-          this.toast.success('User registered successfully');
+          this.toast.success(this.ts.translate('admin.register.toast.success'));
           this.myForm.reset();
           this.myForm.markAsPristine();
           this.myForm.markAsUntouched();
@@ -61,7 +65,7 @@ export class RegisterAdminComponent {
         error: (error) => {
           console.error('Registration failed:', error);
           this.successMessage = null;
-          this.toast.error('Registration failed. Please try again');
+          this.toast.error(this.ts.translate('admin.register.toast.error'));
         },
       });
     } else {

@@ -15,8 +15,9 @@ import { PatientHistoryComponent } from '../patient-history/patient-history.comp
     PatientInfoComponent,
     PatientAppointmentsComponent,
     PatientPrescriptionsComponent,
-    PatientHistoryComponent
-],
+    PatientHistoryComponent,
+
+  ],
   templateUrl: './patient-dashboard.component.html',
   styleUrl: './patient-dashboard.component.css'
 })

@@ -3,7 +3,7 @@
     <button mat-icon-button aria-label="Back">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <span class="app-back-label">Back to dashboard</span>
+    <span class="app-back-label">{{ 'common.back' | t }}</span>
   </a>
 
   <div class="app-card">
@@ -12,8 +12,8 @@
         <mat-icon>groups</mat-icon>
       </div>
       <div>
-        <h2 class="app-card__title">My patients</h2>
-        <div class="app-card__subtitle">Search and view patients under your care</div>
+        <h2 class="app-card__title">{{ 'doctor.patients.title' | t }}</h2>
+        <div class="app-card__subtitle">{{ 'doctor.patients.subtitle' | t }}</div>
       </div>
     </div>
 
@@ -23,7 +23,7 @@
         #search
         class="app-input search-input"
         type="text"
-        placeholder="Search by name, surname, email or username..."
+        [placeholder]="'doctor.patients.search' | t"
         (input)="onChange(search.value)"
       />
     </div>
@@ -39,8 +39,8 @@
     } @else {
       <div class="app-empty">
         <mat-icon>person_off</mat-icon>
-        <h3>No patients found</h3>
-        <p>Try a different search term or check back later.</p>
+        <h3>{{ 'doctor.patients.empty.title' | t }}</h3>
+        <p>{{ 'doctor.patients.empty.desc' | t }}</p>
       </div>
     }
   } @else {

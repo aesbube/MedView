@@ -6,6 +6,8 @@ import {MatIconButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {TranslatePipe} from '../../../../core/pipes/translate.pipe';
+import {TranslationService} from '../../../../core/services/translation.service';
 
 @Component({
   selector: 'app-pharmacist-details',
@@ -18,12 +20,14 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
     MatIconButton,
     RouterLink,
     MatProgressSpinner,
+    TranslatePipe,
   ]
 })
 export class PharmacistDetailsComponent implements OnInit {
   service = inject(PharmacistService);
   fb = inject(FormBuilder);
   private toast = inject(ToastService);
+  private ts = inject(TranslationService);
   form!: FormGroup;
   todayStr: string = new Date().toISOString().split('T')[0];
 
@@ -48,8 +52,8 @@ export class PharmacistDetailsComponent implements OnInit {
     if (this.form.valid) {
       const updated = this.form.getRawValue();
       this.service.updatePharmacistDetails(updated).subscribe({
-        next: () => this.toast.success('Pharmacist details saved'),
-        error: () => this.toast.error('Could not save pharmacist details')
+        next: () => this.toast.success(this.ts.translate('pharmacist.details.toast.success')),
+        error: () => this.toast.error(this.ts.translate('pharmacist.details.toast.error'))
       });
     }
   }

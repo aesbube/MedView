@@ -4,8 +4,8 @@
       <mat-icon>event_available</mat-icon>
     </div>
     <div>
-      <h2 class="app-card__title">My Appointments</h2>
-      <div class="app-card__subtitle">Upcoming scheduled appointments</div>
+      <h2 class="app-card__title">{{ 'patient.appointments.title' | t }}</h2>
+      <div class="app-card__subtitle">{{ 'patient.appointments.subtitle' | t }}</div>
     </div>
   </div>
 
@@ -17,8 +17,8 @@
     @if (numOfAppointments === 0) {
       <div class="app-empty">
         <mat-icon>event_busy</mat-icon>
-        <h3>No upcoming appointments</h3>
-        <p>You do not have any upcoming appointments scheduled.</p>
+        <h3>{{ 'patient.appointments.empty.title' | t }}</h3>
+        <p>{{ 'patient.appointments.empty.desc' | t }}</p>
       </div>
     } @else {
       <div class="app-grid-cards">

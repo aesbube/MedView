@@ -14,8 +14,8 @@
       } @else {
         <div class="app-empty">
           <mat-icon>assignment_late</mat-icon>
-          <h3>No diagnosis yet</h3>
-          <p>No diagnosis has been recorded for this appointment.</p>
+          <h3>{{ 'specialist.diagnosis.empty.title' | t }}</h3>
+          <p>{{ 'specialist.diagnosis.empty.desc' | t }}</p>
         </div>
       }
     } @else {
