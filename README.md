@@ -1,6 +1,6 @@
-# kiii-project
+# MedView
 
-This is the repository for ci/cd project.
+This is the repository for my bachelors thesis - MedView
 
 ## Quick Start
 
